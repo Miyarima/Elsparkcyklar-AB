@@ -4,6 +4,9 @@ HEJJJJJ
 
 ## Installation
 fdsfsdfdsfsdfdsfdsfsdfdsfdsfds
+ALEXANDER
+
+ÄNDRAR TILL TEST1 branch
 ### Prerequisites
 
 - Linux/WSL
