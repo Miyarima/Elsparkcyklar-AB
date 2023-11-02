@@ -1,5 +1,7 @@
 # Elsparkcyklar-AB
 
+HEJJJJJ
+
 ## Installation
 fdsfsdfdsfsdfdsfdsfsdfdsfdsfds
 ### Prerequisites
@@ -25,3 +27,5 @@ npm install
 ```bash
 npm run start
 ```
+
+Test susm
