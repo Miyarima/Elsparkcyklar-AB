@@ -13,7 +13,7 @@ fdsfsdfdsfsdfdsfdsfsdfdsfdsfds
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/Miyarima/Elsparkcyklar-AB
+git clone git@github.com:Miyarima/Elsparkcyklar-AB.git
 ```
 
 ### Install Dependencies
