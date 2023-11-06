@@ -3,13 +3,14 @@
 const adminRoutes = require("./routes/admin.js");
 
 const express = require("express");
+const path = require("path");
 const app = express();
 const port = 1337;
 
 app.set("views", "./views/pages");
 app.set("view engine", "ejs");
 
-app.use(express.static(__dirname + "/public"));
+app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/admin", adminRoutes);
