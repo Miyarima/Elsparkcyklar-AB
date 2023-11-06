@@ -52,8 +52,7 @@ npm run start
 
 ## Team
 
-**Lead Maintainers:**
 * [__Jonathan__](https://github.com/Miyarima)
 * [__Sucro__](https://github.com/susm92)
-* [__Olle__](https://github.com/deabacteria8)
+* [__Olle__](https://github.com/deadbacteria8)
 * [__Alexander__](https://github.com/A-Norre)
