@@ -1,0 +1,17 @@
+version: "3"
+networks:
+    http3:
+services:
+    webbclient:
+        build:
+            context: ./webbclient/
+            dockerfile: Dockerfile
+        container_name: "webbclient"
+        ports:
+            - "1337:1337"
+        networks:
+            http3:
+#         links:
+#             - "server:bthloggen-server"
+# volumes:
+#     data:
