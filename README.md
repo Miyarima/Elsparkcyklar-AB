@@ -1,5 +1,11 @@
 # Elsparkcyklar-AB
 
+<div align="center">
+
+[![Linter](https://github.com/Miyarima/Elsparkcyklar-AB/actions/workflows/super-linter.yml/badge.svg)](https://github.com/Miyarima/Elsparkcyklar-AB/actions/workflows/super-linter.yml)
+
+</div>
+
 HEJJJJJ nu tvåfewfew
 
 ## Installation
