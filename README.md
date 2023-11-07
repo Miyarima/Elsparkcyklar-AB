@@ -46,7 +46,7 @@ npm i
 npm run start
 ```
 
-## Docker
+### Docker
 
 Stand in the root folder and write the following command to start the server
 ```bash
