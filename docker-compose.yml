@@ -23,7 +23,7 @@ services:
         ports:
             - "3306:3306"
         volumes:
-            - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+            - ./database:/docker-entrypoint-initdb.d
     adminer:
         image: adminer
         restart: always
