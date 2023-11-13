@@ -46,7 +46,16 @@ npm i
 npm run start
 ```
 
-## Docker
+### Docker
+
+Stand in the root folder and write the following command to start the server
+```bash
+docker-compose up
+```
+To turn it off
+```bash
+docker-compose down
+```
 
 ## Documentation
 
