@@ -6,11 +6,11 @@ const express = require("express");
 const path = require("path");
 const app = express();
 const port = 1337;
-const __dirname = path.resolve();
 
 app.set("views", "./views/pages");
 app.set("view engine", "ejs");
 
+// eslint-disable-next-line
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 

@@ -15,18 +15,19 @@ And lastly bike intelligence which monitors and controlls the bike.
 
 ### Table of Contents
 
-- [Install](#installation)
-- [Docker](#docker)
-- [Documentation](#documentation)
-- [Team](#team)
+-   [Install](#installation)
+-   [Docker](#docker)
+-   [Database](#database)
+-   [Documentation](#documentation)
+-   [Team](#team)
 
 ## Installation
 
 ### Prerequisites
 
-- Linux/WSL
-- Node >(Version 18.16.0)
-- npm >(version 9.5.1)
+-   Linux/WSL
+-   Node >(Version 18.16.0)
+-   npm >(version 9.5.1)
 
 ### Clone the Repository
 
@@ -48,20 +49,31 @@ npm run start
 
 ### Docker
 
-Stand in the root folder and write the following command to start the server
+Stand in the root folder and write the following command to start all services, add `-d` to detatch and `--build` to make sure it always the latest build
+
 ```bash
-docker-compose up
+docker-compose up -d --build
 ```
+
 To turn it off
+
 ```bash
 docker-compose down
+```
+
+### Database
+
+To connect to your local docker container running my SQL, password is `vteam`
+
+```bash
+mysql -h 127.0.0.1 -P 3307 -u vteam -p
 ```
 
 ## Documentation
 
 ## Team
 
-* [__Jonathan__](https://github.com/Miyarima)
-* [__Sucro__](https://github.com/susm92)
-* [__Olle__](https://github.com/deadbacteria8)
-* [__Alexander__](https://github.com/A-Norre)
+-   [**Jonathan**](https://github.com/Miyarima)
+-   [**Sucro**](https://github.com/susm92)
+-   [**Olle**](https://github.com/deadbacteria8)
+-   [**Alexander**](https://github.com/A-Norre)
