@@ -1,8 +1,12 @@
 "use strict";
 
+const print = require("../src/user/printHello.js");
+
 const viewHome = (req, res) => {
+    print.hello();
+
     res.render("index.ejs", {
-        title: "Admin Dashboard",
+        title: "Users Dashboard",
         message: "hello!",
     });
 };

@@ -2,11 +2,20 @@ version: "3"
 networks:
     http3:
 services:
-    webbclient:
+    api:
         build:
-            context: ./webbclient/
+            context: ./api/
             dockerfile: Dockerfile
-        container_name: "webbclient"
+        container_name: "api"
+        ports:
+            - "8080:8080"
+        networks:
+            http3:
+    frontend:
+        build:
+            context: ./frontend/
+            dockerfile: Dockerfile
+        container_name: "frontend"
         ports:
             - "1337:1337"
         networks:
@@ -20,6 +29,8 @@ services:
             MYSQL_DATABASE: Elsparkcyklar
             MYSQL_USER: vteam
             MYSQL_PASSWORD: vteam
+        networks:
+            http3:
         ports:
             - "3307:3306"
         volumes:

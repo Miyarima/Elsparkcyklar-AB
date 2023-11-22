@@ -11,8 +11,7 @@ COPY controllers ./controllers/
 COPY middleware ./middleware/
 COPY public ./public/
 COPY routes ./routes/
-COPY views ./views/
 
-EXPOSE 1337
+EXPOSE 8080
 
 CMD ["node", "server.js"]
