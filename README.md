@@ -37,11 +37,15 @@ git clone git@github.com:Miyarima/Elsparkcyklar-AB.git
 
 ### Install Dependencies
 
+To run the project locally you'll need to install all dependencies. Stand in the folder `/api` and `/frontend` and run the following command.
+
 ```bash
 npm i
 ```
 
 ### Start the Server
+
+The project contains two servers, one in `/api` and the other one in `/frontend`. To start each server run the following command in each root folder.
 
 ```bash
 npm run start
