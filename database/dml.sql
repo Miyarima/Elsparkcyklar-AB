@@ -7,10 +7,10 @@ VALUES (12.345, 34.567, 100.00, 'alice_jones', 'pass456', 'user', 'alice.jones@e
 INSERT INTO City (longitude, latitude, `name`) VALUES (18.0686, 59.3293, 'Stockholm'),
 (13.0007, 55.6050, 'Malmö');
 
-INSERT INTO Zone (city_id, longitude, latitude)
+INSERT INTO Zone (city_id, longitude, latitude,max_speed)
 VALUES
-    (1, 18.0686, 59.3293),
-    (2, 13.0007, 55.6050);
+    (1, 18.0686, 59.3293,20),
+    (2, 13.0007, 55.6050,20);
 
 INSERT INTO Station (city_id, longitude, latitude, `address`)
 VALUES
@@ -22,3 +22,8 @@ VALUES
     (18.0686, 59.3293, 'Available'),
     (13.0007, 55.6050, 'In Use');
 
+
+INSERT INTO Bike (longitude, latitude, `status`, station_id)
+VALUES
+    (18.0686, 59.3293, 'Available',2),
+    (13.0007, 55.6050, 'In Use',1);
