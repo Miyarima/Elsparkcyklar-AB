@@ -9,6 +9,7 @@ RUN npm install
 COPY server.js .
 COPY controllers ./controllers/
 COPY middleware ./middleware/
+COPY db ./db/
 COPY public ./public/
 COPY routes ./routes/
 
