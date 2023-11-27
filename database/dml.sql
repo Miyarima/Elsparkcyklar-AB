@@ -1,5 +1,5 @@
 
-INSERT INTO User (longitude, latitude, wallet, username, `password`, `role`, email)
+INSERT INTO User (longitude, latitude, wallet, `username`, `password`, `role`, email)
 VALUES (12.345, 34.567, 100.00, 'alice_jones', 'pass456', 'user', 'alice.jones@email.com'),
 (-45.678, 78.901, 50.50, 'charlie_smith', 'p@ssw0rd', 'admin', 'charlie.smith@email.com'),
 (0.0, 0.0, 75.25, 'david_miller', 'securepass123', 'user', 'david.miller@email.com');
@@ -12,7 +12,7 @@ VALUES
     (1, 18.0686, 59.3293,20),
     (2, 13.0007, 55.6050,20);
 
-INSERT INTO Station (city_id, longitude, latitude, `address`)
+INSERT INTO Station (zone_id, longitude, latitude, `address`)
 VALUES
     (1, 18.0686, 59.3293, 'Address 1, Stockholm'),
     (2, 13.0007, 55.6050, 'Address 2, Malmö');
