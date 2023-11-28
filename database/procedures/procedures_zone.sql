@@ -20,8 +20,8 @@ CREATE PROCEDURE get_zones_in_city(
     IN city_in VARCHAR(50)
 )
 BEGIN
-    SELECT z.*, c.`name`, c.id FROM `Zone` z,
-    LEFT JOIN City ON  z.city_id = c.id
+    SELECT z.*, c.`name`, c.id FROM `Zone` z
+    LEFT JOIN City c ON  z.city_id = c.id
     WHERE z.city_id = city_in OR c.`name` = city_in;
 END ;;
 
