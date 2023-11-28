@@ -30,21 +30,37 @@ DELIMITER ;;
 CREATE PROCEDURE insert_user(
     IN username_in VARCHAR(100),
     IN email_in TEXT,
-    IN password_in TEXT DEFAULT NULL
+    IN password_in TEXT
 )
 BEGIN
-    INSERT INTO User(`username`, email_in, password_in)
+    INSERT INTO User(`username`, email, `password`)
     VALUES(username_in, email_in, password_in);
 END ;;
 
 DELIMITER ;
+
+DROP PROCEDURE IF EXISTS insert_user_git;
+
+DELIMITER ;;
+
+CREATE PROCEDURE insert_user_git(
+    IN username_in VARCHAR(100),
+    IN email_in TEXT
+)
+BEGIN
+    INSERT INTO User(`username`, email)
+    VALUES(username_in, email_in);
+END ;;
+
+DELIMITER ;
+
 
 
 DROP PROCEDURE IF EXISTS update_wallet_for_user;
 
 DELIMITER ;;
 
-CREATE PROCEDURE insert_user(
+CREATE PROCEDURE update_wallet_for_user(
     IN username_in VARCHAR(100),
     IN balance_change FLOAT
 )
