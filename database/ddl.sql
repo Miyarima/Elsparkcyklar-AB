@@ -88,7 +88,6 @@ CREATE TABLE Invoice (
     FOREIGN KEY (travel_id) REFERENCES Travel(id)
 );
 
-
 CREATE TABLE `Admin` (
     id INT PRIMARY KEY AUTO_INCREMENT,
     username TEXT DEFAULT NULL,
@@ -96,8 +95,6 @@ CREATE TABLE `Admin` (
     `role` VARCHAR(10)
 );
 
-
-source procedures/procedures_init.sql
 
 
 

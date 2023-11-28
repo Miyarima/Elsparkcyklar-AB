@@ -10,6 +10,8 @@ BEGIN
         Station s ON b.station_id = s.id;
 END ;;
 
+DELIMITER ;
+
 DROP PROCEDURE IF EXISTS get_bikes_attached_to_specific_station;
 DELIMITER ;;
 
@@ -39,7 +41,7 @@ BEGIN
     SELECT * FROM Station WHERE zone_id = zone_id_in;
 END ;;
 
-DELIMTER ;
+DELIMITER ;
 
 DROP PROCEDURE IF EXISTS get_station_from_address;
 
