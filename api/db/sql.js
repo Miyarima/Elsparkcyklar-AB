@@ -4,8 +4,8 @@ const mysql = require("mysql2/promise");
 
 let db;
 const config = {
-    host: "db",
-    port: "3307",
+    host: "database",
+    port: "3306",
     user: "vteam",
     password: "vteam",
     database: "Elsparkcyklar",
@@ -13,7 +13,12 @@ const config = {
 };
 
 (async function () {
-    db = await mysql.createConnection(config);
+    try {
+        db = await mysql.createConnection(config);
+        console.log("Connected to the database!");
+    } catch (error) {
+        console.error("Error connecting to the database:", error.message);
+    }
 
     process.on("exit", () => {
         db.end();
