@@ -20,6 +20,7 @@ const config = {
         console.error("Error connecting to the database:", error.message);
     }
 
+    // eslint-disable-next-line
     process.on("exit", () => {
         db.end();
     });
