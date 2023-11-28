@@ -1,13 +1,16 @@
 "use strict";
 
-const print = require("../src/admin/printHello.js");
+const bikes = require("../src/admin/bikes.js");
 
-const viewHome = (req, res) => {
-    print.hello();
+const viewHome = async (req, res) => {
+    const allBikes = await bikes.getBikes();
+
+    console.log(allBikes);
 
     res.render("index.ejs", {
         title: "Admin Dashboard",
-        message: "hello!",
+        message: "This is the Admin dashboard!",
+        bikes: allBikes,
     });
 };
 
