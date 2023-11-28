@@ -15,6 +15,7 @@ const config = {
 (async function () {
     db = await mysql.createConnection(config);
 
+    // eslint-disable-next-line
     process.on("exit", () => {
         db.end();
     });
