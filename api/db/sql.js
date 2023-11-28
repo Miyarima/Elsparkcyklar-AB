@@ -5,7 +5,7 @@ const mysql = require("mysql2/promise");
 let db;
 const config = {
     host: "database",
-    port: "3307",
+    port: "3306",
     user: "vteam",
     password: "vteam",
     database: "Elsparkcyklar",
