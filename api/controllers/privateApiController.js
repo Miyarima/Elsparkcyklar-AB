@@ -42,17 +42,6 @@ const getAllBikes = async (req, res) => {
     });
 };
 
-// Tänkar att ett fetch ser ut så här
-//     const result = await fetch(`https://api:8080/api/bike/:id/rent?apiKey=${apiKey}`, {
-//         body: {
-//             user: "mos",
-//         },
-//         headers: {
-//             'content-type': 'application/json'
-//         },
-//         method: 'PUT'
-//     });
-
 const rentBike = async (req, res) => {
     const apiKey = req.query.apiKey;
     const bikeId = req.params.id;
@@ -177,7 +166,52 @@ const setBikePosition = async (req, res) => {
     }
 
     return res.status(200).json({
-        message: "bike has been rented",
+        message: "bike position has been set",
+    });
+};
+
+const updateBikePosition = async (req, res) => {
+    const apiKey = req.query.apiKey;
+    const bikeId = req.params.id;
+    const contentType = req.headers["content-type"];
+    const { position } = req.body;
+
+    // Check for apiKey provided
+    if (!apiKey) {
+        console.log("NO API KEY!");
+        return res.status(403).json({ error: "Please provide an API key." });
+    }
+
+    // Check for the required headers
+    if (!contentType || contentType !== "application/json") {
+        return res
+            .status(400)
+            .json({ error: "Content-Type must be application/json" });
+    }
+
+    // Check for the required body content
+    if (!req.body || Object.keys(req.body).length === 0) {
+        return res
+            .status(400)
+            .json({ error: "Request body is missing or empty" });
+    }
+
+    // checking if a position was provided in the body
+    if (!position) {
+        return res.status(400).json({
+            error: "No position was provided, so the bike can't be changed",
+        });
+    }
+
+    // If the provided bikeId didn't exsist in the database
+    if (!bikeId) {
+        return res
+            .status(403)
+            .json({ error: "Please provide correct ID for a bike." });
+    }
+
+    return res.status(200).json({
+        message: "updated position of bike",
     });
 };
 
@@ -200,6 +234,44 @@ const getSpecificBike = async (req, res) => {
     });
 };
 
+const turnOffSpecificBike = async (req, res) => {
+    const apiKey = req.query.apiKey;
+    const bikeId = req.params.id;
+
+    if (!apiKey) {
+        return res.status(403).json({ error: "Please provide an API key." });
+    }
+
+    if (!bikeId) {
+        return res
+            .status(403)
+            .json({ error: "Please provide correct ID for a bike." });
+    }
+
+    return res.status(200).json({
+        message: "turning of this bike",
+    });
+};
+
+const deleteSpecificBike = async (req, res) => {
+    const apiKey = req.query.apiKey;
+    const bikeId = req.params.id;
+
+    if (!apiKey) {
+        return res.status(403).json({ error: "Please provide an API key." });
+    }
+
+    if (!bikeId) {
+        return res
+            .status(403)
+            .json({ error: "Please provide correct ID for a bike." });
+    }
+
+    return res.status(200).json({
+        message: "deleting this bike",
+    });
+};
+
 module.exports = {
     getAllRoutes,
     getAllBikes,
@@ -208,4 +280,7 @@ module.exports = {
     getBikePosition,
     getSpecificBike,
     setBikePosition,
+    updateBikePosition,
+    turnOffSpecificBike,
+    deleteSpecificBike,
 };
