@@ -2,4 +2,23 @@
 
 <h1><%= message %></h1>
 
+<ul>
+    <% bikes.bikes.forEach(function(bike) { %>
+    <li>ID: <%= bike.id %></li>
+    <li>Station ID: <%= bike.station_id %></li>
+    <li>Longitude: <%= bike.longitude %></li>
+    <li>Latitude: <%= bike.latitude %></li>
+    <li>Status: <%= bike.status %></li>
+    <li>Speed: <%= bike.speed %></li>
+    <li>Zone ID: <%= bike.zone_id %></li>
+    <li>Battery: <%= bike.battery %></li>
+    <li>Charging: <%= bike.charging %></li>
+    <li>Comparison Longitude 1: <%= bike.comparison_longitude1 %></li>
+    <li>Comparison Latitude 1: <%= bike.comparison_latitude1 %></li>
+    <li>Comparison Longitude 2: <%= bike.comparison_longitude2 %></li>
+    <li>Comparison Latitude 2: <%= bike.comparison_latitude2 %></li>
+    <hr />
+    <% }); %>
+</ul>
+
 <%- include("./../partials/footer.ejs") %>
