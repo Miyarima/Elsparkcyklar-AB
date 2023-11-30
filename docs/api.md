@@ -2,6 +2,16 @@
 
 Introducing our innovative Bike Renting System API, designed to revolutionize the way you manage bike rentals. Our API offers seamless integration, allowing businesses to effortlessly incorporate bike rental functionalities into their platforms. With robust features for inventory management, user authentication, rental tracking, and payment processing, our API ensures a smooth and efficient renting experience. Experience the power of effortless bike rentals with our flexible and scalable API, empowering businesses to cater to the growing demand for sustainable and convenient transportation solutions."
 
+## Usage
+
+To use the public API you will need to generate a API key on the following link<br>
+
+```bash
+/api/apikey
+```
+
+It will return a key, which you need to use in every request to use the API
+
 ## Exampel
 
 A Request should look like this
@@ -127,6 +137,26 @@ returns the port of the specifc zone and charging ID
 ---
 
 ## Users
+
+**PUT**
+
+```bash
+/api/users
+```
+
+returns all users in the system
+
+---
+
+**PUT**
+
+```bash
+/api/user/:id/travel
+```
+
+returns the travel history for the specific user
+
+---
 
 ## Bikes
 
