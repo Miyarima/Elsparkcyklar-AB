@@ -36,6 +36,96 @@ get "/api"
 
 ## Cities
 
+**GET**
+
+```bash
+/api/cities
+```
+
+returns all cities
+
+---
+
+**POST**
+
+```bash
+/api/city/:name
+```
+
+adds new city
+
+---
+
+**GET**
+
+```bash
+/api/city/:id
+```
+
+returns specific city
+
+---
+
+**GET**
+
+```bash
+/api/city/:id/bike
+```
+
+returns all bikes within a specific city
+
+---
+
+**GET**
+
+```bash
+/api/city/:id/zone
+```
+
+returns zones, bikes and charging statioins in specific city
+
+---
+
+**POST**
+
+```bash
+/api/city/:id/bike/:nr
+```
+
+add a number of bikes to specific city
+
+---
+
+**PUT**
+
+```bash
+/api/city/:id/bike/:nr
+```
+
+update a number of bikes from specific city
+
+---
+
+**DELETE**
+
+```bash
+/api/city/:id/bike/:nr
+```
+
+Remove a number of bikes from specific city
+
+---
+
+**PUT**
+
+```bash
+/api/city/:id/zone/:zoneid/:chargingid
+```
+
+returns the port of the specifc zone and charging ID
+
+---
+
 ## Users
 
 ## Bikes
