@@ -425,7 +425,6 @@ const addNumberBikes = async (req, res) => {
             .json({ error: "Missing number of bikes to add to the city!." });
     }
 
-
     return res.status(200).json({
         message: "Bikes have been added to city.",
     });
@@ -452,7 +451,6 @@ const updateNumberBikes = async (req, res) => {
             .status(403)
             .json({ error: "Missing number of bikes to add to the city!." });
     }
-
 
     return res.status(200).json({
         message: "Bikes have been updated in the city.",
@@ -481,9 +479,42 @@ const deleteNumberBikes = async (req, res) => {
             .json({ error: "Missing number of bikes to remove to the city!." });
     }
 
-
     return res.status(200).json({
         message: "Bikes have been removed from the city.",
+    });
+};
+
+// Get all available users in system
+const getAllUsers = async (req, res) => {
+    const apiKey = req.query.apiKey;
+
+
+    if (!apiKey) {
+        return res.status(403).json({ error: "Please provide an API key." });
+    }
+
+    return res.status(200).json({
+        message: "Returns a list of all users in system.",
+    });
+};
+
+// Get all travel for specific user
+const getTravelUser = async (req, res) => {
+    const apiKey = req.query.apiKey;
+    const userId = req.params.id;
+
+    if (!apiKey) {
+        return res.status(403).json({ error: "Please provide an API key." });
+    }
+
+    if (!userId) {
+        return res
+            .status(403)
+            .json({ error: "Missing userId for specific user." });
+    }
+
+    return res.status(200).json({
+        message: "Returns all history of specific user.",
     });
 };
 
@@ -506,5 +537,7 @@ module.exports = {
     getCityChargingStation,
     addNumberBikes,
     updateNumberBikes,
-    deleteNumberBikes
+    deleteNumberBikes,
+    getAllUsers,
+    getTravelUser,
 };

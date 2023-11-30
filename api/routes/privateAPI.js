@@ -54,6 +54,18 @@ router.delete("/bike/:id", (req, res) => {
 });
 
 /* ########################################### */
+/* #################  USER   ################# */
+/* ########################################### */
+
+router.get("/users", (req, res) => {
+    privateApiController.getAllUsers(req, res);
+});
+
+router.get("/user/:id/travel", (req, res) => {
+    privateApiController.getTravelUser(req, res);
+});
+
+/* ########################################### */
 /* ################  CITIES   ################ */
 /* ########################################### */
 
