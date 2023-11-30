@@ -53,4 +53,52 @@ router.delete("/bike/:id", (req, res) => {
     privateApiController.deleteSpecificBike(req, res);
 });
 
+/* ########################################### */
+/* ################  CITIES   ################ */
+/* ########################################### */
+
+// Returns all cities
+router.get("/cities", (req, res) => {
+    privateApiController.getAllCities(req, res);
+});
+
+// Adds new city
+router.post("/city/:name", (req, res) => {
+    privateApiController.addNewCity(req, res);
+});
+
+// Returns specific city
+router.get("/city/:id", (req, res) => {
+    privateApiController.getSpecificCity(req, res);
+});
+
+// Returns all bikes within a specific city
+router.get("/city/:id/bike", (req, res) => {
+    privateApiController.getBikesCity(req, res);
+});
+
+// Returns zones, bikes and charging statioins in specific city
+router.get("/city/:id/zone", (req, res) => {
+    privateApiController.getCityZone(req, res);
+});
+
+// Add a number of bikes to specific city
+router.post("/city/:id/bike/:nr", (req, res) => {
+    privateApiController.addNumberBikes(req, res);
+});
+
+// Update a number of bikes from specific city
+router.put("/city/:id/bike/:nr", (req, res) => {
+    privateApiController.updateNumberBikes(req, res);
+});
+
+// Remove a number of bikes from specific city
+router.delete("/city/:id/bike/:nr", (req, res) => {
+    privateApiController.deleteNumberBikes(req, res);
+});
+
+router.get("/city/:id/zone/:zoneid/:chargingid", (req, res) => {
+    privateApiController.getCityChargingStation(req, res);
+});
+
 module.exports = router;
