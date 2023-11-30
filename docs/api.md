@@ -42,8 +42,6 @@ The response could look like this
 
 ## All Available Routes
 
-get "/api"
-
 ## Cities
 
 **GET**
