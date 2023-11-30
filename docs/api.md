@@ -24,8 +24,13 @@ const result = await fetch(
 The response could look like this
 
 ```js
+{
+    "message": "bike has been rented"
+}
 
 ```
+
+## All Available Routes
 
 get "/api"
 
@@ -35,29 +40,93 @@ get "/api"
 
 ## Bikes
 
-// Returns all bikes
-get "/api/bikes"
+**GET**
 
-// Rents a bike
-put "/api/bike/:id/rent"
+```bash
+/api/bikes
+```
 
-// Returnes rented bike
-put "/api/bike/:id/returned"
+returns all bikes in the system
 
-// Retuns position of given bike
-get"/api/bike/:id/position"
+---
 
-// Set bike position first time
-post "/api/bike/:id/position"
+**PUT**
 
-// Update a bike which already got a position
-put "/api/bike/:id/position"
+```bash
+/api/bike/:id/rent
+```
 
-// Get all information about a specific bike
-get "/bike/:id"
+rents the bike with the given ID
+send user in headers
 
-// Turn of specific bike
-put "/api/bike/:id"
+---
 
-// Delete specific bike
-<button style="color: white; background-color: red; border: none; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 4px;">Delete</button> "/api/bike/:id"
+**PUT**
+
+```bash
+/api/bike/:id/returned
+```
+
+returns the bike with the given ID
+
+---
+
+**GET**
+
+```bash
+/api/bike/:id/position
+```
+
+retrive the position of the bike with the given ID
+
+---
+
+**POST**
+
+```bash
+/api/bike/:id/position
+```
+
+set the first location for a bike with the given ID
+
+---
+
+**PUT**
+
+```bash
+/api/bike/:id/position
+```
+
+update the location of a bike with the given ID
+
+---
+
+**GET**
+
+```bash
+/bike/:id
+```
+
+returns all information about the bike with the given ID
+
+---
+
+**PUT**
+
+```bash
+/bike/:id
+```
+
+turns of the bike with the given ID
+
+> (vi bör nog göra mer med denna än att bara stänga en cykel)
+
+---
+
+**DELETE**
+
+```bash
+/bike/:id
+```
+
+delets the bike with the given ID
