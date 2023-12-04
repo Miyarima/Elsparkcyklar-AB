@@ -1,0 +1,14 @@
+<%- include("header_user.ejs") %>
+
+<div class="title">Plånbok - Prepaid</div>
+
+<div class="middle">
+    <form action="/user/wallet">
+        <label class="give-code" for="fname">Ange kod</label><br><br>
+        <input class="text-wallet" type="number" required><br>
+        <input class="user-button" type="submit" value="Skicka">
+    </form>
+</div>
+
+
+<%- include("footer.ejs") %>

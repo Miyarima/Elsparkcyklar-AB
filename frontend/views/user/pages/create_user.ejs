@@ -1,0 +1,14 @@
+<%- include("header_login_user.ejs") %>
+
+<div class="middle">
+    <form class="user-input" action="user">
+        <label class="text-input" for="fname">Username</label><br>
+        <input class="user-login" type="text" placeholder="Username.."><br><br>
+        <label class="text-input" for="lname">Password</label><br>
+        <input class="user-login" type="password" placeholder="Password.."><br><br>
+        <label class="text-input"style="margin-left:-21.5em;" for="lname">Email</label><br>
+        <input class="user-login" type="email" placeholder="email@outlook.se"><br><br>
+        <input class="user-button" type="submit" value="Skapa konto">
+    </form>
+</div>
+<%- include("footer.ejs") %>

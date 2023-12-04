@@ -1,0 +1,21 @@
+<%- include("header_mobile.ejs") %>
+
+<!-- <div class="title">För att hyra ange cykelns ID</div> -->
+
+<div class="middle"><br><br>
+    <form class="user-input" action="/mobile/rent">
+        <label class="text-input" for="fname">Username</label><br>
+        <input class="user-login" type="text" placeholder="Username.."><br><br>
+        <label class="text-input" for="lname">Password</label><br>
+        <input class="user-login" type="password" placeholder="Password.."><br><br>
+        <input class="user-button" type="submit" value="Logga in">
+    </form>
+    <!-- <form action="wallet">
+        <label class="give-bikeid" for="fname">Cykel-ID</label><br><br>
+        <input class="text-rent" type="number" required><br>
+        <input class="rent-button" type="submit" value="Logga in">
+    </form> -->
+</div>
+
+
+<%- include("footer.ejs") %>
