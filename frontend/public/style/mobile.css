@@ -1,0 +1,181 @@
+body {
+    background-color: lightgray;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #030044;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 12em;
+}
+  
+.sidenav a {
+    padding: 25px 8px 25px 32px;
+    text-decoration: none;
+    font-size: 45px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+}
+
+  
+.sidenav .closebtn {
+    padding-right: 35px;
+    padding-left: 35px;
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 60px;
+    /* margin-left: 20px; */
+}
+
+.menu {
+    font-size: 70px;
+    color:white; 
+    margin-left:0.6em;
+    font-weight: bold;
+}
+  
+.middle {
+    text-align: center;
+    margin-top: 5em;
+}
+
+ul {
+    position: fixed;
+    height: 10em;
+    width: 101%;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: #030044;
+    overflow: hidden;
+    margin-left: -1em;
+    margin-top: -0.5em;
+}
+
+.menu-text {
+    margin-top: 1em;
+    font-size: 45px;
+    color: white;
+    font-weight: bold;
+    margin-left: 5em;
+}
+
+.list {
+    float: left;
+    margin-top: 0.5em;
+    font-size: 45px;
+}
+
+.list a {
+    margin-left: 1em;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: larger;
+}
+
+.list a:hover {
+    background-color: white;
+    color: #030044;
+}
+
+.active {
+    margin-right: 1em;
+    color: white;
+    font-weight: bold;
+    font-size: larger;
+}
+
+.title {
+    text-align: center;
+    margin-top: 5em;
+    background-color: #030044;
+    color: white;
+    padding: 1em;
+    width: 14em;
+    font-weight: bold;
+    font-size: 2.5em;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.give-bikeid {
+    font-size: 6em;
+}
+
+.rent-button {
+    font-weight: bold;
+    font-size: 3em;
+    /* width: 11em; */
+    background-color: #050077;
+    color: white;
+    padding: 1em 3em;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.text-rent {
+    font-weight: bold;
+    font-size: 3em;
+    height: 2em;
+    width: 6em;
+    border: 1px solid #030044;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Inloggning */
+
+.text-input {
+    font-weight: bold;
+    font-size: 60px;
+    margin-left: -6.8em;
+}
+
+.user-login {
+    font-size: 35px;
+    font-weight: bold;
+    width: 20em;
+    height: 3em;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+  
+.user-button {
+    font-weight: bold;
+    font-size: 50px;
+    width: 11em;
+    background-color: #050077;
+    color: white;
+    padding: 1em 3em;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.main {
+    margin-top: 8em; /* Add a top margin to avoid content overlay */
+}

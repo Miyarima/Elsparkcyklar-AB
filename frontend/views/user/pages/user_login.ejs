@@ -1,0 +1,14 @@
+<%- include("header_login_user.ejs") %>
+
+<div class="middle">
+    <form class="user-input" action="/user/user">
+        <label class="text-input" for="fname">Username</label><br>
+        <input class="user-login" type="text" placeholder="Username.."><br><br>
+        <label class="text-input" for="lname">Password</label><br>
+        <input class="user-login" type="password" placeholder="Password.."><br><br>
+        <input class="user-button" type="submit" value="Logga in">
+    </form>
+    <br><br><br>
+    <a class="create-button" href="/user/createuser">Skapa Konto</a>
+</div>
+<%- include("footer.ejs") %>

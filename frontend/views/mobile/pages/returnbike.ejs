@@ -1,0 +1,14 @@
+<%- include("header_mobile.ejs") %>
+
+<div class="title">För att lämna tillbaka ange cykelns ID</div>
+
+<div class="middle">
+    <form action="/mobile/rent">
+        <label class="give-bikeid" for="fname">Cykel-ID</label><br><br>
+        <input class="text-rent" type="number" required><br>
+        <input class="rent-button" type="submit" value="Lämna tillbaka">
+    </form>
+</div>
+
+
+<%- include("footer.ejs") %>

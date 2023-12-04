@@ -1,0 +1,24 @@
+<%- include("header_user.ejs") %>
+
+<div class="title">Kontodetaljer</div>
+
+<table class="table-details" id="details">
+    <tr class="tr-details">
+        <th class="th-details">Användarnamn</th>
+        <th class="th-details">Roll</th>
+        <th class="th-details">Email</th>
+        <th class="th-details">Plånbok (kr)</th>
+    </tr>
+    <tr class="tr-details">
+        <td class="td-details">alice_jones</td>
+        <td class="td-details">user</td>
+        <td class="td-details" style="width: 14.5em;">alice.jones@email.com</td>
+        <td class="td-details">100.00</td>
+    </tr>
+</table>
+<div class="middle-edit"> <!-- Ändra till egen klass om du vill flytta den-->
+    <a class="edit-button" href="/user/detailsedit">Redigera</a>
+</div>
+
+
+<%- include("footer.ejs") %>

@@ -1,0 +1,262 @@
+body {
+    background-color: lightgray;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+ul {
+    position: fixed;
+    width: 101%;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: #030044;
+    overflow: hidden;
+    margin-left: -1em;
+    margin-top: -0.5em;
+}
+
+.list {
+    float: left;
+}
+
+.list a {
+    margin-left: 1em;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: larger;
+}
+
+.list a:hover {
+    background-color: white;
+    color: #030044;
+}
+
+.active {
+    margin-right: 1em;
+    color: white;
+    font-weight: bold;
+    font-size: larger;
+}
+
+.login {
+    float: center;
+    margin-right: 1em;
+    color: white;
+    font-weight: bold;
+    font-size: larger;
+    padding: 14px 16px;
+}
+
+.loginlist {
+    text-align: center;
+}
+
+.middle {
+    text-align: center;
+    margin-top: 5em;
+}
+
+.middle-edit {
+    text-align: center;
+    margin-top: 4em;
+}
+
+.middle-save-changes {
+    text-align: center;
+    margin-top: 4em;
+}
+
+.text-input {
+    font-weight: bold;
+    font-size: large;
+    margin-left: -20em;
+}
+
+.user-login {
+    font-size: large;
+    font-weight: bold;
+    width: 25em;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+  
+.user-button {
+    font-weight: bold;
+    font-size: large;
+    background-color: #030044;
+    color: white;
+    padding: 1em 3em;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.create-button {
+    text-decoration: none;
+    font-weight: bold;
+    font-size: large;
+    width: 11em;
+    background-color: #030044;
+    color: white;
+    padding: 1em 2.5em;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.edit-button {
+    text-decoration: none;
+    font-weight: bold;
+    font-size: large;
+    width: 11em;
+    background-color: #030044;
+    color: white;
+    padding: 1em 2.5em;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.title {
+    text-align: center;
+    margin-top: 5em;
+    background-color: #030044;
+    color: white;
+    padding: 1em 2.5em;
+    width: 40%;
+    font-weight: bold;
+    font-size: large;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* TABLE History */
+.table-history {
+    margin-top: 2em;
+    margin-left: auto;
+    margin-right: auto;
+    table-layout: fixed;
+    text-align: center;
+    border: solid;
+    border-color: #f2f2f2;
+}
+
+#history tr:nth-child(even){background-color: #f2f2f2;}
+#history tr:nth-child(odd){background-color: #bcbcbc;}
+
+
+.th-history {
+    border: solid;
+    width: 10em;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #050077;
+    color: white;
+    text-align: center; 
+}
+
+.td-history {
+    border: none;
+    padding: 1em;
+    width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+
+/* TABLE DETAILS/USER */
+.table-details {
+    margin-top: 2em;
+    margin-left: auto;
+    margin-right: auto;
+    table-layout: fixed;
+    text-align: center;
+    border: solid;
+    border-color: #f2f2f2;
+}
+
+#details tr:nth-child(even){background-color: #f2f2f2;}
+#details tr:nth-child(odd){background-color: #bcbcbc;}
+
+
+.th-details {
+    border: solid;
+    width: 10em;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #050077;
+    color: white;
+    text-align: center; 
+}
+
+.td-details {
+    border: none;
+    padding: 1em;
+    width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.details-wallet {
+    font-size: medium;
+    width: 8em;
+    height: 1em;
+}
+
+.details-email {
+    font-size: medium;
+    width: 14em;
+    height: 1em;
+}
+
+/* WALLET */
+.wallet-button {
+    margin-left: 100px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: large;
+    width: 11em;
+    background-color: #030044;
+    color: white;
+    padding: 1em 2.5em;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.give-code {
+    color: #030044;
+    font-size: larger;
+    font-weight: bolder;
+}
+
+
+.text-wallet {
+    font-weight: bold;
+    font-size: large;
+    border: 1px solid #030044;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.main {
+    margin-top: 3em; /* Add a top margin to avoid content overlay */
+}

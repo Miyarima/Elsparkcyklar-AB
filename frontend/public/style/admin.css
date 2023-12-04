@@ -1,0 +1,259 @@
+body {
+    background-color: darkgray;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.empty-space {
+    height: 3em;
+}
+
+ul {
+    position: fixed;
+    width: 101%;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: #6b0000;
+    overflow: hidden;
+    margin-left: -1em;
+    margin-top: -0.5em;
+}
+
+.list {
+    float: left;
+}
+
+.list a {
+    margin-left: 1em;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: larger;
+}
+
+.list a:hover {
+    background-color: white;
+    color: #6b0000;
+}
+
+.active {
+    margin-right: 1em;
+    color: white;
+    font-weight: bold;
+    font-size: larger;
+}
+
+.login {
+    float: center;
+    margin-right: 1em;
+    color: white;
+    font-weight: bold;
+    font-size: larger;
+    padding: 14px 16px;
+}
+
+.loginlist {
+    text-align: center;
+}
+
+.middle {
+    text-align: center;
+    margin-top: 5em;
+}
+
+.text-input {
+    font-weight: bold;
+    font-size: large;
+    margin-left: -20em;
+}
+
+.admin-login {
+    font-size: large;
+    font-weight: bold;
+    width: 25em;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+  
+.admin-button {
+    font-weight: bold;
+    font-size: large;
+    width: 11em;
+    background-color: #6b0000;
+    color: white;
+    padding: 1em 3em;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.create-button {
+    text-decoration: none;
+    font-weight: bold;
+    font-size: large;
+    width: 11em;
+    background-color: #6b0000;
+    color: white;
+    padding: 1em 2.5em;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.title {
+    text-align: center;
+    margin-top: 5em;
+    background-color: #6b0000;
+    color: white;
+    padding: 1em 2.5em;
+    width: 40%;
+    font-weight: bold;
+    font-size: large;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* TABLE CUSTOMER */
+.table-customer {
+    margin-top: 2em;
+    margin-left: auto;
+    margin-right: auto;
+    table-layout: fixed;
+    text-align: center;
+    border: solid;
+    border-color: #f2f2f2;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+#customers tr:nth-child(odd){background-color: #bcbcbc;}
+
+
+.th-customer {
+    border: solid;
+    width: 10em;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #9E0000;
+    color: white;
+    text-align: center; 
+}
+
+.td-customer {
+    border: none;
+    padding: 1em;
+    width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+
+/* TABLE BIKE */
+.table-bike {
+    margin-top: 2em;
+    margin-left: auto;
+    margin-right: auto;
+    table-layout: fixed;
+    text-align: center;
+    border: solid;
+    border-color: #f2f2f2;
+}
+
+#bikes tr:nth-child(even){background-color: #f2f2f2;}
+#bikes tr:nth-child(odd){background-color: #bcbcbc;}
+
+
+.th-bike {
+    border: solid;
+    width: 10em;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #9E0000;
+    color: white;
+    text-align: center; 
+}
+
+.td-bike {
+    border: none;
+    padding: 1em;
+    width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+
+/* TABLE STATIONS */
+.table-explainer {
+    color: #9E0000;
+    margin-top: 3em;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-weight: bold;
+    font-size: larger;
+    text-decoration: underline;
+}
+.table-station {
+    margin-top: 2em;
+    margin-left: auto;
+    margin-right: auto;
+    table-layout: fixed;
+    text-align: center;
+    border: solid;
+    border-color: #f2f2f2;
+}
+
+#stations tr:nth-child(even){background-color: #f2f2f2;}
+#stations tr:nth-child(odd){background-color: #bcbcbc;}
+
+
+.th-station {
+    border: solid;
+    width: 10em;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #9E0000;
+    color: white;
+    text-align: center; 
+}
+
+.td-station {
+    border: none;
+    padding: 1em;
+    width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/* STÄDER */
+.add-bike {
+    font-weight: bold;
+    font-size: large;
+    width: 3em;
+    height: 1em;
+    background-color: white;
+    color: black;
+    padding: 1em 2em;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.main {
+    margin-top: 3em; /* Add a top margin to avoid content overlay */
+}
