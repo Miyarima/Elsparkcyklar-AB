@@ -4,6 +4,8 @@
 
 [![Linter](https://github.com/Miyarima/Elsparkcyklar-AB/actions/workflows/super-linter.yml/badge.svg)](https://github.com/Miyarima/Elsparkcyklar-AB/actions/workflows/super-linter.yml)
 
+[![Linter](https://github.com/Miyarima/Elsparkcyklar-AB/actions/workflows/codeql.yml/badge.svg)](https://github.com/Miyarima/Elsparkcyklar-AB/actions/workflows/codeql.yml)
+
 [![Maintainability](https://api.codeclimate.com/v1/badges/b671fdfa8bbaf70b4f61/maintainability)](https://codeclimate.com/github/Miyarima/Elsparkcyklar-AB/maintainability)
 
 <a href="https://codeclimate.com/github/Miyarima/Elsparkcyklar-AB/test_coverage"><img src="https://api.codeclimate.com/v1/badges/b671fdfa8bbaf70b4f61/test_coverage" /></a>
