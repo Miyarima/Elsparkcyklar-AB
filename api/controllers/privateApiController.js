@@ -1,16 +1,14 @@
 "use strict";
 
-const db = require("../db/sql.js");
+// const db = require("../db/sql.js");
 
 const getAllRoutes = async (req, res) => {
     const apiKey = req.query.apiKey;
 
     if (!apiKey) {
-        console.log("NO API KEY!");
         return res.status(403).json({ error: "Please provide an API key." });
     }
 
-    console.log("API KEY GIVEN!");
     return res.status(200).json({
         rotues: [
             "/city",
@@ -297,9 +295,7 @@ const addNewCity = async (req, res) => {
     }
 
     if (!cityName) {
-        return res
-            .status(403)
-            .json({ error: "Missing name for the city!." });
+        return res.status(403).json({ error: "Missing name for the city!." });
     }
 
     return res.status(200).json({
@@ -317,17 +313,13 @@ const getSpecificCity = async (req, res) => {
     }
 
     if (!cityId) {
-        return res
-            .status(403)
-            .json({ error: "Missing id for the city!." });
+        return res.status(403).json({ error: "Missing id for the city!." });
     }
 
     return res.status(200).json({
         message: `Information of the city with id ${cityId}`,
     });
 };
-
-
 
 // Get bikes in specific city
 const getBikesCity = async (req, res) => {
@@ -339,9 +331,7 @@ const getBikesCity = async (req, res) => {
     }
 
     if (!cityId) {
-        return res
-            .status(403)
-            .json({ error: "Missing id for the city!." });
+        return res.status(403).json({ error: "Missing id for the city!." });
     }
 
     return res.status(200).json({
@@ -359,9 +349,7 @@ const getCityZone = async (req, res) => {
     }
 
     if (!cityId) {
-        return res
-            .status(403)
-            .json({ error: "Missing id for the city!." });
+        return res.status(403).json({ error: "Missing id for the city!." });
     }
 
     return res.status(200).json({
@@ -381,15 +369,11 @@ const getCityChargingStation = async (req, res) => {
     }
 
     if (!cityId) {
-        return res
-            .status(403)
-            .json({ error: "Missing id for the city!." });
+        return res.status(403).json({ error: "Missing id for the city!." });
     }
 
     if (!zoneId) {
-        return res
-            .status(403)
-            .json({ error: "Missing zoneId for the city!." });
+        return res.status(403).json({ error: "Missing zoneId for the city!." });
     }
 
     if (!chargingId) {
@@ -414,9 +398,7 @@ const addNumberBikes = async (req, res) => {
     }
 
     if (!cityId) {
-        return res
-            .status(403)
-            .json({ error: "Missing cityId for the city!." });
+        return res.status(403).json({ error: "Missing cityId for the city!." });
     }
 
     if (!numberId) {
@@ -441,9 +423,7 @@ const updateNumberBikes = async (req, res) => {
     }
 
     if (!cityId) {
-        return res
-            .status(403)
-            .json({ error: "Missing cityId for the city!." });
+        return res.status(403).json({ error: "Missing cityId for the city!." });
     }
 
     if (!numberId) {
@@ -468,9 +448,7 @@ const deleteNumberBikes = async (req, res) => {
     }
 
     if (!cityId) {
-        return res
-            .status(403)
-            .json({ error: "Missing cityId for the city!." });
+        return res.status(403).json({ error: "Missing cityId for the city!." });
     }
 
     if (!numberId) {
@@ -487,7 +465,6 @@ const deleteNumberBikes = async (req, res) => {
 // Get all available users in system
 const getAllUsers = async (req, res) => {
     const apiKey = req.query.apiKey;
-
 
     if (!apiKey) {
         return res.status(403).json({ error: "Please provide an API key." });
