@@ -20,10 +20,10 @@ VALUES
 INSERT INTO Bike (longitude, latitude, `status`)
 VALUES
     (18.0686, 59.3293, 'Available'),
-    (13.0007, 55.6050, 'In Use');
+    (13.0007, 55.6050, 'Available');
 
 
-INSERT INTO Bike (longitude, latitude, `status`, station_id)
+INSERT INTO Bike (longitude, latitude, `status`)
 VALUES
-    (18.0686, 59.3293, 'Available',2),
-    (13.0007, 55.6050, 'In Use',1);
+    (18.0686, 59.3293, 'Available'),
+    (13.0007, 55.6050, 'Available');
