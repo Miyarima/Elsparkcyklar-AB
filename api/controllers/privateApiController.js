@@ -1,6 +1,6 @@
 "use strict";
 
-const db = require("../db/sql.js");
+const db = require("../db/databaseFunctions.js");
 
 const getAllRoutes = async (req, res) => {
     const apiKey = req.query.apiKey;
