@@ -2,7 +2,30 @@ version: "3"
 networks:
     http3:
 services:
+    db:
+        image: mysql
+        restart: always
+        container_name: "database"
+        environment:
+            MYSQL_ROOT_PASSWORD: vteam
+            MYSQL_DATABASE: Elsparkcyklar
+            MYSQL_USER: vteam
+            MYSQL_PASSWORD: vteam
+        networks:
+            http3:
+        ports:
+            - "3307:3306"
+        volumes:
+            - ./database:/docker-entrypoint-initdb.d
+        healthcheck:
+            test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+            interval: 10s
+            timeout: 5s
+            retries: 3
     api:
+        depends_on:
+            db:
+                condition: service_healthy
         build:
             context: ./api/
             dockerfile: Dockerfile
@@ -20,18 +43,4 @@ services:
             - "1337:1337"
         networks:
             http3:
-    db:
-        image: mysql
-        restart: always
-        container_name: "database"
-        environment:
-            MYSQL_ROOT_PASSWORD: vteam
-            MYSQL_DATABASE: Elsparkcyklar
-            MYSQL_USER: vteam
-            MYSQL_PASSWORD: vteam
-        networks:
-            http3:
-        ports:
-            - "3307:3306"
-        volumes:
-            - ./database:/docker-entrypoint-initdb.d
+

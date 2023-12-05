@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS `Admin`;
 DROP TABLE IF EXISTS Invoice;
 DROP TABLE IF EXISTS Travel;
 DROP TABLE IF EXISTS User;
+DROP TABLE IF EXISTS Port;
 DROP TABLE IF EXISTS Bike;
 DROP TABLE IF EXISTS Station;
 DROP TABLE IF EXISTS `Zone`;
@@ -35,7 +36,6 @@ CREATE TABLE Station (
 
 CREATE TABLE Bike (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    station_id INT DEFAULT NULL,
     longitude FLOAT NOT NULL,
     latitude FLOAT NOT NULL,
     `status` VARCHAR(10) DEFAULT NULL,
@@ -45,10 +45,19 @@ CREATE TABLE Bike (
     charging BOOLEAN DEFAULT false,
     comparison_longitude FLOAT DEFAULT NULL,
     comparison_latitude FLOAT DEFAULT NULL,
-    needs_repair BOOLEAN DEFAULT false,
-    FOREIGN KEY (station_id) REFERENCES Station(id),
+    power BOOLEAN DEFAULT true,
     FOREIGN KEY (`zone_id`) REFERENCES `Zone`(id)
 );
+
+CREATE TABLE Port (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    station_id INT NOT NULL,
+    bike_id INT DEFAULT NULL,
+    `status` VARCHAR(20) DEFAULT 'Working',
+    FOREIGN KEY (station_id) REFERENCES `Station` (id),
+    FOREIGN KEY (bike_id) REFERENCES `Bike` (id)
+);
+
 
 
 CREATE TABLE User (
@@ -63,7 +72,7 @@ CREATE TABLE User (
 
 CREATE TABLE Travel (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    `username` VARCHAR(100),
+    `username` VARCHAR(100) NOT NULL,
     bike_id INT NOT NULL,
     start_longitude FLOAT NOT NULL,
     start_latitude FLOAT NOT NULL,
