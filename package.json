@@ -1,25 +1,27 @@
 {
-  "name": "elsparkcyklar-ab",
-  "version": "1.0.0",
-  "description": "<div align=\"center\">",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Miyarima/Elsparkcyklar-AB.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Miyarima/Elsparkcyklar-AB/issues"
-  },
-  "homepage": "https://github.com/Miyarima/Elsparkcyklar-AB#readme",
-  "devDependencies": {
-    "eslint": "^8.55.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "^5.0.1"
-  }
+    "name": "elsparkcyklar-ab",
+    "version": "1.0.0",
+    "description": "<div align=\"center\">",
+    "main": "index.js",
+    "scripts": {
+        "test": "npx jest"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Miyarima/Elsparkcyklar-AB.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Miyarima/Elsparkcyklar-AB/issues"
+    },
+    "homepage": "https://github.com/Miyarima/Elsparkcyklar-AB#readme",
+    "devDependencies": {
+        "eslint": "^8.55.0",
+        "eslint-config-prettier": "^9.1.0",
+        "eslint-plugin-prettier": "^5.0.1",
+        "jest": "^29.7.0",
+        "supertest": "^6.3.3"
+    }
 }
