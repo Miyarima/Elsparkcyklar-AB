@@ -18,5 +18,11 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: npm install
         run: npm i
+      - name: Navigate to subfolder
+        run: cd api/
+      - name: Install in subfolder
+        run: npm i
+      - name: Navigate back to main directory
+        run: cd ..
       - name: tests
         run: npm test
