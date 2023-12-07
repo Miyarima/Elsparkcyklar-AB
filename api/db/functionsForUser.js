@@ -57,7 +57,7 @@ const gatheredUserFunctions = {
      */
     selectTravelsForUser: async (userId) => {
         const queryObject = {
-            query: "SELECT * FROM Travel WHERE `username` = ?",
+            query: "SELECT * FROM Travel WHERE `id` = ?",
             params: [userId],
         };
         return await dbFuncs.promisifiedSimpleQueryFunc(queryObject);
@@ -72,7 +72,7 @@ const gatheredUserFunctions = {
      */
     selectInvoicesForUser: async (userId) => {
         const queryObject = {
-            query: "SELECT i.* FROM Invoice i LEFT JOIN Travel t ON i.travel_id = t.id WHERE t.`username` = ?",
+            query: "SELECT i.* FROM Invoice i LEFT JOIN Travel t ON i.travel_id = t.id WHERE t.`id` = ?",
             params: [userId],
         };
         return await dbFuncs.promisifiedSimpleQueryFunc(queryObject);
@@ -104,7 +104,7 @@ const gatheredUserFunctions = {
         const currentDate = new Date();
 
         const queryObject = {
-            query: "UPDATE User u RIGHT JOIN Travel t ON u.username = t.username RIGHT JOIN Invoice i ON t.id = i.travel_id SET u.wallet = u.wallet - t.total_cost WHERE i.id = ?",
+            query: "UPDATE User u RIGHT JOIN Travel t ON u.id = t.id RIGHT JOIN Invoice i ON t.id = i.travel_id SET u.wallet = u.wallet - t.total_cost WHERE i.id = ?",
             params: [invoiceId],
         };
 

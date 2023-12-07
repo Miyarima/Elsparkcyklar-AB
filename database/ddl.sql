@@ -58,7 +58,7 @@ CREATE TABLE Port (
 );
 
 CREATE TABLE User (
-    `username` VARCHAR(100) PRIMARY KEY,
+    id VARCHAR(100) PRIMARY KEY,
     longitude FLOAT DEFAULT NULL,
     latitude FLOAT DEFAULT NULL,
     wallet FLOAT DEFAULT 0,
@@ -70,7 +70,7 @@ CREATE TABLE User (
 
 CREATE TABLE Travel (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    `username` VARCHAR(100) NOT NULL,
+    user_id VARCHAR(100) NOT NULL,
     bike_id INT NOT NULL,
     start_longitude FLOAT NOT NULL,
     start_latitude FLOAT NOT NULL,
@@ -82,7 +82,7 @@ CREATE TABLE Travel (
     start_cost FLOAT DEFAULT 0,
     travel_cost FLOAT DEFAULT 0,
     total_cost FLOAT DEFAULT 0,
-    FOREIGN KEY (`username`) REFERENCES User(`username`),
+    FOREIGN KEY (user_id) REFERENCES User(id),
     FOREIGN KEY (bike_id) REFERENCES Bike(id)
 );
 
