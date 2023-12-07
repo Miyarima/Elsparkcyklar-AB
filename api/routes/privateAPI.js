@@ -8,6 +8,10 @@ router.get("/", (req, res) => {
     privateApiController.getAllRoutes(req, res);
 });
 
+/* ########################################### */
+/* #################  BIKES  ################# */
+/* ########################################### */
+
 // Returns all bikes
 router.get("/bikes", (req, res) => {
     privateApiController.getAllBikes(req, res);
@@ -54,7 +58,7 @@ router.delete("/bike/:id", (req, res) => {
 });
 
 /* ########################################### */
-/* #################  USER   ################# */
+/* #################  USER  ################## */
 /* ########################################### */
 
 router.get("/users", (req, res) => {

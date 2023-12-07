@@ -16,5 +16,6 @@
         "eqeqeq": ["warn"],
         "padded-blocks": ["warn", "never"],
         "space-before-blocks": ["warn", "always"]
-    }
+    },
+    "ignorePatterns": ["app.test.js"]
 }
