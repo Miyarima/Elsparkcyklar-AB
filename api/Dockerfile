@@ -7,6 +7,7 @@ COPY package*.json .
 RUN npm install
 
 COPY server.js .
+COPY app.js .
 COPY controllers ./controllers/
 COPY middleware ./middleware/
 COPY db ./db/
