@@ -127,7 +127,7 @@ const gatheredBikeFunctions = {
      * @param {int} bikeId bikeId
      * @returns {bool} True if the querys were succesful, otherwise an error.
      */
-    lockBike: async (bikeId) => {
+    lockBike: async (bikeId, longitude, latitude) => {
         const currentDate = new Date();
 
         const futureDate = new Date();
@@ -143,13 +143,13 @@ const gatheredBikeFunctions = {
         };
 
         const queryObject2 = {
-            query: "UPDATE Travel SET status = 'done' WHERE status = 'Ongoing' AND bike_id = ?",
-            params: [bikeId],
+            query: "UPDATE Travel SET status = 'done', end_longitude = ?, end_latitude = ? WHERE status = 'Ongoing' AND bike_id = ?",
+            params: [longitude, latitude, bikeId],
         };
 
         const queryObject3 = {
-            query: "UPDATE Bike SET status = 'Locked' WHERE id = ?",
-            params: [bikeId],
+            query: "UPDATE Bike SET status = 'Locked', longitude = ?, latitude = ? WHERE id = ?",
+            params: [longitude, latitude, bikeId],
         };
 
         return await dbFuncs.promisifiedTransactionFunc([
