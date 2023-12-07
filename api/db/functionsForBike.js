@@ -105,7 +105,7 @@ const gatheredBikeFunctions = {
      */
     unlockBike: async (bikeId, userId) => {
         const queryObject = {
-            query: "INSERT INTO Travel(bike_id, `username`, `status`, start_longitude, start_latitude) VALUES (?, ?, 'Ongoing', (SELECT longitude FROM Bike WHERE id = ?),(SELECT latitude FROM Bike WHERE id = ?))",
+            query: "INSERT INTO Travel(bike_id, `user_id`, `status`, start_longitude, start_latitude) VALUES (?, ?, 'Ongoing', (SELECT longitude FROM Bike WHERE id = ?),(SELECT latitude FROM Bike WHERE id = ?))",
             params: [bikeId, userId, bikeId, bikeId],
         };
 

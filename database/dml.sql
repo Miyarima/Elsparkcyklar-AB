@@ -1,5 +1,5 @@
 
-INSERT INTO User (longitude, latitude, wallet, `username`, `password`, `role`, email)
+INSERT INTO User (longitude, latitude, wallet, id, `password`, `role`, email)
 VALUES (12.345, 34.567, 100.00, 'alice_jones', 'pass456', 'user', 'alice.jones@email.com'),
 (-45.678, 78.901, 50.50, 'charlie_smith', 'p@ssw0rd', 'admin', 'charlie.smith@email.com'),
 (0.0, 0.0, 75.25, 'david_miller', 'securepass123', 'user', 'david.miller@email.com');
@@ -27,3 +27,5 @@ INSERT INTO Bike (longitude, latitude, `status`)
 VALUES
     (18.0686, 59.3293, 'Available'),
     (13.0007, 55.6050, 'Available');
+
+INSERT INTO Travel(bike_id, user_id, `status`, start_longitude, start_latitude) VALUES (1, 'alice_jones', 'Ongoing', (SELECT longitude FROM Bike WHERE id = 1),(SELECT latitude FROM Bike WHERE id = 1))

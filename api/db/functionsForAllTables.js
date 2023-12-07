@@ -51,7 +51,7 @@ const functionsForAllTables = {
                     ? `'${dataOb[key]}'`
                     : dataOb[key];
             valuesStr += `${value},`;
-            rowStr += key;
+            rowStr += `${key},`;
         }
         rowStr = rowStr.slice(0, -1);
         valuesStr = valuesStr.slice(0, -1);
