@@ -4,6 +4,7 @@ const mysql = require("mysql2");
 
 let pool;
 
+
 const config = {
     host: "database",
     port: "3306",
@@ -14,6 +15,8 @@ const config = {
     connectionLimit: 10,
     queueLimit: 0,
 };
+
+
 
 /**
  * Creates pool
