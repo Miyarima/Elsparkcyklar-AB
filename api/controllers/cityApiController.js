@@ -70,7 +70,8 @@ const getBikesCity = async (req, res) => {
     }
 
     // ! funkar inte
-    const citiesAndBikes = db.gatheredCityFunctions.allBikesAndItsCities();
+    const citiesAndBikes =
+        await db.gatheredCityFunctions.allBikesAndItsCities();
 
     return res.status(200).json({
         bikes: citiesAndBikes,
@@ -121,7 +122,7 @@ const getCityChargingStation = async (req, res) => {
     // }
 
     const availablePorts =
-        db.gatheredCityFunctions.availablePortsForStation(zoneId);
+        await db.gatheredCityFunctions.availablePortsForStation(zoneId);
 
     return res.status(200).json({
         ports: availablePorts,
