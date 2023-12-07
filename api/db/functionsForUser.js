@@ -1,9 +1,15 @@
 "use strict";
-const { dbFunctions } = require("./databaseFunctions");
+const dbFunctions = require("./databaseFunctions");
 
 const dbFuncs = dbFunctions.gatheredDatabaseFunctions;
 
 const gatheredUserFunctions = {
+    /**
+     * All Users from the database
+     * @async
+     * @function
+     * @returns {Array.<Object>} An array containing objects as the result of the database query.
+     */
     allUsers: async () => {
         const queryObject = {
             query: "SELECT * FROM User",
@@ -12,6 +18,13 @@ const gatheredUserFunctions = {
         return await dbFuncs.promisifiedSimpleQueryFunc(queryObject);
     },
 
+    /**
+     * Specific user from the database
+     * @async
+     * @function
+     * @param {int} userId id for user
+     * @returns {Array.<Object>} An array containing objects as the result of the database query.
+     */
     specificUser: async (userId) => {
         const queryObject = {
             query: "SELECT * FROM User WHERE id = ?",
@@ -20,6 +33,13 @@ const gatheredUserFunctions = {
         return await dbFuncs.promisifiedSimpleQueryFunc(queryObject);
     },
 
+    /**
+     * Delete specific user from the database
+     * @async
+     * @function
+     * @param {int} userId id for user
+     * @returns {Array.<Object>} An array containing objects as the result of the database query.
+     */
     deleteUser: async (userId) => {
         const queryObject = {
             query: "DELETE FROM User WHERE id = ?",
@@ -28,6 +48,13 @@ const gatheredUserFunctions = {
         return await dbFuncs.promisifiedSimpleQueryFunc(queryObject);
     },
 
+    /**
+     * Select all the travels for specific user
+     * @async
+     * @function
+     * @param {int} userId id for user
+     * @returns {Array.<Object>} An array containing objects as the result of the database query.
+     */
     selectTravelsForUser: async (userId) => {
         const queryObject = {
             query: "SELECT * FROM Travel WHERE `username` = ?",
@@ -36,6 +63,13 @@ const gatheredUserFunctions = {
         return await dbFuncs.promisifiedSimpleQueryFunc(queryObject);
     },
 
+    /**
+     * Select invoices for specific user
+     * @async
+     * @function
+     * @param {int} userId id for user
+     * @returns {Array.<Object>} An array containing objects as the result of the database query.
+     */
     selectInvoicesForUser: async (userId) => {
         const queryObject = {
             query: "SELECT i.* FROM Invoice i LEFT JOIN Travel t ON i.travel_id = t.id WHERE t.`username` = ?",
@@ -44,12 +78,45 @@ const gatheredUserFunctions = {
         return await dbFuncs.promisifiedSimpleQueryFunc(queryObject);
     },
 
-    getTravelsForUser: async (userId) => {
+    /**
+     * Select role and user from api key.
+     * @async
+     * @function
+     * @param {int} apiKey api key
+     * @returns {Array.<Object>} An array containing objects as the result of the database query.
+     */
+    selectRoleFromApiKey: async (apiKey) => {
         const queryObject = {
-            query: "SELECT * FROM Travel WHERE `username` = ?",
-            params: [userId],
+            query: "SELECT id,role FROM User WHERE api_key = ?",
+            params: [apiKey],
         };
         return await dbFuncs.promisifiedSimpleQueryFunc(queryObject);
+    },
+
+    /**
+     * Function to pay invoice
+     * @async
+     * @function
+     * @param {int} invoiceId invoice id
+     * @returns {bool} True if the querys were succesful, otherwise an error.
+     */
+    payInvoice: async (invoiceId) => {
+        const currentDate = new Date();
+
+        const queryObject = {
+            query: "UPDATE User u RIGHT JOIN Travel t ON u.username = t.username RIGHT JOIN Invoice i ON t.id = i.travel_id SET u.wallet = u.wallet - t.total_cost WHERE i.id = ?",
+            params: [invoiceId],
+        };
+
+        const queryObject2 = {
+            query: "UPDATE Invoice SET date_paid = ? WHERE id = ?",
+            params: [currentDate.toDateString(), invoiceId],
+        };
+
+        return await dbFuncs.promisifiedTransactionFunc([
+            queryObject,
+            queryObject2,
+        ]);
     },
 };
 

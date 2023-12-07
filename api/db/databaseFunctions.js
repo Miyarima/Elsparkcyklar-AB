@@ -3,6 +3,7 @@
 const mysql = require("mysql2");
 
 let pool;
+
 const config = {
     host: "database",
     port: "3306",
@@ -11,23 +12,26 @@ const config = {
     database: "Elsparkcyklar",
     waitForConnections: true,
     connectionLimit: 10,
-    queueLimit: 0
+    queueLimit: 0,
 };
 
-
-const getPool = () => {
-    if (pool) {
-        return;
-    }
+/**
+ * Creates pool
+ */
+(function () {
     pool = mysql.createPool(config);
     // eslint-disable-next-line
     process.on("exit", () => {
         pool.end();
     });
-};
+})();
 
+/**
+ * Executes one database query
+ * @param {Object} queryOb - object with query key and optional parameter key.
+ * @param {function} callback - The callback function to handle the result.
+ */
 const simpleQuery = (queryOb, callback) => {
-    getPool();
     pool.query(queryOb.query, queryOb.params, (error, results) => {
         if (error) {
             callback(error, null);
@@ -37,8 +41,12 @@ const simpleQuery = (queryOb, callback) => {
     });
 };
 
+/**
+ * Function for database transactions.
+ * @param {Array.<Object>} queryObjects - Array with query objects.
+ * @param {function} callback - The callback function to handle the result.
+ */
 const transactions = (queryObjects, callback) => {
-    getPool();
     pool.getConnection((error, conn) => {
         if (error) {
             return callback(error, null);
@@ -90,6 +98,11 @@ const transactions = (queryObjects, callback) => {
 };
 
 const gatheredDatabaseFunctions = {
+    /**
+     * Function to promisify the simpleQuery function
+     * @param {Object} queryObject - object with query key and optional parameter key.
+     * @returns {Promise} returns promise
+     */
     promisifiedSimpleQueryFunc: (queryObject) => {
         return new Promise((resolve, reject) => {
             simpleQuery(queryObject, (error, result) => {
@@ -102,6 +115,11 @@ const gatheredDatabaseFunctions = {
         });
     },
 
+    /**
+     * Function to promisify the transaction function
+     * @param {Array.<Object>} queryObjects - Array with query objects.
+     * @returns {Promise} returns promise
+     */
     promisifiedTransactionFunc: (queryObjects) => {
         return new Promise((resolve, reject) => {
             transactions(queryObjects, (error, result) => {

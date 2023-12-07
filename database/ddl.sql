@@ -8,7 +8,6 @@ DROP TABLE IF EXISTS Station;
 DROP TABLE IF EXISTS `Zone`;
 DROP TABLE IF EXISTS City;
 
-
 CREATE TABLE City (
     id INT PRIMARY KEY AUTO_INCREMENT,
     `name` TEXT NOT NULL,
@@ -58,8 +57,6 @@ CREATE TABLE Port (
     FOREIGN KEY (bike_id) REFERENCES `Bike` (id)
 );
 
-
-
 CREATE TABLE User (
     `username` VARCHAR(100) PRIMARY KEY,
     longitude FLOAT DEFAULT NULL,
@@ -67,6 +64,7 @@ CREATE TABLE User (
     wallet FLOAT DEFAULT 0,
     `password` TEXT DEFAULT NULL,
     `role` VARCHAR(10) DEFAULT 'User',
+    api_key VARCHAR(250) UNIQUE DEFAULT NULL,
     email TEXT NOT NULL
 );
 
@@ -92,16 +90,9 @@ CREATE TABLE Invoice (
     id INT PRIMARY KEY AUTO_INCREMENT,
     issue_date TEXT NOT NULL,
     `expiry_date` TEXT NOT NULL,
-    paid BOOLEAN DEFAULT false,
+    date_paid TEXT DEFAULT NULL,
     travel_id INT NOT NULL,
     FOREIGN KEY (travel_id) REFERENCES Travel(id)
-);
-
-CREATE TABLE `Admin` (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    username TEXT DEFAULT NULL,
-    `password` TEXT DEFAULT NULL,
-    `role` VARCHAR(10)
 );
 
 

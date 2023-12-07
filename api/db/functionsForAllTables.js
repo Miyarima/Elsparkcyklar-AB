@@ -1,9 +1,16 @@
 "use strict";
-const { dbFunctions } = require("./databaseFunctions");
+const dbFunctions = require("./databaseFunctions");
 
 const dbFuncs = dbFunctions.gatheredDatabaseFunctions;
 
 const functionsForAllTables = {
+    /**
+     * Updates on row in database
+     * @async
+     * @function
+     * @param {Object} dataOb - object with table key, id key, and keys for rows to update and its values
+     * @returns {Array.<Object>} An array containing objects as the result of the database query.
+     */
     oneRowUpdateTable: async (dataOb) => {
         const id = dataOb.id;
         const table = dataOb.table;
@@ -25,6 +32,14 @@ const functionsForAllTables = {
         return await dbFuncs.promisifiedSimpleQueryFunc(queryObject);
     },
 
+    /**
+     * Inserts row in to database
+     * @async
+     * @function
+     * @param {Object} dataOb - object with table key, and keys for rows to insert and its values
+     * @returns {Array.<Object>} An array containing objects as the result of the database query.
+     */
+
     insertTable: async (dataOb) => {
         const table = dataOb.table;
         delete dataOb.table;
@@ -41,7 +56,7 @@ const functionsForAllTables = {
         rowStr = rowStr.slice(0, -1);
         valuesStr = valuesStr.slice(0, -1);
         const queryObject = {
-            query: `INSERT INTO ${table} (${rowStr}) VALUES(${valuesStr})`
+            query: `INSERT INTO ${table} (${rowStr}) VALUES(${valuesStr})`,
         };
         return await dbFuncs.promisifiedSimpleQueryFunc(queryObject);
     },
