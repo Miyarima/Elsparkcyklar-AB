@@ -235,10 +235,10 @@ returns all bikes in the system
 **PUT**
 
 ```bash
-/api/bike/:id/rent
+/api/bike/:id/:userid/rent
 ```
 
-rents the bike with the given ID
+rents the bike with the given ID, userid is also required in order to bind the bike to the specific user
 send user in headers
 
 ---
@@ -246,10 +246,11 @@ send user in headers
 **PUT**
 
 ```bash
-/api/bike/:id/returned
+/api/bike/:id/:longitude/:latitude/returned
 ```
 
 returns the bike with the given ID
+also takes longitude and latitude for the bikeID in question, is required in order to updated the bike length
 
 ---
 
