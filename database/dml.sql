@@ -27,5 +27,6 @@ INSERT INTO Bike (longitude, latitude, `status`)
 VALUES
     (18.0686, 59.3293, 'Available'),
     (13.0007, 55.6050, 'Available');
-
+/*
 INSERT INTO Travel(bike_id, user_id, `status`, start_longitude, start_latitude) VALUES (1, 'alice_jones', 'Ongoing', (SELECT longitude FROM Bike WHERE id = 1),(SELECT latitude FROM Bike WHERE id = 1))
+*/

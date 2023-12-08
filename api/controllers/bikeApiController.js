@@ -27,7 +27,9 @@ const rentBike = async (req, res) => {
 
     // Check for apiKey
     if (!apiKey) {
-        return res.status(403).json({ error: "Please provide an API key." });
+        return res
+            .status(403)
+            .json({ error: "Please provide an API key." });
     }
 
     // Check for the required headers
@@ -40,7 +42,7 @@ const rentBike = async (req, res) => {
     // checking if a user was provided in the body
     if (!userId) {
         return res
-            .status(400)
+            .status(403)
             .json({ error: "No user to rent the bike was provided" });
     }
 
