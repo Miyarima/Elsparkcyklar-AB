@@ -1,5 +1,5 @@
 DROP DATABASE IF EXISTS Elsparkcyklar;
 CREATE DATABASE Elsparkcyklar;
 USE Elsparkcyklar;
-source ddl.sql;
-source dml.sql;
+source docker-entrypoint-initdb.d/ddl.sql;
+source docker-entrypoint-initdb.d/dml.sql;
