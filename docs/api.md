@@ -246,7 +246,7 @@ send user in headers
 **PUT**
 
 ```bash
-/api/bike/:id/:longitude/:latitude/returned
+/api/bike/:id/:longitude/:latitude/return
 ```
 
 returns the bike with the given ID
