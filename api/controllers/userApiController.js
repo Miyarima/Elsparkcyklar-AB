@@ -23,9 +23,6 @@ const getAllUsers = async (req, res) => {
 const addUser = async (req, res) => {
     const apiKey = req.query.apiKey;
     const contentType = req.headers["content-type"];
-    const username = req.body.username;
-    const password = req.body.password;
-    const email = req.body.email;
 
     if (!apiKey) {
         return res.status(403).json({ error: "Please provide an API key." });
@@ -45,46 +42,63 @@ const addUser = async (req, res) => {
             .json({ error: "Request body is missing or empty" });
     }
 
-    if (!username) {
-        return res
-            .status(403)
-            .json({ error: "A username is needed to create user" });
+    try {
+        const {
+            username,
+            password,
+            email,
+            longitude,
+            latitude,
+            wallet,
+            role,
+            api_key,
+        } = req.body;
+
+        if (!username) {
+            return res
+                .status(403)
+                .json({ error: "A username is needed to create user" });
+        }
+
+        if (!password) {
+            return res
+                .status(403)
+                .json({ error: "A password for the user is needed" });
+        }
+
+        if (!email) {
+            return res
+                .status(403)
+                .json({ error: "A email for the user is needed" });
+        }
+
+        const insert = {
+            table: "User",
+            id: username,
+            password: password,
+            email: email,
+        };
+
+        if (role) insert.role = role;
+        if (wallet) insert.wallet = wallet;
+        if (api_key) insert.api_key = api_key;
+        if (longitude) insert.longitude = longitude;
+        if (latitude) insert.latitude = latitude;
+
+        await dbCreate.functionsForAllTables.insertTable(insert);
+
+        return res.status(200).json({
+            message: "A new user has been created",
+        });
+    } catch (error) {
+        return res.status(500).json({ error: `${error}` });
     }
-
-    if (!password) {
-        return res
-            .status(403)
-            .json({ error: "A password for the user is needed" });
-    }
-
-    if (!email) {
-        return res
-            .status(403)
-            .json({ error: "A email for the user is needed" });
-    }
-
-    const insert = {
-        table: "User",
-        username: username,
-        password: password,
-        email: email,
-    };
-
-    await dbCreate.functionsForAllTables.insertTable(insert);
-
-    return res.status(200).json({
-        message: "A new user has been created",
-    });
 };
 
 // Get all available users in system
 const updateSpecificUser = async (req, res) => {
     const apiKey = req.query.apiKey;
-    const userId = req.params.id;
     const contentType = req.headers["content-type"];
-    const username = req.body.username;
-    const password = req.body.password;
-    const email = req.body.email;
 
     if (!apiKey) {
         return res.status(403).json({ error: "Please provide an API key." });
@@ -104,29 +118,39 @@ const updateSpecificUser = async (req, res) => {
             .json({ error: "Request body is missing or empty" });
     }
 
-    const update = {
-        table: "User",
-        id: userId,
-    };
+    try {
+        const {
+            username,
+            password,
+            email,
+            longitude,
+            latitude,
+            wallet,
+            role,
+            api_key,
+        } = req.body;
 
-    if (username) {
-        update.username = username;
+        const update = {
+            table: "User",
+            id: username,
+        };
+
+        if (password) update.password = password;
+        if (email) update.email = email;
+        if (role) update.role = role;
+        if (wallet) update.wallet = wallet;
+        if (api_key) update.api_key = api_key;
+        if (longitude) update.longitude = longitude;
+        if (latitude) update.latitude = latitude;
+
+        await dbCreate.functionsForAllTables.oneRowUpdateTable(update);
+
+        return res.status(200).json({
+            message: "The user has been updated",
+        });
+    } catch (error) {
+        return res.status(500).json({ error: `${error}` });
     }
-
-    if (password) {
-        update.password = password;
-    }
-
-    if (email) {
-        update.email = email;
-    }
-
-    // await dbCreate.functionsForAllTables.insertTable(insert);
-    await dbCreate.functionsForAllTables.oneRowUpdateTable(update);
-
-    return res.status(200).json({
-        message: "A new user has been created",
-    });
 };
 
 // Get all available users in system

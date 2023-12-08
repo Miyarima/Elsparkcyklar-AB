@@ -94,7 +94,7 @@ router.get("/cities", (req, res) => {
 });
 
 // Adds new city
-router.post("/city/:name", (req, res) => {
+router.post("/city", (req, res) => {
     cityApiController.addNewCity(req, res);
 });
 
@@ -104,7 +104,7 @@ router.get("/city/:id", (req, res) => {
 });
 
 // Returns all bikes within a specific city
-router.get("/city/:id/bike", (req, res) => {
+router.get("/city/:city/bike", (req, res) => {
     cityApiController.getBikesCity(req, res);
 });
 
@@ -128,10 +128,7 @@ router.delete("/city/:id/bike/:nr", (req, res) => {
     cityApiController.deleteNumberBikes(req, res);
 });
 
-// router.get("/city/:id/zone/:zoneid/:chargingid", (req, res) => {
-//     cityApiController.getCityChargingStation(req, res);
-// });
-
+// Returns all availbel ports on a station
 router.get("/city/zone/:id/ports", (req, res) => {
     cityApiController.getCityChargingStation(req, res);
 });
