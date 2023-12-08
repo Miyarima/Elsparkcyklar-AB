@@ -166,9 +166,29 @@ const getCityChargingStation = async (req, res) => {
     });
 };
 
-//=====================================
-// Vet inte riktigt vad dessa ska göra
-//=====================================
+// Get specific zone and charging station within zone
+const getBikeChargingOnStation = async (req, res) => {
+    const apiKey = req.query.apiKey;
+    const zoneId = req.params.id;
+
+    if (!apiKey) {
+        return res.status(403).json({ error: "Please provide an API key." });
+    }
+
+    if (!zoneId) {
+        return res.status(403).json({ error: "Missing zoneId for the city!." });
+    }
+
+    const bikes = await db.gatheredCityFunctions.bikesAttachedToStation();
+
+    return res.status(200).json({
+        bikes: bikes,
+    });
+};
+
+//? ======================================
+//? = Vet inte riktigt vad dessa ska göra
+//? ======================================
 
 // Add number of bikes in city
 const addNumberBikes = async (req, res) => {
@@ -252,6 +272,7 @@ module.exports = {
     getBikesCity,
     getCityZone,
     getCityChargingStation,
+    getBikeChargingOnStation,
     addNumberBikes,
     updateNumberBikes,
     deleteNumberBikes,

@@ -36,9 +36,9 @@ router.get("/bike/:id/position", (req, res) => {
 });
 
 // Set bike position first time
-router.post("/bike/:id/position", (req, res) => {
-    bikeApiController.setBikePosition(req, res);
-});
+// router.post("/bike/:id/position", (req, res) => {
+//     bikeApiController.setBikePosition(req, res);
+// });
 
 // Update a bike which already got a position
 router.put("/bike/:id/position", (req, res) => {
@@ -111,6 +111,11 @@ router.get("/city/:city/bike", (req, res) => {
 // Returns zones, bikes and charging statioins in specific city
 router.get("/city/:id/zone", (req, res) => {
     cityApiController.getCityZone(req, res);
+});
+
+// Returns bikes on specific charging station
+router.get("/city/:id/zone/bike", (req, res) => {
+    cityApiController.getBikeChargingOnStation(req, res);
 });
 
 // Add a number of bikes to specific city
