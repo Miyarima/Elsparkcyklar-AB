@@ -18,12 +18,58 @@ const getAllBikes = async (req, res) => {
     });
 };
 
+//
+// USED FOR TESTS - DUMMY CODE
+//
+const dummyTest = async (req, res) => {
+    const apiKey = req.query.apiKey;
+    const bikeId = req.params.id;
+    const contentType = req.headers["content-type"];
+    const { user } = req.body;
+
+    // Check for apiKey provided
+    if (!apiKey) {
+        return res.status(403).json({ error: "Please provide an API key." });
+    }
+
+    // Check for the required headers
+    if (!contentType || contentType !== "application/json") {
+        return res
+            .status(400)
+            .json({ error: "Content-Type must be application/json" });
+    }
+
+    // Check for the required body content
+    if (!req.body || Object.keys(req.body).length === 0) {
+        return res
+            .status(400)
+            .json({ error: "Request body is missing or empty" });
+    }
+
+    // checking if a user was provided in the body
+    if (!user) {
+        return res
+            .status(400)
+            .json({ error: "No user to rent the bike was provided" });
+    }
+
+    // If the provided bikeId didn't exsist in the database
+    if (!bikeId) {
+        return res
+            .status(403)
+            .json({ error: "Please provide correct ID for a bike." });
+    }
+
+    return res.status(200).json({
+        message: "bike has been rented",
+    });
+};
+
 const rentBike = async (req, res) => {
     const apiKey = req.query.apiKey;
     const bikeId = req.params.id;
     const userId = req.params.userid;
     const contentType = req.headers["content-type"];
-    //const { user } = req.body;
 
     // Check for apiKey
     if (!apiKey) {
@@ -297,4 +343,5 @@ module.exports = {
     updateBikePosition,
     turnOffSpecificBike,
     deleteSpecificBike,
+    dummyTest,
 };

@@ -20,6 +20,11 @@ router.get("/bikes", (req, res) => {
     bikeApiController.getAllBikes(req, res);
 });
 
+// Rents a testDummy
+router.put("/dummy/:id/rent", (req, res) => {
+    bikeApiController.dummyTest(req, res);
+});
+
 // Rents a bike
 router.put("/bike/:id/:userid/rent", (req, res) => {
     bikeApiController.rentBike(req, res);

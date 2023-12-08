@@ -34,17 +34,17 @@ describe("GET /api", () => {
     });
 });
 
-describe("GET /api/bike/:id/:userid/rent", () => {
+describe("GET /api/dummy/:id/rent", () => {
     describe("Not providing an API Key", () => {
         test("should respond with a 403 status code", async () => {
-            const res = await request(app).put("/api/bike/:id/:userid/rent").query({});
+            const res = await request(app).put("/api/dummy/1/rent").query({});
             expect(res.statusCode).toBe(403);
             expect(res.body).toEqual({ error: "Please provide an API key." });
         });
     });
     describe("Providing an API Key, but nothing else", () => {
         test("should respond with a 400 status code", async () => {
-            const res = await request(app).put("/api/bike/:id/:userid/rent").query({
+            const res = await request(app).put("/api/dummy/1/rent").query({
                 apiKey: 1,
             });
             expect(res.statusCode).toBe(400);
@@ -53,27 +53,25 @@ describe("GET /api/bike/:id/:userid/rent", () => {
             });
         });
     });
-    describe("Providing an API Key with content-type, but no bikeid", () => {
-        test("should respond with a 403 status code", async () => {
+    describe("Providing an API Key with content-type", () => {
+        test("should respond with a 400 status code", async () => {
             const res = await request(app)
-                .put("/api/bike/:id/:userid/rent")
+                .put("/api/dummy/1/rent")
                 .query({
                     apiKey: 1,
                 })
                 .set("content-type", "application/json")
-                .send({
-                    userid: "mos"
-                });
-            expect(res.statusCode).toBe(403);
+                .send({});
+            expect(res.statusCode).toBe(400);
             expect(res.body).toEqual({
-                error: "No user to rent the bike was provided",
+                error: "Request body is missing or empty",
             });
         });
     });
-    describe("Providing an API Key with content-type, but no userid", () => {
-        test("should respond with a 403 status code", async () => {
+    describe("Providing an API Key with content-type, but no user", () => {
+        test("should respond with a 400 status code", async () => {
             const res = await request(app)
-                .put("/api/bike/:id/:userid/rent")
+                .put("/api/dummy/1/rent")
                 .query({
                     apiKey: 1,
                 })
@@ -81,7 +79,7 @@ describe("GET /api/bike/:id/:userid/rent", () => {
                 .send({
                     id: 1,
                 });
-            expect(res.statusCode).toBe(403);
+            expect(res.statusCode).toBe(400);
             expect(res.body).toEqual({
                 error: "No user to rent the bike was provided",
             });
@@ -90,14 +88,13 @@ describe("GET /api/bike/:id/:userid/rent", () => {
     describe("Providing an API Key with content-type and bike ID", () => {
         test("should respond with a 200 status code", async () => {
             const res = await request(app)
-                .put("/api/bike/:id/:userid/rent")
+                .put("/api/dummy/1/rent")
                 .query({
                     apiKey: 1,
                 })
                 .set("content-type", "application/json")
                 .send({
-                    id: 1,
-                    userid: "mos"
+                    user: "mos",
                 });
             expect(res.statusCode).toBe(200);
             expect(res.body).toEqual({
