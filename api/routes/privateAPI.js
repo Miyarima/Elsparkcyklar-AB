@@ -72,12 +72,12 @@ router.post("/user", (req, res) => {
     userApiController.addUser(req, res);
 });
 
-router.get("/user/:id", (req, res) => {
-    userApiController.getSpecificUser(req, res);
+router.put("/user", (req, res) => {
+    userApiController.updateSpecificUser(req, res);
 });
 
-router.put("/user/:id", (req, res) => {
-    userApiController.updateSpecificUser(req, res);
+router.get("/user/:id", (req, res) => {
+    userApiController.getSpecificUser(req, res);
 });
 
 router.get("/user/:id/travel", (req, res) => {
