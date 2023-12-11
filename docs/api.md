@@ -1,6 +1,6 @@
 # API
 
-Introducing our innovative Bike Renting System API, designed to revolutionize the way you manage bike rentals. Our API offers seamless integration, allowing businesses to effortlessly incorporate bike rental functionalities into their platforms. With robust features for inventory management, user authentication, rental tracking, and payment processing, our API ensures a smooth and efficient renting experience. Experience the power of effortless bike rentals with our flexible and scalable API, empowering businesses to cater to the growing demand for sustainable and convenient transportation solutions."
+Introducing our innovative Bike Renting System API, designed to revolutionize the way you manage bike rentals. Our API offers seamless integration, allowing businesses to effortlessly incorporate bike rental functionalities into their platforms. With robust features for inventory management, user authentication, rental tracking, and payment processing, our API ensures a smooth and efficient renting experience. Experience the power of effortless bike rentals with our flexible and scalable API, empowering businesses to cater to the growing demand for sustainable and convenient transportation solutions.
 
 ## Usage
 
@@ -27,7 +27,7 @@ const result = await fetch(
             "content-type": "application/json",
         },
         method: "PUT",
-    }
+    },
 );
 ```
 
@@ -57,7 +57,15 @@ returns all cities
 **POST**
 
 ```bash
-/api/city/:name
+/api/city
+```
+
+body
+
+```bash
+name
+longitude
+latitude
 ```
 
 adds new city
@@ -77,7 +85,7 @@ returns specific city
 **GET**
 
 ```bash
-/api/city/:id/bike
+/api/city/:city/bike
 ```
 
 returns all bikes within a specific city
@@ -127,22 +135,78 @@ Remove a number of bikes from specific city
 **PUT**
 
 ```bash
-/api/city/:id/zone/:zoneid/:chargingid
+/api/city/:id/zone/:id/ports
 ```
 
-returns the port of the specifc zone and charging ID
+returns all avaible ports on a station
 
 ---
 
 ## Users
 
-**PUT**
+**GET**
 
 ```bash
 /api/users
 ```
 
 returns all users in the system
+
+---
+
+**POST**
+
+```bash
+/api/user
+```
+
+body
+
+```bash
+username
+password
+email
+longitude (opt)
+latitude (opt)
+wallet (opt)
+role (opt)
+api_key (opt)
+```
+
+adds a user to the system
+
+---
+
+**GET**
+
+```bash
+/api/user/:id
+```
+
+returns specific user in the system
+
+---
+
+**PUT**
+
+```bash
+/api/user
+```
+
+body
+
+```bash
+username
+password (opt)
+email (opt)
+longitude (opt)
+latitude (opt)
+wallet (opt)
+role (opt)
+api_key (opt)
+```
+
+update a specific user in the system
 
 ---
 
@@ -171,10 +235,10 @@ returns all bikes in the system
 **PUT**
 
 ```bash
-/api/bike/:id/rent
+/api/bike/:id/:userid/rent
 ```
 
-rents the bike with the given ID
+rents the bike with the given ID, userid is also required in order to bind the bike to the specific user
 send user in headers
 
 ---
@@ -182,10 +246,11 @@ send user in headers
 **PUT**
 
 ```bash
-/api/bike/:id/returned
+/api/bike/:id/:longitude/:latitude/return
 ```
 
 returns the bike with the given ID
+also takes longitude and latitude for the bikeID in question, is required in order to updated the bike length
 
 ---
 
@@ -199,20 +264,18 @@ retrive the position of the bike with the given ID
 
 ---
 
-**POST**
+**PUT**
 
 ```bash
 /api/bike/:id/position
 ```
 
-set the first location for a bike with the given ID
-
----
-
-**PUT**
+body
 
 ```bash
-/api/bike/:id/position
+id
+longitude
+latitude
 ```
 
 update the location of a bike with the given ID
@@ -236,8 +299,6 @@ returns all information about the bike with the given ID
 ```
 
 turns of the bike with the given ID
-
-> (vi bör nog göra mer med denna än att bara stänga en cykel)
 
 ---
 
