@@ -34,17 +34,17 @@ describe("GET /api", () => {
     });
 });
 
-describe("GET /api/bike/:id/rent", () => {
+describe("GET /api/dummy/:id/rent", () => {
     describe("Not providing an API Key", () => {
         test("should respond with a 403 status code", async () => {
-            const res = await request(app).put("/api/bike/1/rent").query({});
+            const res = await request(app).put("/api/dummy/1/rent").query({});
             expect(res.statusCode).toBe(403);
             expect(res.body).toEqual({ error: "Please provide an API key." });
         });
     });
     describe("Providing an API Key, but nothing else", () => {
         test("should respond with a 400 status code", async () => {
-            const res = await request(app).put("/api/bike/1/rent").query({
+            const res = await request(app).put("/api/dummy/1/rent").query({
                 apiKey: 1,
             });
             expect(res.statusCode).toBe(400);
@@ -56,7 +56,7 @@ describe("GET /api/bike/:id/rent", () => {
     describe("Providing an API Key with content-type", () => {
         test("should respond with a 400 status code", async () => {
             const res = await request(app)
-                .put("/api/bike/1/rent")
+                .put("/api/dummy/1/rent")
                 .query({
                     apiKey: 1,
                 })
@@ -71,7 +71,7 @@ describe("GET /api/bike/:id/rent", () => {
     describe("Providing an API Key with content-type, but no user", () => {
         test("should respond with a 400 status code", async () => {
             const res = await request(app)
-                .put("/api/bike/1/rent")
+                .put("/api/dummy/1/rent")
                 .query({
                     apiKey: 1,
                 })
@@ -88,7 +88,7 @@ describe("GET /api/bike/:id/rent", () => {
     describe("Providing an API Key with content-type and bike ID", () => {
         test("should respond with a 200 status code", async () => {
             const res = await request(app)
-                .put("/api/bike/1/rent")
+                .put("/api/dummy/1/rent")
                 .query({
                     apiKey: 1,
                 })
