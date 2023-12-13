@@ -34,10 +34,10 @@ VALUES
     ('alice_jones', 1, 15.584517869106758, 56.16428617865516, 15.598958447904023, 56.20020191696828, 2, 10, 300)
 ;
 
-INSERT INTO Invoice (issue_date, `expiry_date`, travel_id, user_id)
+INSERT INTO Invoice (issue_date, `expiry_date`, travel_id)
 VALUES
-	(CURRENT_DATE(), CURRENT_DATE()+5, 1, 'alice_jones'),
-	(CURRENT_DATE(), CURRENT_DATE()+5, 2, 'alice_jones')
+	(CURRENT_DATE(), CURRENT_DATE()+5, 1),
+	(CURRENT_DATE(), CURRENT_DATE()+5, 2)
 ;
 
 /*
