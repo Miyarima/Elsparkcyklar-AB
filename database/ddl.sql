@@ -92,6 +92,8 @@ CREATE TABLE Invoice (
     `expiry_date` TEXT NOT NULL,
     date_paid TEXT DEFAULT NULL,
     travel_id INT NOT NULL,
+    user_id VARCHAR(100) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES User(id),
     FOREIGN KEY (travel_id) REFERENCES Travel(id)
 );
 

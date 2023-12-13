@@ -153,7 +153,7 @@ const updateSpecificUser = async (req, res) => {
     }
 };
 
-// Get all available users in system
+// Get all specific user in system
 const getSpecificUser = async (req, res) => {
     const apiKey = req.query.apiKey;
     const userId = req.params.id;

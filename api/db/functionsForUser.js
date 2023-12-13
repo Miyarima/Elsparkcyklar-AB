@@ -57,7 +57,9 @@ const gatheredUserFunctions = {
      */
     selectTravelsForUser: async (userId) => {
         const queryObject = {
-            query: "SELECT * FROM Travel WHERE `id` = ?",
+            query: "SELECT i.issue_date, t.* FROM Travel as t LEFT JOIN Invoice as i ON t.id = i.travel_id WHERE t.`user_id` = ?",
+            //query: "SELECT i.issue_date, t.* FROM Travel as t LEFT JOIN Invoice as i ON t.id = i.travel_id WHERE t.`id` = ?",
+            //query: "SELECT * FROM Travel WHERE `id` = ?",
             params: [userId],
         };
         return await dbFuncs.promisifiedSimpleQueryFunc(queryObject);
