@@ -11,86 +11,18 @@
         <th class="th-customer">Position</th>
         <th class="th-customer">Wallet</th>
     </tr>
+    <% for (let user of users) { %>
     <tr class="tr-customer">
-        <td class="td-customer">alice_jones</td>
-        <td class="td-customer">user</td>
-        <td class="td-customer">alice.jones@email.com</td>
-        <td class="td-customer">Longitude: 12.345<br>
-            Latitude: 34.567</td>
-        <td class="td-customer">100.00</td>
+        <td class="td-customer"><%= user.id %></td>
+        <td class="td-customer"><%= user.role %></td>
+        <td class="td-customer"><%= user.email %></td>
+        <td class="td-customer">
+            Latitude: <%= user.latitude %><br>
+            Longitude: <%= user.longitude %>
+        </td>
+        <td class="td-customer"><%= user.wallet %></td>
     </tr>
-    <tr class="tr-customer">
-        <td class="td-customer">alice_jones</td>
-        <td class="td-customer">user</td>
-        <td class="td-customer">alice.jones@email.com</td>
-        <td class="td-customer">Longitude: 12.345<br>
-            Latitude: 34.567</td>
-        <td class="td-customer">100.00</td>
-    </tr>
-    <tr class="tr-customer">
-        <td class="td-customer">alice_jones</td>
-        <td class="td-customer">user</td>
-        <td class="td-customer">alice.jones@email.com</td>
-        <td class="td-customer">Longitude: 12.345<br>
-            Latitude: 34.567</td>
-        <td class="td-customer">100.00</td>
-    </tr>
-    <tr class="tr-customer">
-        <td class="td-customer">alice_jones</td>
-        <td class="td-customer">user</td>
-        <td class="td-customer">alice.jones@email.com</td>
-        <td class="td-customer">Longitude: 12.345<br>
-            Latitude: 34.567</td>
-        <td class="td-customer">100.00</td>
-    </tr>
-    <tr class="tr-customer">
-        <td class="td-customer">alice_jones</td>
-        <td class="td-customer">user</td>
-        <td class="td-customer">alice.jones@email.com</td>
-        <td class="td-customer">Longitude: 12.345<br>
-            Latitude: 34.567</td>
-        <td class="td-customer">100.00</td>
-    </tr>
-    <tr class="tr-customer">
-        <td class="td-customer">alice_jones</td>
-        <td class="td-customer">user</td>
-        <td class="td-customer">alice.jones@email.com</td>
-        <td class="td-customer">Longitude: 12.345<br>
-            Latitude: 34.567</td>
-        <td class="td-customer">100.00</td>
-    </tr>
-    <tr class="tr-customer">
-        <td class="td-customer">alice_jones</td>
-        <td class="td-customer">user</td>
-        <td class="td-customer">alice.jones@email.com</td>
-        <td class="td-customer">Longitude: 12.345<br>
-            Latitude: 34.567</td>
-        <td class="td-customer">100.00</td>
-    </tr>
-    <tr class="tr-customer">
-        <td class="td-customer">alice_jones</td>
-        <td class="td-customer">user</td>
-        <td class="td-customer">alice.jones@email.com</td>
-        <td class="td-customer">Longitude: 12.345<br>
-            Latitude: 34.567</td>
-        <td class="td-customer">100.00</td>
-    </tr>
-    <tr class="tr-customer">
-        <td class="td-customer">alice_jones</td>
-        <td class="td-customer">user</td>
-        <td class="td-customer">alice.jones@email.com</td>
-        <td class="td-customer">Longitude: 12.345<br>
-            Latitude: 34.567</td>
-        <td class="td-customer">100.00</td>
-    </tr>
-    <tr class="tr-customer">
-        <td class="td-customer">alice_jones</td>
-        <td class="td-customer">user</td>
-        <td class="td-customer">alice.jones@email.com</td>
-        <td class="td-customer">Longitude: 12.345<br>
-            Latitude: 34.567</td>
-        <td class="td-customer">100.00</td>
-    </tr>
+    <% } %>
 </table>
 
 <%- include("footer.ejs") %>
