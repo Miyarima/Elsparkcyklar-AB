@@ -1,12 +1,14 @@
 "use strict";
 
-const axios = require("axios");
+
 const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/userController.js");
-
-const clientID = "c40fb77fa87796607ad9";
-const clientSecret = "33909380358de1cf2634961840b3f436d6e0236b";
+const gitAuthentication = require("../auth/gitauth.js");
+const standardAuthentication = require("../auth/standardauth.js");
+const gitAuth = gitAuthentication.gitAuthOB;
+const standardAuth = standardAuthentication.standardAuth;
+//router.use(cookieParser());
 
 router.use((req, res, next) => {
     req.app.set("views", "./views/user/pages");
@@ -25,31 +27,28 @@ router.get("/createuser", (req, res) => {
     res.render("create_user.ejs");
 });
 
-// Declare the redirect route
-router.get("/authenticate", (req, res) => {
-    // The req.query object has the query params that were sent to this route.
-    const requestToken = req.query.code;
-    
-    axios({
-        method: "post",
-        url: `https://github.com/login/oauth/access_token?client_id=${clientID}&client_secret=${clientSecret}&code=${requestToken}`,
-        // Set the content type header, so that we get the response in JSON
-        headers: {
-            accept: "application/json"
-        }
-    }).then((response) => {
-        const accessToken = response.data.access_token;
-        //console.log(response.data);
-        // redirect the user to the home page, along with the access token
-        res.redirect(`user?access_token=${accessToken}`);
-    });
+router.post("/createuser", (req, res) => {
+    standardAuth.insertUser(req,res)
 });
 
-router.get("/user", (req, res) => {
+// Declare the redirect route
+router.get("/authenticate", (req, res) => {
+    gitAuth.getAccessToken(req,res);
+});
+
+router.get("/gitsignup", (req, res) => {
+    res.render("gitsignup.ejs");
+});
+
+router.post("/gitsignup", (req, res) => {
+    gitAuth.gitSignup(req,res);
+});
+
+router.get("/user",standardAuth.simpleAuthorization("User"), (req, res) => {
     res.render("front.ejs");
 });
 
-router.get("/details", (req, res) => {
+router.get("/details",standardAuth.simpleAuthorization("User"), (req, res) => {
     res.render("details.ejs");
 });
 

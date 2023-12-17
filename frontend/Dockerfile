@@ -12,6 +12,7 @@ COPY public ./public/
 COPY routes ./routes/
 COPY src ./src/
 COPY views ./views/
+COPY auth ./auth/
 
 EXPOSE 1337
 

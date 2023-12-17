@@ -19,6 +19,68 @@ const getAllUsers = async (req, res) => {
     });
 };
 
+const addGitUser = async (req, res) => {
+    const apiKey = req.query.apiKey;
+    const contentType = req.headers["content-type"];
+
+    if (!apiKey) {
+        return res.status(403).json({ error: "Please provide an API key." });
+    }
+
+    // Check for the required headers
+    if (!contentType || contentType !== "application/json") {
+        return res
+            .status(400)
+            .json({ error: "Content-Type must be application/json" });
+    }
+
+    // Check for the required body content
+    if (!req.body || Object.keys(req.body).length === 0) {
+        return res
+            .status(400)
+            .json({ error: "Request body is missing or empty" });
+    }
+
+    try {
+        const {
+            username,
+            git_id,
+            longitude,
+            latitude,
+            wallet,
+            role,
+            api_key,
+        } = req.body;
+
+        if (!username) {
+            return res
+                .status(403)
+                .json({ error: "A username is needed to create user" });
+        }
+
+
+        const insert = {
+            table: "User",
+            id: username
+        };
+
+        if (role) insert.role = role;
+        if (wallet) insert.wallet = wallet;
+        if (api_key) insert.api_key = api_key;
+        if (longitude) insert.longitude = longitude;
+        if (latitude) insert.latitude = latitude;
+        if (git_id) insert.git_id = git_id;
+
+        await dbCreate.functionsForAllTables.insertTable(insert);
+
+        return res.status(200).json({
+            message: "A new user has been created",
+        });
+    } catch (error) {
+        return res.status(500).json({ error: `${error}` });
+    }
+};
+
 // Get all available users in system
 const addUser = async (req, res) => {
     const apiKey = req.query.apiKey;
@@ -169,6 +231,39 @@ const getSpecificUser = async (req, res) => {
     });
 };
 
+
+// Get id from git username
+const getUserFromGitUsername = async (req, res) => {
+    const apiKey = req.query.apiKey;
+    const userId = req.params.id;
+
+    if (!apiKey) {
+        return res.status(403).json({ error: "Please provide an API key." });
+    }
+
+    const user = await db.gatheredUserFunctions.getUsernameFromGit(userId);
+
+    return res.status(200).json({
+        users: user,
+    });
+};
+
+
+const getUserFromEmail = async (req, res) => {
+    const apiKey = req.query.apiKey;
+    const emailId = req.params.email_id;
+
+    if (!apiKey) {
+        return res.status(403).json({ error: "Please provide an API key." });
+    }
+
+    const user = await db.gatheredUserFunctions.selectRowsWithEmail(emailId);
+
+    return res.status(200).json({
+        users: user,
+    });
+};
+
 // Get all travel for specific user
 const getTravelUser = async (req, res) => {
     const apiKey = req.query.apiKey;
@@ -220,4 +315,7 @@ module.exports = {
     getTravelUser,
     updateSpecificUser,
     deleteSpecificUser,
+    getUserFromGitUsername,
+    getUserFromEmail,
+    addGitUser
 };

@@ -1,63 +1,6 @@
 <%- include("header_user.ejs") %>
 
 <h3 id="welcomeMessage">vTeam USER</h3>
-Lorem ipsum dolor sit amet consectetur adipisicLorem ipsum dolor sit amet consectetur adipisicing elit. Molestias labore sed esse ipsa quam doloremque iste, expedita cumque, autem nulla est iure aliquam fugiat accusamus, mollitia dolorum itaque vero sapiente.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias labore sed esse ipsa quam doloremque iste, expedita cumque, autem nulla est iure aliquam fugiat accusamus, mollitia dolorum itaque vero sapiente.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias labore sed esse ipsa quam doloremque iste, expedita cumque, autem nulla est iure aliquam fugiat accusamus, mollitia dolorum itaque vero sapiente.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias labore sed esse ipsa quam doloremque iste, expedita cumque, autem nulla est iure aliquam fugiat accusamus, mollitia dolorum itaque vero sapiente.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias labore sed esse ipsa quam doloremque iste, expedita cumque, autem nulla est iure aliquam fugiat accusamus, mollitia dolorum itaque vero sapiente.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias labore sed esse ipsa quam doloremque iste, expedita cumque, autem nulla est iure aliquam fugiat accusamus, mollitia dolorum itaque vero sapiente.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias labore sed esse ipsa quam doloremque iste, expedita cumque, autem nulla est iure aliquam fugiat accusamus, mollitia dolorum itaque vero sapiente.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias labore sed esse ipsa quam doloremque iste, expedita cumque, autem nulla est iure aliquam fugiat accusamus, mollitia dolorum itaque vero sapiente.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias labore sed esse ipsa quam doloremque iste, expedita cumque, autem nulla est iure aliquam fugiat accusamus, mollitia dolorum itaque vero sapiente.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias labore sed esse ipsa quam doloremque iste, expedita cumque, autem nulla est iure aliquam fugiat accusamus, mollitia dolorum itaque vero sapiente.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias labore sed esse ipsa quam doloremque iste, expedita cumque, autem nulla est iure aliquam fugiat accusamus, mollitia dolorum itaque vero sapiente.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias labore sed esse ipsa quam doloremque iste, expedita cumque, autem nulla est iure aliquam fugiat accusamus, mollitia dolorum itaque vero sapiente.
-ing elit. Molestias labore sed esse ipsa quam doloremque iste, expedita cumque, autem nulla est iure aliquam fugiat accusamus, mollitia dolorum itaque vero sapiente.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias labore sed esse ipsa quam doloremque iste, expedita cumque, autem nulla est iure aliquam fugiat accusamus, mollitia dolorum itaque vero sapiente.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias labore sed esse ipsa quam doloremque iste, expedita cumque, autem nulla est iure aliquam fugiat accusamus, mollitia dolorum itaque vero sapiente.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias labore sed esse ipsa quam doloremque iste, expedita cumque, autem nulla est iure aliquam fugiat accusamus, mollitia dolorum itaque vero sapiente.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias labore sed esse ipsa quam doloremque iste, expedita cumque, autem nulla est iure aliquam fugiat accusamus, mollitia dolorum itaque vero sapiente.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias labore sed esse ipsa quam doloremque iste, expedita cumque, autem nulla est iure aliquam fugiat accusamus, mollitia dolorum itaque vero sapiente.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias labore sed esse ipsa quam doloremque iste, expedita cumque, autem nulla est iure aliquam fugiat accusamus, mollitia dolorum itaque vero sapiente.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias labore sed esse ipsa quam doloremque iste, expedita cumque, autem nulla est iure aliquam fugiat accusamus, mollitia dolorum itaque vero sapiente.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias labore sed esse ipsa quam doloremque iste, expedita cumque, autem nulla est iure aliquam fugiat accusamus, mollitia dolorum itaque vero sapiente.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias labore sed esse ipsa quam doloremque iste, expedita cumque, autem nulla est iure aliquam fugiat accusamus, mollitia dolorum itaque vero sapiente.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias labore sed esse ipsa quam doloremque iste, expedita cumque, autem nulla est iure aliquam fugiat accusamus, mollitia dolorum itaque vero sapiente.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias labore sed esse ipsa quam doloremque iste, expedita cumque, autem nulla est iure aliquam fugiat accusamus, mollitia dolorum itaque vero sapiente.
 
-<script>
-    // We can get the token from the "access_token" query
-    // param, available in the browsers "location" global
-    const query = window.location.search.substring(1);
-    const token = query.split('access_token=')[1];
-
-    // Call the user info API using the fetch browser library
-    fetch('https://api.github.com/user', {
-        headers: {
-            // Include the token in the Authorization header
-            Authorization: 'token ' + token
-        }
-    })
-    // Parse the response as JSON
-    .then(res => res.json())
-    .then(res => {
-        //console.log('GitHub API Response:', res);
-        // Check if the 'login' field is present and not null
-        const userName = res.login;
-
-        // Update the content of the h3 element
-        const welcomeMessage = document.getElementById('welcomeMessage');
-        if (welcomeMessage) {
-            welcomeMessage.textContent = `vTeam ${userName}`;
-        }
-    })
-    .catch(error => {
-        console.error('Error fetching user information:', error);
-        // Handle the error, e.g., display a message to the user
-        const errorNode = document.createTextNode('Error fetching user information');
-        document.body.appendChild(errorNode);
-    });
-</script>
 
 <%- include("footer.ejs") %>
