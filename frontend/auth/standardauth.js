@@ -37,10 +37,10 @@ const standardAuth = {
                             msg = extractedString.includes("PRIMARY")
                                 ? "Username already exists"
                                 : extractedString.includes("email")
-                                  ? extractedString.charAt(0).toUpperCase +
+                                    ? extractedString.charAt(0).toUpperCase +
                                     extractedString.slice(1) +
                                     "already exists"
-                                  : "There was an error";
+                                    : "There was an error";
                         }
                         return res.render("create_user.ejs", { msg });
                     });
