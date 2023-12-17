@@ -1,6 +1,5 @@
 "use strict";
 
-
 const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/userController.js");
@@ -28,12 +27,12 @@ router.get("/createuser", (req, res) => {
 });
 
 router.post("/createuser", (req, res) => {
-    standardAuth.insertUser(req,res)
+    standardAuth.insertUser(req, res);
 });
 
 // Declare the redirect route
 router.get("/authenticate", (req, res) => {
-    gitAuth.getAccessToken(req,res);
+    gitAuth.getAccessToken(req, res);
 });
 
 router.get("/gitsignup", (req, res) => {
@@ -41,14 +40,14 @@ router.get("/gitsignup", (req, res) => {
 });
 
 router.post("/gitsignup", (req, res) => {
-    gitAuth.gitSignup(req,res);
+    gitAuth.gitSignup(req, res);
 });
 
-router.get("/user",standardAuth.simpleAuthorization("User"), (req, res) => {
+router.get("/user", standardAuth.simpleAuthorization("User"), (req, res) => {
     res.render("front.ejs");
 });
 
-router.get("/details",standardAuth.simpleAuthorization("User"), (req, res) => {
+router.get("/details", standardAuth.simpleAuthorization("User"), (req, res) => {
     res.render("details.ejs");
 });
 

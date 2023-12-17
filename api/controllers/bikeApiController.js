@@ -73,9 +73,7 @@ const rentBike = async (req, res) => {
 
     // Check for apiKey
     if (!apiKey) {
-        return res
-            .status(403)
-            .json({ error: "Please provide an API key." });
+        return res.status(403).json({ error: "Please provide an API key." });
     }
 
     // Check for the required headers
@@ -103,7 +101,7 @@ const rentBike = async (req, res) => {
 
     return res.status(200).json({
         message: "bike has been rented",
-        status: rent
+        status: rent,
     });
 };
 
@@ -128,21 +126,29 @@ const returnBike = async (req, res) => {
         console.log("No coordinates for Longitude given!");
         return res
             .status(403)
-            .json({ error: "Please provide a coordinate for longitude for a bike." });
+            .json({
+                error: "Please provide a coordinate for longitude for a bike.",
+            });
     }
 
     if (!latitude) {
         console.log("No coordinates for Latitude given!");
         return res
             .status(403)
-            .json({ error: "Please provide a coordinate for latitude for a bike." });
+            .json({
+                error: "Please provide a coordinate for latitude for a bike.",
+            });
     }
 
-    const bike = await db.gatheredBikeFunctions.lockBike(bikeId, longitude, latitude);
+    const bike = await db.gatheredBikeFunctions.lockBike(
+        bikeId,
+        longitude,
+        latitude,
+    );
 
     return res.status(200).json({
         message: "bike has been returned",
-        status: bike
+        status: bike,
     });
 };
 

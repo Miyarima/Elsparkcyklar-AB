@@ -42,15 +42,8 @@ const addGitUser = async (req, res) => {
     }
 
     try {
-        const {
-            username,
-            git_id,
-            longitude,
-            latitude,
-            wallet,
-            role,
-            api_key,
-        } = req.body;
+        const { username, git_id, longitude, latitude, wallet, role, api_key } =
+            req.body;
 
         if (!username) {
             return res
@@ -58,10 +51,9 @@ const addGitUser = async (req, res) => {
                 .json({ error: "A username is needed to create user" });
         }
 
-
         const insert = {
             table: "User",
-            id: username
+            id: username,
         };
 
         if (role) insert.role = role;
@@ -231,7 +223,6 @@ const getSpecificUser = async (req, res) => {
     });
 };
 
-
 // Get id from git username
 const getUserFromGitUsername = async (req, res) => {
     const apiKey = req.query.apiKey;
@@ -247,7 +238,6 @@ const getUserFromGitUsername = async (req, res) => {
         users: user,
     });
 };
-
 
 const getUserFromEmail = async (req, res) => {
     const apiKey = req.query.apiKey;
@@ -317,5 +307,5 @@ module.exports = {
     deleteSpecificUser,
     getUserFromGitUsername,
     getUserFromEmail,
-    addGitUser
+    addGitUser,
 };
