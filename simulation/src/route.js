@@ -188,6 +188,98 @@ const landskrona10 = [
     [55.872311, 12.836],
 ];
 
+// Stockholm Sibirien
+
+// Stockholm stadsbibliotek - Stefanskyrkan
+const stockholm1 = [
+    [59.343579, 18.054143],
+    [59.344513, 18.057927],
+    [59.345313, 18.057183],
+    [59.346889, 18.055417],
+    [59.347554, 18.054807],
+];
+
+// Brygghuset - Odenplan
+const stockholm2 = [
+    [59.344877, 18.048996],
+    [59.343572, 18.050358],
+    [59.343098, 18.050751],
+    [59.342999, 18.048203],
+    [59.342458, 18.04874],
+];
+
+// Texas Longhorn Norrtull - Brygghuset
+const stockholm3 = [
+    [59.347868, 18.046099],
+    [59.346884, 18.046979],
+    [59.347551, 18.04979],
+    [59.345888, 18.051292],
+    [59.345221, 18.048738],
+];
+
+// Roslagsgatan - Hotel Ruth
+const stockholm4 = [
+    [59.349225, 18.057193],
+    [59.347803, 18.058695],
+    [59.346129, 18.060218],
+    [59.345772, 18.058893],
+    [59.345309, 18.05701],
+];
+
+// McDonalds - Churchill Arms Stockholm
+const stockholm5 = [
+    [59.343246, 18.056426],
+    [59.343498, 18.057675],
+    [59.342565, 18.058595],
+    [59.34284, 18.059655],
+    [59.343212, 18.061216],
+];
+
+// Valhallavägen - Birger Jarlsgatan
+const stockholm6 = [
+    [59.34685, 18.066568],
+    [59.347454, 18.065085],
+    [59.348732, 18.062244],
+    [59.348195, 18.060212],
+    [59.349491, 18.058873],
+];
+
+// Hotel Birger Jarl - Pom & Flora
+const stockholm7 = [
+    [59.342253, 18.062143],
+    [59.343274, 18.061287],
+    [59.344176, 18.060296],
+    [59.343789, 18.058721],
+    [59.344503, 18.057885],
+];
+
+// KTH - Brinellvägen
+const stockholm8 = [
+    [59.349638, 18.070041],
+    [59.349176, 18.07022],
+    [59.348946, 18.069949],
+    [59.348235, 18.070206],
+    [59.347568, 18.071108],
+];
+
+// Körsbärsvägen - Elite Hotel Arcardia
+const stockholm9 = [
+    [59.349963, 18.062543],
+    [59.349321, 18.063622],
+    [59.349046, 18.063829],
+    [59.34862, 18.064729],
+    [59.34819, 18.064963],
+];
+
+// Valhallavägen - Jarlaplan
+const stockholm10 = [
+    [59.347336, 18.065027],
+    [59.346538, 18.061883],
+    [59.345767, 18.062522],
+    [59.344935, 18.06307],
+    [59.344111, 18.063044],
+];
+
 const coordinates = [
     karlskrona1,
     karlskrona2,
@@ -209,6 +301,16 @@ const coordinates = [
     landskrona8,
     landskrona9,
     landskrona10,
+    stockholm1,
+    stockholm2,
+    stockholm3,
+    stockholm4,
+    stockholm5,
+    stockholm6,
+    stockholm7,
+    stockholm8,
+    stockholm9,
+    stockholm10,
 ];
 
 module.exports = coordinates;
