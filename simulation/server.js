@@ -10,18 +10,26 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
-    // res.sendFile(path.join(__dirname, "public", "index.html"));
     res.render("index.hmtl");
 });
 
 app.post("/update-map", (req, res) => {
     const { coordinates } = req.body;
 
-    console.log(coordinates);
-
     if (coordinates) {
         res.status(200).send("Coordinates received");
         io.emit("updateCoordinates", coordinates);
+    } else {
+        res.status(400).send("Invalid coordinates");
+    }
+});
+
+app.post("/update-map-static", (req, res) => {
+    const { coordinates } = req.body;
+
+    if (coordinates) {
+        res.status(200).send("Coordinates received");
+        io.emit("updateStaticCoordinates", coordinates);
     } else {
         res.status(400).send("Invalid coordinates");
     }

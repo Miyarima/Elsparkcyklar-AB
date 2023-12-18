@@ -9,7 +9,7 @@ class Bike {
     //     [LONGITUDE, LATITUDE],
     // ];
 
-    constructor(user, bikeId, longitude, latitude, route, zoneId) {
+    constructor(user, bikeId, longitude, latitude, route, zoneId, speedZones) {
         this.user = user;
         this.bikeId = bikeId;
         this.longitude = longitude;
@@ -18,7 +18,7 @@ class Bike {
         this.status = "stationary";
         this.zoneId = zoneId;
         this.speed = 0;
-        this.maxSpeed = 25;
+        this.maxSpeed = 20;
         this.distanceMoved = 0;
         this.battery = 100;
         this.charging = false;
@@ -27,6 +27,7 @@ class Bike {
         this.comparisonLatitude = route[1][1];
         this.currentCoordinate = 1;
         this.updateInterval = null;
+        this.speedZones = speedZones;
     }
 
     turnOn() {
@@ -59,13 +60,10 @@ class Bike {
     }
 
     updateDb() {
-        // console.log(
-        //     `Sending update about ${this.user} ${this.bikeId} to the database`,
-        // );
         this.randomSpeed();
         this.calculateDistance();
         this.calculateIntermediateCoordinate(this.distanceMoved);
-        // this.sendUpdateToMap();
+        this.checkSpeedZone();
         // console.log(
         //     `${this.user} at ${this.longitude} ${this.latitude}, going ${this.speed} km/h and moving towards ${this.comparisonLongitude} ${this.comparisonLatitude}`,
         // );
@@ -73,12 +71,10 @@ class Bike {
 
     getCoordinates() {
         return [this.longitude, this.latitude];
-        // console.log([this.longitude, this.latitude]);
     }
 
     getRoute() {
-        // return this.route;
-        console.log(this.route);
+        return this.route;
     }
 
     updateCurrentCoordiante() {
@@ -96,7 +92,9 @@ class Bike {
 
     randomSpeed() {
         const rand = Math.random();
-        const weights = Array.from({ length: 21 }, (_, i) => Math.pow(2, i));
+        const weights = Array.from({ length: this.maxSpeed + 1 }, (_, i) =>
+            Math.pow(2, i),
+        );
         const totalWeight = weights.reduce((acc, val) => acc + val, 0);
         const ranges = weights.map((weight) => weight / totalWeight);
         let cumulativeProbability = 0;
@@ -107,6 +105,40 @@ class Bike {
                 this.speed = i;
                 break;
             }
+        }
+    }
+
+    checkSpeedZone() {
+        let inZone = 0;
+        const toRadians = (degrees) => (degrees * Math.PI) / 180;
+        const radius = 6371000;
+
+        this.speedZones.forEach((zone) => {
+            const currLatRad = toRadians(this.latitude);
+            const currLonRad = toRadians(this.longitude);
+            const zoneLatRad = toRadians(zone[1]);
+            const zoneLonRad = toRadians(zone[0]);
+
+            const latDiff = zoneLatRad - currLatRad;
+            const lonDiff = zoneLonRad - currLonRad;
+
+            const a =
+                Math.sin(latDiff / 2) * Math.sin(latDiff / 2) +
+                Math.cos(currLatRad) *
+                    Math.cos(zoneLatRad) *
+                    Math.sin(lonDiff / 2) *
+                    Math.sin(lonDiff / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            const distance = radius * c;
+
+            if (zone[2] >= distance) {
+                inZone = 1;
+                this.maxSpeed = zone[3];
+            }
+        });
+
+        if (!inZone && this.maxSpeed < 20) {
+            this.maxSpeed = 20;
         }
     }
 
