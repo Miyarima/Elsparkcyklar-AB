@@ -81,7 +81,7 @@ ul {
     border-radius: 4px;
     box-sizing: border-box;
 }
-  
+
 .admin-button {
     font-weight: bold;
     font-size: large;
@@ -133,9 +133,12 @@ ul {
     border-color: #f2f2f2;
 }
 
-#customers tr:nth-child(even){background-color: #f2f2f2;}
-#customers tr:nth-child(odd){background-color: #bcbcbc;}
-
+#customers tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+#customers tr:nth-child(odd) {
+    background-color: #bcbcbc;
+}
 
 .th-customer {
     border: solid;
@@ -143,9 +146,9 @@ ul {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: #9E0000;
+    background-color: #9e0000;
     color: white;
-    text-align: center; 
+    text-align: center;
 }
 
 .td-customer {
@@ -156,7 +159,6 @@ ul {
     white-space: nowrap;
     text-overflow: ellipsis;
 }
-
 
 /* TABLE BIKE */
 .table-bike {
@@ -169,9 +171,12 @@ ul {
     border-color: #f2f2f2;
 }
 
-#bikes tr:nth-child(even){background-color: #f2f2f2;}
-#bikes tr:nth-child(odd){background-color: #bcbcbc;}
-
+#bikes tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+#bikes tr:nth-child(odd) {
+    background-color: #bcbcbc;
+}
 
 .th-bike {
     border: solid;
@@ -179,9 +184,9 @@ ul {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: #9E0000;
+    background-color: #9e0000;
     color: white;
-    text-align: center; 
+    text-align: center;
 }
 
 .td-bike {
@@ -193,10 +198,9 @@ ul {
     text-overflow: ellipsis;
 }
 
-
 /* TABLE STATIONS */
 .table-explainer {
-    color: #9E0000;
+    color: #9e0000;
     margin-top: 3em;
     margin-left: auto;
     margin-right: auto;
@@ -215,9 +219,12 @@ ul {
     border-color: #f2f2f2;
 }
 
-#stations tr:nth-child(even){background-color: #f2f2f2;}
-#stations tr:nth-child(odd){background-color: #bcbcbc;}
-
+#stations tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+#stations tr:nth-child(odd) {
+    background-color: #bcbcbc;
+}
 
 .th-station {
     border: solid;
@@ -225,9 +232,9 @@ ul {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: #9E0000;
+    background-color: #9e0000;
     color: white;
-    text-align: center; 
+    text-align: center;
 }
 
 .td-station {

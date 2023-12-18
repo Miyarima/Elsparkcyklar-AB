@@ -15,7 +15,7 @@ body {
     transition: 0.5s;
     padding-top: 12em;
 }
-  
+
 .sidenav a {
     padding: 25px 8px 25px 32px;
     text-decoration: none;
@@ -25,7 +25,6 @@ body {
     transition: 0.3s;
 }
 
-  
 .sidenav .closebtn {
     padding-right: 35px;
     padding-left: 35px;
@@ -38,11 +37,11 @@ body {
 
 .menu {
     font-size: 70px;
-    color:white; 
-    margin-left:0.6em;
+    color: white;
+    margin-left: 0.6em;
     font-weight: bold;
 }
-  
+
 .middle {
     text-align: center;
     margin-top: 5em;
@@ -162,7 +161,7 @@ ul {
     border-radius: 4px;
     box-sizing: border-box;
 }
-  
+
 .user-button {
     font-weight: bold;
     font-size: 50px;

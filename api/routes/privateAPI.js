@@ -77,12 +77,24 @@ router.post("/user", (req, res) => {
     userApiController.addUser(req, res);
 });
 
+router.post("/gituser", (req, res) => {
+    userApiController.addGitUser(req, res);
+});
+
 router.put("/user", (req, res) => {
     userApiController.updateSpecificUser(req, res);
 });
 
 router.get("/user/:id", (req, res) => {
     userApiController.getSpecificUser(req, res);
+});
+
+router.get("/gituser/:id", (req, res) => {
+    userApiController.getUserFromGitUsername(req, res);
+});
+
+router.get("/email/email_id", (req, res) => {
+    userApiController.getUserFromEmail(req, res);
 });
 
 router.get("/user/:id/travel", (req, res) => {

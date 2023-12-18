@@ -1,0 +1,11 @@
+<%- include("header_login_user.ejs") %>
+<% if (typeof msg !== 'undefined') { %>
+    <h1><%= msg %></h1>
+<% } %>
+<form method="POST" action="/user/gitsignup">
+    <label for="username"><b>Username</b></label>
+    <input type="text" id="username" name="username" placeholder="Username.." required>
+    <button type="submit">Submit</button>
+</form>
+
+<%- include("footer.ejs") %>

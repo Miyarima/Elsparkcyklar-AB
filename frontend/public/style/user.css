@@ -87,7 +87,7 @@ ul {
     border-radius: 4px;
     box-sizing: border-box;
 }
-  
+
 .user-button {
     font-weight: bold;
     font-size: large;
@@ -151,9 +151,12 @@ ul {
     border-color: #f2f2f2;
 }
 
-#history tr:nth-child(even){background-color: #f2f2f2;}
-#history tr:nth-child(odd){background-color: #bcbcbc;}
-
+#history tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+#history tr:nth-child(odd) {
+    background-color: #bcbcbc;
+}
 
 .th-history {
     border: solid;
@@ -163,7 +166,7 @@ ul {
     text-align: left;
     background-color: #050077;
     color: white;
-    text-align: center; 
+    text-align: center;
 }
 
 .td-history {
@@ -174,7 +177,6 @@ ul {
     white-space: nowrap;
     text-overflow: ellipsis;
 }
-
 
 /* TABLE DETAILS/USER */
 .table-details {
@@ -187,9 +189,12 @@ ul {
     border-color: #f2f2f2;
 }
 
-#details tr:nth-child(even){background-color: #f2f2f2;}
-#details tr:nth-child(odd){background-color: #bcbcbc;}
-
+#details tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+#details tr:nth-child(odd) {
+    background-color: #bcbcbc;
+}
 
 .th-details {
     border: solid;
@@ -199,7 +204,7 @@ ul {
     text-align: left;
     background-color: #050077;
     color: white;
-    text-align: center; 
+    text-align: center;
 }
 
 .td-details {
@@ -244,7 +249,6 @@ ul {
     font-size: larger;
     font-weight: bolder;
 }
-
 
 .text-wallet {
     font-weight: bold;

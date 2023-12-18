@@ -67,6 +67,21 @@ const gatheredUserFunctions = {
     },
 
     /**
+     * Select all rows with email_id
+     * @async
+     * @function
+     * @param {int} email_id email_id
+     * @returns {Array.<Object>} An array containing objects as the result of the database query.
+     */
+    selectRowsWithEmail: async (email_id) => {
+        const queryObject = {
+            query: "SELECT * FROM User WHERE `email` = ? OR",
+            params: [email_id],
+        };
+        return await dbFuncs.promisifiedSimpleQueryFunc(queryObject);
+    },
+
+    /**
      * Select invoices for specific user
      * @async
      * @function
@@ -92,6 +107,21 @@ const gatheredUserFunctions = {
         const queryObject = {
             query: "SELECT id,role FROM User WHERE api_key = ?",
             params: [apiKey],
+        };
+        return await dbFuncs.promisifiedSimpleQueryFunc(queryObject);
+    },
+
+    /**
+     * Select role and user from api key.
+     * @async
+     * @function
+     * @param {int} gitUsername gitUsername
+     * @returns {Array.<Object>} An array containing objects as the result of the database query.
+     */
+    getUsernameFromGit: async (gitUsername) => {
+        const queryObject = {
+            query: "SELECT id FROM User WHERE git_id = ?",
+            params: [gitUsername],
         };
         return await dbFuncs.promisifiedSimpleQueryFunc(queryObject);
     },
