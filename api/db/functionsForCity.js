@@ -66,10 +66,10 @@ const gatheredCityFunctions = {
      * @function
      * @returns {Array.<Object>} An array containing objects as the result of the database query.
      */
-    bikesAttachedToStation: async () => {
+    bikesAttachedToStation: async (stationId) => {
         const queryObject = {
-            query: "SELECT b.id, b.charging, b.battery, b.status, s.id, s.`address`,p.id FROM Bike b RIGHT JOIN Port p ON b.id = p.bike_id LEFT JOIN Station s ON p.station_id = s.id",
-            params: [], // You can add parameters here if needed
+            query: "SELECT b.id, b.charging, b.battery, b.status, s.id, s.`address`,p.id FROM Bike b RIGHT JOIN Port p ON b.id = p.bike_id LEFT JOIN Station s ON p.station_id = s.id WHERE s.id = ?",
+            params: [stationId], // You can add parameters here if needed
         };
         return await dbFuncs.promisifiedSimpleQueryFunc(queryObject);
     },

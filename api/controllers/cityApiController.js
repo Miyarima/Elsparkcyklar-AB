@@ -169,17 +169,17 @@ const getCityChargingStation = async (req, res) => {
 // Get specific zone and charging station within zone
 const getBikeChargingOnStation = async (req, res) => {
     const apiKey = req.query.apiKey;
-    const zoneId = req.params.id;
+    const stationId = req.params.id;
 
     if (!apiKey) {
         return res.status(403).json({ error: "Please provide an API key." });
     }
 
-    if (!zoneId) {
+    if (!stationId) {
         return res.status(403).json({ error: "Missing zoneId for the city!." });
     }
 
-    const bikes = await db.gatheredCityFunctions.bikesAttachedToStation();
+    const bikes = await db.gatheredCityFunctions.bikesAttachedToStation(stationId);
 
     return res.status(200).json({
         bikes: bikes,
