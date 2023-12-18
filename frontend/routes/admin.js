@@ -22,15 +22,15 @@ router.get("/admin", (req, res) => {
 });
 
 router.get("/cities", (req, res) => {
-    res.render("cities.ejs");
+    adminController.allCities(req, res, 123);
 });
 
 router.get("/customers", (req, res) => {
-    res.render("customers.ejs");
+    adminController.allCustomers(req, res, 123);
 });
 
 router.get("/bikes", (req, res) => {
-    res.render("bikes.ejs");
+    adminController.allBikes(req, res, 123);
 });
 
 router.get("/stations", (req, res) => {

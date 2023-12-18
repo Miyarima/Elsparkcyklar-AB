@@ -10,10 +10,10 @@
         <th class="th-details">Plånbok (kr)</th>
     </tr>
     <tr class="tr-details">
-        <td class="td-details">alice_jones</td>
-        <td class="td-details">user</td>
-        <td class="td-details" style="width: 14.5em;">alice.jones@email.com</td>
-        <td class="td-details">100.00</td>
+        <td class="td-details"><%= users[0].id %></td>
+        <td class="td-details"><%= users[0].role %></td>
+        <td class="td-details" style="width: 14.5em;"><%= users[0].email %></td>
+        <td class="td-details"><%= users[0].wallet %></td>
     </tr>
 </table>
 <div class="middle-edit"> <!-- Ändra till egen klass om du vill flytta den-->
