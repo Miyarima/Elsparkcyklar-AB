@@ -26,7 +26,6 @@ CREATE TABLE `Zone` (
 
 CREATE TABLE Station (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    zone_id INT NOT NULL,
     longitude FLOAT NOT NULL,
     latitude FLOAT NOT NULL,
     `address` TEXT NOT NULL,
@@ -40,12 +39,14 @@ CREATE TABLE Bike (
     `status` VARCHAR(10) DEFAULT NULL,
     speed FLOAT DEFAULT 0,
     `zone_id` INT DEFAULT NULL,
+    `station_id` INT DEFAULT NULL,
     battery INT DEFAULT 100,
     charging BOOLEAN DEFAULT false,
     comparison_longitude FLOAT DEFAULT NULL,
     comparison_latitude FLOAT DEFAULT NULL,
     power BOOLEAN DEFAULT true,
-    FOREIGN KEY (`zone_id`) REFERENCES `Zone`(id)
+    FOREIGN KEY (`zone_id`) REFERENCES `Zone`(id),
+    FOREIGN KEY (`station_id`) REFERENCES Station(id)
 );
 
 CREATE TABLE Port (
