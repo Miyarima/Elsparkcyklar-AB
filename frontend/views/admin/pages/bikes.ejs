@@ -9,76 +9,17 @@
         <th class="th-bike">Status</th>
         <th class="th-bike">Station</th>
     </tr>
+    <% for (let bike of bikes) { %>
     <tr class="tr-bike">
-        <td class="td-bike">1</td>
-        <td class="td-bike">Longitude: 18.0686<br>
-            Latitude: 59.3293</td>
-        <td class="td-bike">Available</td>
+        <td class="td-bike"><%= bike.id %></td>
+        <td class="td-bike">
+            Latitude: <%= bike.latitude %>
+            <br>
+            Longitude: <%= bike.longitude %></td>
+        <td class="td-bike"><%= bike.status %></td>
         <td class="td-bike">2</td>
     </tr>
-    <tr class="tr-bike">
-        <td class="td-bike">2</td>
-        <td class="td-bike">Longitude: 13.0007<br>
-            Latitude: 55.6050</td>
-        <td class="td-bike">In Use</td>
-        <td class="td-bike">1</td>
-    </tr>
-    <tr class="tr-bike">
-        <td class="td-bike">1</td>
-        <td class="td-bike">Longitude: 18.0686<br>
-            Latitude: 59.3293</td>
-        <td class="td-bike">Available</td>
-        <td class="td-bike">2</td>
-    </tr>
-    <tr class="tr-bike">
-        <td class="td-bike">2</td>
-        <td class="td-bike">Longitude: 13.0007<br>
-            Latitude: 55.6050</td>
-        <td class="td-bike">In Use</td>
-        <td class="td-bike">1</td>
-    </tr>
-    <tr class="tr-bike">
-        <td class="td-bike">1</td>
-        <td class="td-bike">Longitude: 18.0686<br>
-            Latitude: 59.3293</td>
-        <td class="td-bike">Available</td>
-        <td class="td-bike">2</td>
-    </tr>
-    <tr class="tr-bike">
-        <td class="td-bike">2</td>
-        <td class="td-bike">Longitude: 13.0007<br>
-            Latitude: 55.6050</td>
-        <td class="td-bike">In Use</td>
-        <td class="td-bike">1</td>
-    </tr>
-    <tr class="tr-bike">
-        <td class="td-bike">1</td>
-        <td class="td-bike">Longitude: 18.0686<br>
-            Latitude: 59.3293</td>
-        <td class="td-bike">Available</td>
-        <td class="td-bike">2</td>
-    </tr>
-    <tr class="tr-bike">
-        <td class="td-bike">2</td>
-        <td class="td-bike">Longitude: 13.0007<br>
-            Latitude: 55.6050</td>
-        <td class="td-bike">In Use</td>
-        <td class="td-bike">1</td>
-    </tr>
-    <tr class="tr-bike">
-        <td class="td-bike">1</td>
-        <td class="td-bike">Longitude: 18.0686<br>
-            Latitude: 59.3293</td>
-        <td class="td-bike">Available</td>
-        <td class="td-bike">2</td>
-    </tr>
-    <tr class="tr-bike">
-        <td class="td-bike">2</td>
-        <td class="td-bike">Longitude: 13.0007<br>
-            Latitude: 55.6050</td>
-        <td class="td-bike">In Use</td>
-        <td class="td-bike">1</td>
-    </tr>
+    <% } %>
 </table>
 
 <%- include("footer.ejs") %>

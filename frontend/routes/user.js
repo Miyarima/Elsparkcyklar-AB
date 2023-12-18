@@ -5,6 +5,7 @@ const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/userController.js");
 
+// Used for oAuth
 const clientID = "c40fb77fa87796607ad9";
 const clientSecret = "33909380358de1cf2634961840b3f436d6e0236b";
 
@@ -46,11 +47,11 @@ router.get("/authenticate", (req, res) => {
 });
 
 router.get("/user", (req, res) => {
-    res.render("front.ejs");
+    userController.specificUser(req, res, 'alice_jones', 123);
 });
 
 router.get("/details", (req, res) => {
-    res.render("details.ejs");
+    userController.detailsSpecificUser(req, res, 'alice_jones', 123);
 });
 
 router.get("/detailsedit", (req, res) => {
@@ -58,7 +59,7 @@ router.get("/detailsedit", (req, res) => {
 });
 
 router.get("/history", (req, res) => {
-    res.render("history.ejs");
+    userController.getUserHistory(req, res, 'alice_jones', 123);
 });
 
 router.get("/wallet", (req, res) => {
