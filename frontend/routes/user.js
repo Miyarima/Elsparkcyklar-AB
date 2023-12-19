@@ -44,11 +44,11 @@ router.post("/gitsignup", (req, res) => {
 });
 
 router.get("/user", standardAuth.simpleAuthorization("User"), (req, res) => {
-    userController.specificUser(req, res, 'alice_jones', 123);
+    userController.specificUser(req, res, "alice_jones", 123);
 });
 
 router.get("/details", standardAuth.simpleAuthorization("User"), (req, res) => {
-    userController.detailsSpecificUser(req, res, 'alice_jones', 123);
+    userController.detailsSpecificUser(req, res, "alice_jones", 123);
 });
 
 router.get("/detailsedit", (req, res) => {
@@ -56,7 +56,7 @@ router.get("/detailsedit", (req, res) => {
 });
 
 router.get("/history", (req, res) => {
-    userController.getUserHistory(req, res, 'alice_jones', 123);
+    userController.getUserHistory(req, res, "alice_jones", 123);
 });
 
 router.get("/wallet", (req, res) => {

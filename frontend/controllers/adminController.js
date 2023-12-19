@@ -23,7 +23,7 @@ const allCities = async(req, res, apiKey) => {
         const cityStockholm = [];
 
         for (const stad of cityData.cities) {
-            if (stad.city === 'Stockholm') {
+            if (stad.city === "Stockholm") {
                 cityStockholm.push(stad);
             } else {
                 cityMalmoe.push(stad);
@@ -31,12 +31,12 @@ const allCities = async(req, res, apiKey) => {
         }
 
         console.log(cityMalmoe);
-        console.log(cityMalmoe)
+        console.log(cityMalmoe);
 
         res.render("cities.ejs");
     } catch (error) {
-        console.error('Error fetching user data:', error);
-        res.status(500).send('Internal Server Error');
+        console.error("Error fetching user data:", error);
+        res.status(500).send("Internal Server Error");
     }
 };
 
@@ -47,8 +47,8 @@ const allBikes = async(req, res, apiKey) => {
 
         res.render("bikes.ejs", { bikes: bikeData.bikes });
     } catch (error) {
-        console.error('Error fetching user data:', error);
-        res.status(500).send('Internal Server Error');
+        console.error("Error fetching user data:", error);
+        res.status(500).send("Internal Server Error");
     }
 };
 
@@ -59,8 +59,8 @@ const allCustomers = async(req, res, apiKey) => {
 
         res.render("customers.ejs", { users: userData.users });
     } catch (error) {
-        console.error('Error fetching user data:', error);
-        res.status(500).send('Internal Server Error');
+        console.error("Error fetching user data:", error);
+        res.status(500).send("Internal Server Error");
     }
 };
 

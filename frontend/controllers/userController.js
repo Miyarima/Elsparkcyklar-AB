@@ -21,8 +21,8 @@ const getUserHistory = async (req, res, userId, apiKey) => {
 
         res.render("history.ejs", { users: userData.users });
     } catch (error) {
-        console.log('Error fetching user data:', error);
-        res.status(500).send('Internal Server Error');
+        console.log("Error fetching user data:", error);
+        res.status(500).send("Internal Server Error");
     }
 };
 
@@ -33,8 +33,8 @@ const specificUser = async (req, res, userId, apiKey) => {
 
         res.render("front.ejs", { users: userData.users });
     } catch (error) {
-        console.error('Error fetching user data:', error);
-        res.status(500).send('Internal Server Error');
+        console.error("Error fetching user data:", error);
+        res.status(500).send("Internal Server Error");
     }
 };
 
@@ -45,8 +45,8 @@ const detailsSpecificUser = async (req, res, userId, apiKey) => {
 
         res.render("details.ejs", { users: userData.users });
     } catch (error) {
-        console.error('Error fetching user data:', error);
-        res.status(500).send('Internal Server Error');
+        console.error("Error fetching user data:", error);
+        res.status(500).send("Internal Server Error");
     }
 };
 

@@ -255,6 +255,7 @@ const addNewBike = async (req, res) => {
 const updateNumberBikes = async (req, res) => {
     const apiKey = req.query.apiKey;
     const cityId = req.params.id;
+    const numberId = req.params.nr;
 
     if (!apiKey) {
         return res.status(403).json({ error: "Please provide an API key." });
