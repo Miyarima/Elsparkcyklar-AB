@@ -28,8 +28,7 @@ CREATE TABLE Station (
     id INT PRIMARY KEY AUTO_INCREMENT,
     longitude FLOAT NOT NULL,
     latitude FLOAT NOT NULL,
-    `address` TEXT NOT NULL,
-    FOREIGN KEY (zone_id) REFERENCES `Zone`(id)
+    `address` TEXT NOT NULL
 );
 
 CREATE TABLE Bike (
