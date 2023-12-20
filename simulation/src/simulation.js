@@ -2,6 +2,26 @@ const Bike = require("./bike.js");
 const routes = require("./route.js");
 const firstNames = require("./names.js").firstNames;
 const lastNames = require("./names.js").lastNames;
+const stations = require("./stations.js");
+const zones = require("./zones.js");
+
+const createBike = (bikeId, long, lat, route) => {
+    const randomFirstName =
+        firstNames[Math.floor(Math.random() * firstNames.length)];
+    const randomLastName =
+        lastNames[Math.floor(Math.random() * lastNames.length)];
+    const myBike = new Bike(
+        `${randomFirstName} ${randomLastName}`,
+        bikeId,
+        long,
+        lat,
+        route,
+        5,
+        zones,
+    );
+
+    return myBike;
+};
 
 const generateBikesAndUsers = (count) => {
     let bikes = [];
@@ -20,21 +40,29 @@ const generateBikesAndUsers = (count) => {
     return bikes;
 };
 
-const createBike = (bikeId, long, lat, route) => {
-    const randomFirstName =
-        firstNames[Math.floor(Math.random() * firstNames.length)];
-    const randomLastName =
-        lastNames[Math.floor(Math.random() * lastNames.length)];
-    const myBike = new Bike(
-        `${randomFirstName} ${randomLastName}`,
-        bikeId,
-        long,
-        lat,
-        route,
-        5,
-    );
+const initStaticStructures = () => {
+    let coordinates = [];
+    stations.forEach((station) => {
+        coordinates.push([station[0], station[1], "chargingstation", 10]);
+    });
 
-    return myBike;
+    zones.forEach((station) => {
+        if (station[3] === 5) {
+            coordinates.push([station[0], station[1], "5-zone", station[2]]);
+        } else if (station[3] === 10) {
+            coordinates.push([station[0], station[1], "10-zone", station[2]]);
+        } else {
+            coordinates.push([station[0], station[1], "15-zone", station[2]]);
+        }
+    });
+
+    fetch("http://localhost:3000/update-map-static", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ coordinates }),
+    });
 };
 
 const sendMapUpdates = (bikes) => {
@@ -59,6 +87,7 @@ const sendMapUpdates = (bikes) => {
     });
 };
 
+initStaticStructures();
 const totalBikes = generateBikesAndUsers(3000);
 let reachedDestination = [];
 

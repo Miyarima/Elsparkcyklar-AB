@@ -17,5 +17,5 @@
         "padded-blocks": ["warn", "never"],
         "space-before-blocks": ["warn", "always"]
     },
-    "ignorePatterns": ["app.test.js"]
+    "ignorePatterns": ["app.test.js", "map.js"]
 }
