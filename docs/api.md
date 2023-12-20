@@ -105,10 +105,10 @@ returns zones, bikes and charging statioins in specific city
 **POST**
 
 ```bash
-/api/city/:id/bike/:nr
+/api/bike/
 ```
 
-add a number of bikes to specific city
+adds a bike to the system, content-type has to be application/json and the post should contain an object containing longitude, latitude, status.
 
 ---
 
