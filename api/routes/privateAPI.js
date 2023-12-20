@@ -135,9 +135,9 @@ router.get("/city/:id/zone/bike", (req, res) => {
     cityApiController.getBikeChargingOnStation(req, res);
 });
 
-// Add a number of bikes to specific city
-router.post("/city/:id/bike/:nr", (req, res) => {
-    cityApiController.addNumberBikes(req, res);
+// Insert new bike
+router.post("/bike", (req, res) => {
+    cityApiController.addNewBike(req, res);
 });
 
 // Update a number of bikes from specific city

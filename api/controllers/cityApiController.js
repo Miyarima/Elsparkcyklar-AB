@@ -191,28 +191,64 @@ const getBikeChargingOnStation = async (req, res) => {
 //? ======================================
 
 // Add number of bikes in city
-const addNumberBikes = async (req, res) => {
+const addNewBike = async (req, res) => {
     const apiKey = req.query.apiKey;
-    const cityId = req.params.id;
-    const numberId = req.params.nr;
+    const contentType = req.headers["content-type"];
 
     if (!apiKey) {
         return res.status(403).json({ error: "Please provide an API key." });
     }
 
-    if (!cityId) {
-        return res.status(403).json({ error: "Missing cityId for the city!." });
-    }
-
-    if (!numberId) {
+    // Check for the required headers
+    if (!contentType || contentType !== "application/json") {
         return res
-            .status(403)
-            .json({ error: "Missing number of bikes to add to the city!." });
+            .status(400)
+            .json({ error: "Content-Type must be application/json" });
     }
 
-    return res.status(200).json({
-        message: "Bikes have been added to city.",
-    });
+    // Check for the required body content
+    if (!req.body || Object.keys(req.body).length === 0) {
+        return res
+            .status(400)
+            .json({ error: "Request body is missing or empty" });
+    }
+
+    try {
+        const { longitude, latitude, status } = req.body;
+
+        if (!longitude) {
+            return res.status(403).json({
+                error: "Coordinates are needed for the Bike (longitude)",
+            });
+        }
+
+        if (!latitude) {
+            return res.status(403).json({
+                error: "Coordinates are needed for the Bike (latitude)",
+            });
+        }
+
+        if (!status) {
+            return res
+                .status(403)
+                .json({ error: "Status of bike is unavailable" });
+        }
+
+        const insert = {
+            table: "Bike",
+            longitude: longitude,
+            latitude: latitude,
+            status: status,
+        };
+
+        await dbCreate.functionsForAllTables.insertTable(insert);
+
+        return res.status(200).json({
+            message: "Bikes have been added to city.",
+        });
+    } catch (error) {
+        return res.status(500).json({ error: `${error}` });
+    }
 };
 
 // Update number of bikes in city
@@ -273,7 +309,7 @@ module.exports = {
     getCityZone,
     getCityChargingStation,
     getBikeChargingOnStation,
-    addNumberBikes,
+    addNewBike,
     updateNumberBikes,
     deleteNumberBikes,
 };
