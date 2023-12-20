@@ -19,6 +19,36 @@ const getAllCities = async (req, res) => {
     });
 };
 
+// Get all information about the cities
+const getAllStations = async (req, res) => {
+    const apiKey = req.query.apiKey;
+
+    if (!apiKey) {
+        return res.status(403).json({ error: "Please provide an API key." });
+    }
+
+    const stations = await db.gatheredCityFunctions.selectAllStations();
+
+    return res.status(200).json({
+        stations: stations,
+    });
+};
+
+// Get all information about the cities
+const getAllZones = async (req, res) => {
+    const apiKey = req.query.apiKey;
+
+    if (!apiKey) {
+        return res.status(403).json({ error: "Please provide an API key." });
+    }
+
+    const zones = await db.gatheredCityFunctions.selectAllZones();
+
+    return res.status(200).json({
+        zones: zones,
+    });
+};
+
 // Inserts new city
 const addNewCity = async (req, res) => {
     const apiKey = req.query.apiKey;
@@ -179,7 +209,8 @@ const getBikeChargingOnStation = async (req, res) => {
         return res.status(403).json({ error: "Missing zoneId for the city!." });
     }
 
-    const bikes = await db.gatheredCityFunctions.bikesAttachedToStation(stationId);
+    const bikes =
+        await db.gatheredCityFunctions.bikesAttachedToStation(stationId);
 
     return res.status(200).json({
         bikes: bikes,
@@ -303,6 +334,8 @@ const deleteNumberBikes = async (req, res) => {
 
 module.exports = {
     getAllCities,
+    getAllStations,
+    getAllZones,
     addNewCity,
     getSpecificCity,
     getBikesCity,

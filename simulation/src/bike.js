@@ -30,6 +30,8 @@ class Bike {
         this.speedZones = speedZones;
     }
 
+    // Changes the bike to on
+    // Starts an interval of 1 sek update
     turnOn() {
         this.isOn = true;
         console.log(
@@ -41,6 +43,7 @@ class Bike {
         return this;
     }
 
+    // Turns the bike of and removes the interval
     turnOff() {
         this.isOn = false;
         this.currentSpeed = 0;
@@ -51,14 +54,17 @@ class Bike {
         return this;
     }
 
+    // Retuns if the bike is on or off
     getStatus() {
         return this.isOn;
     }
 
+    // Returns the bikes ID
     getBikeId() {
         return this.bikeId;
     }
 
+    // Calls all needed functions for the program to work
     updateDb() {
         this.randomSpeed();
         this.calculateDistance();
@@ -69,20 +75,24 @@ class Bike {
         // );
     }
 
+    // Returns the current coordinates for the bike
     getCoordinates() {
         return [this.longitude, this.latitude];
     }
 
+    // returns the route assigned to the bike
     getRoute() {
         return this.route;
     }
 
+    // Updates to the new coordinates the bike should travel towards
     updateCurrentCoordiante() {
         this.currentCoordinate += 1;
         this.comparisonLongitude = this.route[this.currentCoordinate][0];
         this.comparisonLatitude = this.route[this.currentCoordinate][1];
     }
 
+    // Calulates the distance the bike traveled since the last update
     calculateDistance() {
         const time = 1000;
         const mps = this.speed / 3.6;
@@ -90,6 +100,7 @@ class Bike {
         this.distanceMoved = (time / 1000) * mps;
     }
 
+    // Generetas a random speed for the bike based on the max allowed speed
     randomSpeed() {
         const rand = Math.random();
         const weights = Array.from({ length: this.maxSpeed + 1 }, (_, i) =>
@@ -108,6 +119,8 @@ class Bike {
         }
     }
 
+    // Check if a bike is inside of a speed zone,
+    // if so limits the bike to the zones max speed
     checkSpeedZone() {
         let inZone = 0;
         const toRadians = (degrees) => (degrees * Math.PI) / 180;
@@ -116,8 +129,8 @@ class Bike {
         this.speedZones.forEach((zone) => {
             const currLatRad = toRadians(this.latitude);
             const currLonRad = toRadians(this.longitude);
-            const zoneLatRad = toRadians(zone[1]);
-            const zoneLonRad = toRadians(zone[0]);
+            const zoneLatRad = toRadians(zone.longitude);
+            const zoneLonRad = toRadians(zone.latitude);
 
             const latDiff = zoneLatRad - currLatRad;
             const lonDiff = zoneLonRad - currLonRad;
@@ -131,9 +144,9 @@ class Bike {
             const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
             const distance = radius * c;
 
-            if (zone[2] >= distance) {
+            if (zone.radius >= distance) {
                 inZone = 1;
-                this.maxSpeed = zone[3];
+                this.maxSpeed = zone.max_speed;
             }
         });
 
@@ -142,6 +155,9 @@ class Bike {
         }
     }
 
+    // Calculates the new coordinates for the bike
+    // based in where it's going, where it was and
+    // how far it traveld since the last update
     calculateIntermediateCoordinate(distanceToMove) {
         const toRadians = (degrees) => (degrees * Math.PI) / 180;
         const toDegrees = (radians) => (radians * 180) / Math.PI;

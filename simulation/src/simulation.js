@@ -2,16 +2,16 @@ const Bike = require("./bike.js");
 const routes = require("./route.js");
 const firstNames = require("./names.js").firstNames;
 const lastNames = require("./names.js").lastNames;
-const stations = require("./stations.js");
-const zones = require("./zones.js");
+const functions = require("./fetch.js");
 
+const random = (arr) => {
+    return arr[Math.floor(Math.random() * arr.length)];
+};
+
+// Generets a bike with the given values
 const createBike = (bikeId, long, lat, route) => {
-    const randomFirstName =
-        firstNames[Math.floor(Math.random() * firstNames.length)];
-    const randomLastName =
-        lastNames[Math.floor(Math.random() * lastNames.length)];
     const myBike = new Bike(
-        `${randomFirstName} ${randomLastName}`,
+        `${random(firstNames)} ${random(lastNames)}`,
         bikeId,
         long,
         lat,
@@ -23,6 +23,8 @@ const createBike = (bikeId, long, lat, route) => {
     return myBike;
 };
 
+// Generates the amount of bikes asked for
+// and retuns in an array
 const generateBikesAndUsers = (count) => {
     let bikes = [];
 
@@ -40,20 +42,30 @@ const generateBikesAndUsers = (count) => {
     return bikes;
 };
 
-const initStaticStructures = () => {
+// Send all static objects to the map
+const initStaticStructures = async () => {
+    stations = await functions.fetchStations();
+    zones = await functions.fetchZones();
+
     let coordinates = [];
+
     stations.forEach((station) => {
-        coordinates.push([station[0], station[1], "chargingstation", 10]);
+        coordinates.push([
+            station.latitude,
+            station.longitude,
+            "chargingstation",
+            10,
+        ]);
     });
 
-    zones.forEach((station) => {
-        if (station[3] === 5) {
-            coordinates.push([station[0], station[1], "5-zone", station[2]]);
-        } else if (station[3] === 10) {
-            coordinates.push([station[0], station[1], "10-zone", station[2]]);
-        } else {
-            coordinates.push([station[0], station[1], "15-zone", station[2]]);
+    zones.forEach((zone) => {
+        let speed = "5-zone";
+
+        if (zone.max_speed !== 5) {
+            speed = zone.max_speed === 10 ? "10-zone" : "15-zone";
         }
+
+        coordinates.push([zone.latitude, zone.longitude, speed, zone.radius]);
     });
 
     fetch("http://localhost:3000/update-map-static", {
@@ -65,6 +77,8 @@ const initStaticStructures = () => {
     });
 };
 
+// Periodically sends all moving objects as
+// an update to the map
 const sendMapUpdates = (bikes) => {
     let coordinates = [];
     bikes.forEach((bike) => {
@@ -87,16 +101,42 @@ const sendMapUpdates = (bikes) => {
     });
 };
 
-initStaticStructures();
-const totalBikes = generateBikesAndUsers(3000);
+async function init(count) {
+    await initStaticStructures();
+    const totalBikes = generateBikesAndUsers(count);
+
+    // Clears the interval which is automatically
+    // sending updates to the map
+    const updateBikes = setInterval(() => {
+        console.log(
+            `dest: ${reachedDestination.length}, bikes: ${totalBikes.length}`,
+        );
+        if (reachedDestination.length === totalBikes.length) {
+            clearInterval(updateBikes);
+        }
+        sendMapUpdates(totalBikes);
+    }, 1000);
+}
+
+let stations;
+let zones;
 let reachedDestination = [];
 
-const updateBikes = setInterval(() => {
-    console.log(
-        `dest: ${reachedDestination.length}, bikes: ${totalBikes.length}`,
-    );
-    if (reachedDestination.length === totalBikes.length) {
-        clearInterval(updateBikes);
-    }
-    sendMapUpdates(totalBikes);
-}, 1000);
+// amount of bikes
+init(3000);
+
+// initStaticStructures();
+// const totalBikes = generateBikesAndUsers(10);
+// let reachedDestination = [];
+
+// // Clears the interval which is automatically
+// // sending updates to the map
+// const updateBikes = setInterval(() => {
+//     console.log(
+//         `dest: ${reachedDestination.length}, bikes: ${totalBikes.length}`,
+//     );
+//     if (reachedDestination.length === totalBikes.length) {
+//         clearInterval(updateBikes);
+//     }
+//     sendMapUpdates(totalBikes);
+// }, 1000);

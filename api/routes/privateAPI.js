@@ -110,6 +110,16 @@ router.get("/cities", (req, res) => {
     cityApiController.getAllCities(req, res);
 });
 
+// Returns all stations
+router.get("/cities/stations", (req, res) => {
+    cityApiController.getAllStations(req, res);
+});
+
+// Returns all zones
+router.get("/cities/zones", (req, res) => {
+    cityApiController.getAllZones(req, res);
+});
+
 // Adds new city
 router.post("/city", (req, res) => {
     cityApiController.addNewCity(req, res);
