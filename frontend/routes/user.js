@@ -3,10 +3,11 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/userController.js");
-const gitAuthentication = require("../auth/gitauth.js");
-const standardAuthentication = require("../auth/standardauth.js");
-const gitAuth = gitAuthentication.gitAuthOB;
-const standardAuth = standardAuthentication.standardAuth;
+const gitAuthentication = require("../auth/gitauthentication.js");
+const standardAuthentication = require("../auth/standardauthentication.js");
+const authorization = require("../auth/authorization.js");
+const gitAuth = gitAuthentication.gitAuthentication;
+const standardAuth = standardAuthentication.standardAuthentication;
 //router.use(cookieParser());
 
 router.use((req, res, next) => {
@@ -14,12 +15,17 @@ router.use((req, res, next) => {
     next();
 });
 
-router.get("/", (req, res) => {
+router.get("/",authorization.simpleAuthorization("User"), (req, res) => {
     userController.viewHome(req, res);
 });
 
 router.get("/userlogin", (req, res) => {
     res.render("user_login.ejs");
+});
+
+router.post("/userlogin", (req, res) => {
+    console.log(req.body)
+    standardAuth.authenticateLogin(req, res);
 });
 
 router.get("/createuser", (req, res) => {
@@ -43,32 +49,38 @@ router.post("/gitsignup", (req, res) => {
     gitAuth.gitSignup(req, res);
 });
 
-router.get("/user", standardAuth.simpleAuthorization("User"), (req, res) => {
+router.get("/user", authorization.simpleAuthorization("User"), (req, res) => {
     userController.specificUser(req, res, "alice_jones", 123);
 });
 
-router.get("/details", standardAuth.simpleAuthorization("User"), (req, res) => {
+router.get("/details", authorization.simpleAuthorization("User"), (req, res) => {
     userController.detailsSpecificUser(req, res, "alice_jones", 123);
 });
 
-router.get("/detailsedit", (req, res) => {
+router.get("/detailsedit",authorization.simpleAuthorization("User"), (req, res) => {
     res.render("details_edit.ejs");
 });
 
-router.get("/history", (req, res) => {
+router.get("/history",authorization.simpleAuthorization("User"), (req, res) => {
     userController.getUserHistory(req, res, "alice_jones", 123);
 });
 
-router.get("/wallet", (req, res) => {
+router.get("/wallet", authorization.simpleAuthorization("User"), (req, res) => {
     res.render("wallet.ejs");
 });
 
-router.get("/prepaid", (req, res) => {
+router.get("/prepaid",authorization.simpleAuthorization("User"), (req, res) => {
     res.render("wallet_prepaid.ejs");
 });
 
-router.get("/autogiro", (req, res) => {
+router.get("/autogiro",authorization.simpleAuthorization("User"), (req, res) => {
     res.render("wallet_autogiro.ejs");
+});
+
+
+router.get("/logout", (req, res) => {
+    req.session.destroy();
+    res.redirect("userlogin");
 });
 
 module.exports = router;

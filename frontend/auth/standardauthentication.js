@@ -1,14 +1,6 @@
-const standardAuth = {
-    simpleAuthorization: (role) => {
-        return (req, res, next) => {
-            if (req.session.username && req.session.role === role) {
-                next();
-            } else {
-                req.session.destroy();
-                return res.redirect("/user/userlogin");
-            }
-        };
-    },
+const authorization = require("./authorization.js");
+
+const standardAuthentication = {
 
     insertUser: (req, res) => {
         const { username, password, email } = req.body;
@@ -37,16 +29,14 @@ const standardAuth = {
                             msg = extractedString.includes("PRIMARY")
                                 ? "Username already exists"
                                 : extractedString.includes("email")
-                                    ? extractedString.charAt(0).toUpperCase +
-                                    extractedString.slice(1) +
-                                    "already exists"
+                                    ?
+                                    " Email already exists"
                                     : "There was an error";
                         }
                         return res.render("create_user.ejs", { msg });
                     });
                 }
-                req.session.username = username;
-                req.session.role = "User";
+                authorization.updateSession(req, username, "User");
                 return res.redirect("/user/user");
             })
             .catch((error) => {
@@ -54,8 +44,25 @@ const standardAuth = {
                 return res.redirect("/user/userlogin");
             });
     },
+
+    authenticateLogin: (req,res) => {
+        const username = req.body.username;
+        return fetch(`http://api:8080/api/user/${username}?apiKey=1`, {
+            method: "GET",
+        })
+            .then((result) => result.json())
+            .then((data) => {   
+                console.log(data.users)
+                if (!data.users[0] || req.body.password !== data.users[0].password ) {
+                    const msg = "incorrect credentials"
+                    return res.render("user_login.ejs", {msg});
+                }
+                authorization.updateSession(req, username, "User");
+                return res.redirect("/user/user");
+            });
+    }
 };
 
 module.exports = {
-    standardAuth,
+    standardAuthentication,
 };
