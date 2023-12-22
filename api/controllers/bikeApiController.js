@@ -124,20 +124,16 @@ const returnBike = async (req, res) => {
 
     if (!longitude) {
         console.log("No coordinates for Longitude given!");
-        return res
-            .status(403)
-            .json({
-                error: "Please provide a coordinate for longitude for a bike.",
-            });
+        return res.status(403).json({
+            error: "Please provide a coordinate for longitude for a bike.",
+        });
     }
 
     if (!latitude) {
         console.log("No coordinates for Latitude given!");
-        return res
-            .status(403)
-            .json({
-                error: "Please provide a coordinate for latitude for a bike.",
-            });
+        return res.status(403).json({
+            error: "Please provide a coordinate for latitude for a bike.",
+        });
     }
 
     const bike = await db.gatheredBikeFunctions.lockBike(

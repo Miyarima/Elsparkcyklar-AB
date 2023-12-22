@@ -4,7 +4,6 @@ const clientID = "c40fb77fa87796607ad9";
 const clientSecret = "33909380358de1cf2634961840b3f436d6e0236b";
 
 const gitAuthentication = {
-
     gitLogin: (token) => {
         return authorization.gitAuthorization(token).then((res) => {
             return fetch(`http://api:8080/api/gituser/${res.login}?apiKey=1`, {
@@ -20,7 +19,8 @@ const gitAuthentication = {
     gitSignup: (req, res) => {
         const username = req.body.username;
         const access_token = req.session.access_token;
-        return authorization.gitAuthorization(access_token)
+        return authorization
+            .gitAuthorization(access_token)
             .then((result) => {
                 const requestBody = {
                     username: username,
@@ -63,12 +63,14 @@ const gitAuthentication = {
             .then((result) => result.json())
             .then((resData) => {
                 const accessToken = resData.access_token;
-                return gitAuthentication.gitLogin(accessToken).then((result) => {
-                    if (!result.exists) {
-                        req.session.access_token = result.token;
-                        return res.redirect("/user/gitsignup");
-                    }
-                });
+                return gitAuthentication
+                    .gitLogin(accessToken)
+                    .then((result) => {
+                        if (!result.exists) {
+                            req.session.access_token = result.token;
+                            return res.redirect("/user/gitsignup");
+                        }
+                    });
             })
             .catch(() => {
                 return res.redirect("/user/userlogin");

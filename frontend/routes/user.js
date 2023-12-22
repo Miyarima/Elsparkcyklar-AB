@@ -15,7 +15,7 @@ router.use((req, res, next) => {
     next();
 });
 
-router.get("/",authorization.simpleAuthorization("User"), (req, res) => {
+router.get("/", authorization.simpleAuthorization("User"), (req, res) => {
     userController.viewHome(req, res);
 });
 
@@ -24,7 +24,7 @@ router.get("/userlogin", (req, res) => {
 });
 
 router.post("/userlogin", (req, res) => {
-    console.log(req.body)
+    console.log(req.body);
     standardAuth.authenticateLogin(req, res);
 });
 
@@ -53,30 +53,49 @@ router.get("/user", authorization.simpleAuthorization("User"), (req, res) => {
     userController.specificUser(req, res, "alice_jones", 123);
 });
 
-router.get("/details", authorization.simpleAuthorization("User"), (req, res) => {
-    userController.detailsSpecificUser(req, res, "alice_jones", 123);
-});
+router.get(
+    "/details",
+    authorization.simpleAuthorization("User"),
+    (req, res) => {
+        userController.detailsSpecificUser(req, res, "alice_jones", 123);
+    },
+);
 
-router.get("/detailsedit",authorization.simpleAuthorization("User"), (req, res) => {
-    res.render("details_edit.ejs");
-});
+router.get(
+    "/detailsedit",
+    authorization.simpleAuthorization("User"),
+    (req, res) => {
+        res.render("details_edit.ejs");
+    },
+);
 
-router.get("/history",authorization.simpleAuthorization("User"), (req, res) => {
-    userController.getUserHistory(req, res, "alice_jones", 123);
-});
+router.get(
+    "/history",
+    authorization.simpleAuthorization("User"),
+    (req, res) => {
+        userController.getUserHistory(req, res, "alice_jones", 123);
+    },
+);
 
 router.get("/wallet", authorization.simpleAuthorization("User"), (req, res) => {
     res.render("wallet.ejs");
 });
 
-router.get("/prepaid",authorization.simpleAuthorization("User"), (req, res) => {
-    res.render("wallet_prepaid.ejs");
-});
+router.get(
+    "/prepaid",
+    authorization.simpleAuthorization("User"),
+    (req, res) => {
+        res.render("wallet_prepaid.ejs");
+    },
+);
 
-router.get("/autogiro",authorization.simpleAuthorization("User"), (req, res) => {
-    res.render("wallet_autogiro.ejs");
-});
-
+router.get(
+    "/autogiro",
+    authorization.simpleAuthorization("User"),
+    (req, res) => {
+        res.render("wallet_autogiro.ejs");
+    },
+);
 
 router.get("/logout", (req, res) => {
     req.session.destroy();

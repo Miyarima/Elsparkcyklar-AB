@@ -14,7 +14,9 @@ const viewHome = (req, res) => {
 
 const getUserHistory = async (req, res, userId, apiKey) => {
     try {
-        const response = await fetch(`${baseURL}/${userId}/travel?apiKey=${apiKey}`);
+        const response = await fetch(
+            `${baseURL}/${userId}/travel?apiKey=${apiKey}`,
+        );
         const userData = await response.json();
 
         console.log(userData);
