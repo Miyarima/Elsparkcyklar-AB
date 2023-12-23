@@ -2,6 +2,35 @@
 
 const apiKey = 1;
 
+const fetchBikes = async () => {
+    try {
+        const response = await fetch(
+            `http://localhost:8080/api/bikes?apiKey=${apiKey}`,
+        );
+        const res = await response.json();
+        return res.bikes;
+    } catch (error) {
+        console.error("Error fetching cities:", error);
+        return null;
+    }
+};
+
+const deleteBike = async (id) => {
+    try {
+        const response = await fetch(
+            `http://localhost:8080/api/bike/${id}?apiKey=${apiKey}`,
+            {
+                method: "Delete",
+            },
+        );
+        const res = await response.json();
+        return res.bikes;
+    } catch (error) {
+        console.error("Error fetching cities:", error);
+        return null;
+    }
+};
+
 const fetchStations = async () => {
     try {
         const response = await fetch(
@@ -28,4 +57,41 @@ const fetchZones = async () => {
     }
 };
 
-module.exports = { fetchStations, fetchZones };
+const sendStaticElements = (coordinates) => {
+    try {
+        fetch("http://localhost:3000/update-map-static", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ coordinates }),
+        });
+    } catch (error) {
+        console.error("Error sending static update", error);
+        return null;
+    }
+};
+
+const sendBikeUpdate = (coordinates) => {
+    try {
+        fetch("http://localhost:3000/update-map", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ coordinates }),
+        });
+    } catch (error) {
+        console.error("Error sending bike update", error);
+        return null;
+    }
+};
+
+module.exports = {
+    fetchBikes,
+    deleteBike,
+    fetchStations,
+    fetchZones,
+    sendStaticElements,
+    sendBikeUpdate,
+};

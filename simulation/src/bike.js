@@ -15,7 +15,7 @@ class Bike {
         this.longitude = longitude;
         this.latitude = latitude;
         this.isOn = false;
-        this.status = "stationary";
+        this.status = "Available";
         this.zoneId = zoneId;
         this.speed = 0;
         this.maxSpeed = 20;
@@ -27,6 +27,7 @@ class Bike {
         this.comparisonLatitude = route[1][1];
         this.currentCoordinate = 1;
         this.updateInterval = null;
+        this.databaseInterval = null;
         this.speedZones = speedZones;
     }
 
@@ -37,9 +38,16 @@ class Bike {
         console.log(
             `${this.user} ${this.bikeId} ${this.longitude} ${this.latitude} is now on`,
         );
+
+        this.createBikeInDb();
+
         this.updateInterval = setInterval(() => {
-            this.updateDb();
+            this.updateBikeValues();
         }, 1000);
+
+        this.databaseInterval = setInterval(() => {
+            this.updateDb();
+        }, 10000);
         return this;
     }
 
@@ -51,6 +59,7 @@ class Bike {
             `${this.user} ${this.bikeId} ${this.longitude} ${this.latitude} is now off`,
         );
         clearInterval(this.updateInterval);
+        clearInterval(this.databaseInterval);
         return this;
     }
 
@@ -64,8 +73,31 @@ class Bike {
         return this.bikeId;
     }
 
+    async createBikeInDb() {
+        const apiKey = 1;
+
+        try {
+            await fetch(`http://localhost:8080/api/bike?apiKey=${apiKey}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    longitude: this.longitude,
+                    latitude: this.latitude,
+                    status: this.status,
+                }),
+            });
+            // const data = await res.json();
+            // console.log(data);
+        } catch (error) {
+            console.error("Error failed create bike:", error);
+            return null;
+        }
+    }
+
     // Calls all needed functions for the program to work
-    updateDb() {
+    updateBikeValues() {
         this.randomSpeed();
         this.calculateDistance();
         this.calculateIntermediateCoordinate(this.distanceMoved);
@@ -73,6 +105,33 @@ class Bike {
         // console.log(
         //     `${this.user} at ${this.longitude} ${this.latitude}, going ${this.speed} km/h and moving towards ${this.comparisonLongitude} ${this.comparisonLatitude}`,
         // );
+    }
+
+    async updateDb() {
+        // console.log("hello");
+        const apiKey = 1;
+
+        try {
+            await fetch(
+                `http://localhost:8080/api/bike/${this.bikeId}/position?apiKey=${apiKey}`,
+                {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        id: this.bikeId,
+                        longitude: this.longitude,
+                        latitude: this.latitude,
+                    }),
+                },
+            );
+            // const data = await res.json();
+            // console.log(data);
+        } catch (error) {
+            console.error("Error failed to update bike:", error);
+            return null;
+        }
     }
 
     // Returns the current coordinates for the bike

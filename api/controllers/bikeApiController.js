@@ -124,20 +124,16 @@ const returnBike = async (req, res) => {
 
     if (!longitude) {
         console.log("No coordinates for Longitude given!");
-        return res
-            .status(403)
-            .json({
-                error: "Please provide a coordinate for longitude for a bike.",
-            });
+        return res.status(403).json({
+            error: "Please provide a coordinate for longitude for a bike.",
+        });
     }
 
     if (!latitude) {
         console.log("No coordinates for Latitude given!");
-        return res
-            .status(403)
-            .json({
-                error: "Please provide a coordinate for latitude for a bike.",
-            });
+        return res.status(403).json({
+            error: "Please provide a coordinate for latitude for a bike.",
+        });
     }
 
     const bike = await db.gatheredBikeFunctions.lockBike(
@@ -175,45 +171,6 @@ const getBikePosition = async (req, res) => {
         latitude: latitude,
     });
 };
-
-//const setBikePosition = async (req, res) => {
-//    const apiKey = req.query.apiKey;
-//    const bikeId = req.params.id;
-//    const contentType = req.headers["content-type"];
-//    const { position } = req.body;
-
-//    // Check for apiKey provided
-//    if (!apiKey) {
-//       console.log("NO API KEY!");
-//        return res.status(403).json({ error: "Please provide an API key." });
-//    }
-
-//    // Check for the required headers
-//    if (!contentType || contentType !== "application/json") {
-//        return res.status(400).json({ error: "Content-Type must be application/json" });
-//    }
-
-//    // Check for the required body content
-//    if (!req.body || Object.keys(req.body).length === 0) {
-//        return res.status(400).json({ error: "Request body is missing or empty" });
-//    }
-
-//    // checking if a position was provided in the body
-//    if (!position) {
-//        return res.status(400).json({
-//            error: "No position was provided, so the bike can't be changed",
-//        });
-//    }
-
-//    // If the provided bikeId didn't exist in the database
-//    if (!bikeId) {
-//        return res.status(403).json({ error: "Please provide correct ID for a bike." });
-//    }
-
-//    return res.status(200).json({
-//        message: "bike position has been set",
-//    });
-//};
 
 const updateBikePosition = async (req, res) => {
     const apiKey = req.query.apiKey;
@@ -345,7 +302,6 @@ module.exports = {
     returnBike,
     getBikePosition,
     getSpecificBike,
-    // setBikePosition,
     updateBikePosition,
     turnOffSpecificBike,
     deleteSpecificBike,
