@@ -28,8 +28,8 @@ const standardAuthentication = {
                             msg = extractedString.includes("PRIMARY")
                                 ? "Username already exists"
                                 : extractedString.includes("email")
-                                    ? " Email already exists"
-                                    : "There was an error";
+                                  ? " Email already exists"
+                                  : "There was an error";
                         }
                         return res.render("create_user.ejs", { msg });
                     });
@@ -43,8 +43,7 @@ const standardAuthentication = {
             });
     },
 
-    authenticateLogin: (req, res) => {
-        const username = req.body.username;
+    authenticateLogin: (username, password, role) => {
         return fetch(`http://api:8080/api/user/${username}?apiKey=1`, {
             method: "GET",
         })
@@ -52,14 +51,38 @@ const standardAuthentication = {
             .then((data) => {
                 console.log(data.users);
                 if (
-                    !data.users[0] ||
-                    req.body.password !== data.users[0].password
+                    password !== data.users[0].password ||
+                    data.users[0].role !== role
                 ) {
-                    const msg = "incorrect credentials";
-                    return res.render("user_login.ejs", { msg });
+                    throw new Error();
                 }
-                authorization.updateSession(req, username, "User");
+                return;
+            });
+    },
+
+    authenticateLoginUser: (req, res) => {
+        standardAuthentication
+            .authenticateLogin(req.body.username, req.body.password, "User")
+            .then(() => {
+                authorization.updateSession(req, req.body.username, "User");
                 return res.redirect("/user/user");
+            })
+            .catch(() => {
+                const msg = "incorrect credentials";
+                return res.render("user_login.ejs", { msg });
+            });
+    },
+
+    authenticateLoginAdmin: (req, res) => {
+        standardAuthentication
+            .authenticateLogin(req.body.username, req.body.password, "Admin")
+            .then(() => {
+                authorization.updateSession(req, req.body.username, "Admin");
+                return res.redirect("/admin/admin");
+            })
+            .catch(() => {
+                const msg = "incorrect credentials";
+                return res.render("admin_login.ejs", { msg });
             });
     },
 };

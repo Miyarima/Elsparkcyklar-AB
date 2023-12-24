@@ -15,39 +15,32 @@ router.use((req, res, next) => {
     next();
 });
 
-router.get("/", authorization.simpleAuthorization("User"), (req, res) => {
-    userController.viewHome(req, res);
-});
+router.get(
+    "/",
+    authorization.simpleAuthorization("User"),
+    userController.viewHome,
+);
 
 router.get("/userlogin", (req, res) => {
     res.render("user_login.ejs");
 });
 
-router.post("/userlogin", (req, res) => {
-    console.log(req.body);
-    standardAuth.authenticateLogin(req, res);
-});
+router.post("/userlogin", standardAuth.authenticateLoginUser);
 
 router.get("/createuser", (req, res) => {
     res.render("create_user.ejs");
 });
 
-router.post("/createuser", (req, res) => {
-    standardAuth.insertUser(req, res);
-});
+router.post("/createuser", standardAuth.insertUser);
 
 // Declare the redirect route
-router.get("/authenticate", (req, res) => {
-    gitAuth.getAccessToken(req, res);
-});
+router.get("/authenticate", gitAuth.getAccessToken);
 
 router.get("/gitsignup", (req, res) => {
     res.render("gitsignup.ejs");
 });
 
-router.post("/gitsignup", (req, res) => {
-    gitAuth.gitSignup(req, res);
-});
+router.post("/gitsignup", gitAuth.gitSignup);
 
 router.get("/user", authorization.simpleAuthorization("User"), (req, res) => {
     userController.specificUser(req, res, "alice_jones", 123);
