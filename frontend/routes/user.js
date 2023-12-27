@@ -46,16 +46,23 @@ router.get("/user", authorization.simpleAuthorization("User"), (req, res) => {
     userController.specificUser(req, res, "alice_jones", 123);
 });
 
-<<<<<<< HEAD
-router.get("/details", standardAuth.simpleAuthorization("User"), async (req, res) => {
-    const users = await userController.detailsSpecificUser(req, res, "alice_jones", 123);
-    res.render("details.ejs", { users });
-});
+router.get(
+    "/details",
+    authorization.simpleAuthorization("User"),
+    async (req, res) => {
+        const users = await userController.detailsSpecificUser(req, res, "alice_jones", 123);
+        res.render("details.ejs", { users });
+    }
+);
 
-router.get("/detailsedit", async (req, res) => {
-    const users = await userController.detailsSpecificUser(req, res, "alice_jones", 123);
-    res.render("details_edit.ejs", { users });
-});
+router.get(
+    "/detailsedit",
+    authorization.simpleAuthorization("User"),
+    async (req, res) => {
+        const users = await userController.detailsSpecificUser(req, res, "alice_jones", 123);
+        res.render("details_edit.ejs", { users });
+    }
+);
 
 router.post("/detailsedit", async (req, res) => {
     //console.log(JSON.stringify(req.body, null, 4));
@@ -63,59 +70,20 @@ router.post("/detailsedit", async (req, res) => {
     res.redirect("details");
 });
 
-router.get("/history", async (req, res) => {
-    const users = await userController.getUserHistory(req, res, "alice_jones", 123);
-    res.render("history.ejs", { users });
-});
-
-router.get("/wallet", (req, res) => {
-    res.render("wallet.ejs");
-});
-
-router.post("/prepaid", async (req, res) => {
-    await userController.updateUserWallet(req, res, req.body.userId, req.body.amount, 123);
-    res.redirect("details");
-});
-
-router.post("/prepaid", async (req, res) => {
-    await userController.updateUserWallet(req, res, req.body.userId, req.body.amount, 123);
-    res.redirect("details");
-});
-
-router.get("/prepaid", (req, res) => {
-    res.render("wallet_prepaid.ejs");
-});
-
-router.get("/autogiro", (req, res) => {
-    res.render("wallet_autogiro.ejs");
-=======
-router.get(
-    "/details",
-    authorization.simpleAuthorization("User"),
-    (req, res) => {
-        userController.detailsSpecificUser(req, res, "alice_jones", 123);
-    },
-);
-
-router.get(
-    "/detailsedit",
-    authorization.simpleAuthorization("User"),
-    (req, res) => {
-        res.render("details_edit.ejs");
-    },
-);
-
 router.get(
     "/history",
     authorization.simpleAuthorization("User"),
-    (req, res) => {
-        userController.getUserHistory(req, res, "alice_jones", 123);
-    },
+    async (req, res) => {
+        const users = await userController.getUserHistory(req, res, "alice_jones", 123);
+        res.render("history.ejs", { users });
+    }
 );
 
-router.get("/wallet", authorization.simpleAuthorization("User"), (req, res) => {
-    res.render("wallet.ejs");
-});
+router.get("/wallet", authorization.simpleAuthorization("User"),
+    (req, res) => {
+        res.render("wallet.ejs");
+    }
+);
 
 router.get(
     "/prepaid",
@@ -124,6 +92,11 @@ router.get(
         res.render("wallet_prepaid.ejs");
     },
 );
+
+router.post("/prepaid", async (req, res) => {
+    await userController.updateUserWallet(req, res, req.body.userId, req.body.amount, 123);
+    res.redirect("details");
+});
 
 router.get(
     "/autogiro",
@@ -136,7 +109,6 @@ router.get(
 router.get("/logout", (req, res) => {
     req.session.destroy();
     res.redirect("userlogin");
->>>>>>> c9afd0d58a446e077545a86b5f5e238665bc356f
 });
 
 module.exports = router;
