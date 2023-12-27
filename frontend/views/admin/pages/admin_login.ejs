@@ -1,13 +1,15 @@
 <%- include("header_login_admin.ejs") %>
 
 <div class="middle">
-    <form class="user-input" action="admin">
-        <label class="text-input" for="fname">Username</label><br>
-        <input class="admin-login" type="text" placeholder="Username.."><br><br>
-        <label class="text-input" for="lname">Password</label><br>
-        <input class="admin-login" type="text" placeholder="Password.."><br><br>
-        <input class="admin-button" type="submit" value="Logga in">
+    <% if (typeof msg !== 'undefined') { %>
+        <h1><%= msg %></h1>
+    <% } %>
+    <form method="POST" action="/user/userlogin">
+        <label class="text-input" for="username">Username</label><br>
+        <input class="user-login" id="username" name="username" type="text" placeholder="Username.."><br><br>
+        <label class="text-input" for="password">Password</label><br>
+        <input class="user-login" type="password" id="password" name="password" placeholder="Password.."><br><br>
+        <input class="user-button" type="submit" value="Logga in">
     </form>
-    <br><br><br>
 </div>
 <%- include("footer.ejs") %>
