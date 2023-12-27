@@ -1,16 +1,19 @@
 <%- include("header_login_user.ejs") %>
 
 <div class="middle">
-    <form class="user-input" action="/user/user">
-        <label class="text-input" for="fname">Username</label><br>
-        <input class="user-login" type="text" placeholder="Username.."><br><br>
-        <label class="text-input" for="lname">Password</label><br>
-        <input class="user-login" type="password" placeholder="Password.."><br><br>
+    <% if (typeof msg !== 'undefined') { %>
+        <h1><%= msg %></h1>
+    <% } %>
+    <form method="POST" action="/user/userlogin">
+        <label class="text-input" for="username">Username</label><br>
+        <input class="user-login" id="username" name="username" type="text" placeholder="Username.."><br><br>
+        <label class="text-input" for="password">Password</label><br>
+        <input class="user-login" type="password" id="password" name="password" placeholder="Password.."><br><br>
         <input class="user-button" type="submit" value="Logga in">
     </form>
     <br>
-        <a class="user-button" href="https://github.com/login/oauth/authorize?client_id=c40fb77fa87796607ad9">Github autentisering</a>
-    <br><br><br>
-        <a class="create-button" href="/user/createuser">Skapa Konto</a>
+    <a class="user-button" href="https://github.com/login/oauth/authorize?client_id=c40fb77fa87796607ad9">Github autentisering</a>
+<br><br><br>
+    <a class="create-button" href="/user/createuser">Skapa Konto</a>
 </div>
 <%- include("footer.ejs") %>

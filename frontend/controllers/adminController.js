@@ -15,7 +15,7 @@ const viewHome = async (req, res) => {
     });
 };
 
-const allCities = async(req, res, apiKey) => {
+const allCities = async (req, res, apiKey) => {
     try {
         const response = await fetch(`${baseURL}/cities?apiKey=${apiKey}`);
         const cityData = await response.json();
@@ -40,7 +40,7 @@ const allCities = async(req, res, apiKey) => {
     }
 };
 
-const allBikes = async(req, res, apiKey) => {
+const allBikes = async (req, res, apiKey) => {
     try {
         const response = await fetch(`${baseURL}/bikes?apiKey=${apiKey}`);
         const bikeData = await response.json();
@@ -52,7 +52,7 @@ const allBikes = async(req, res, apiKey) => {
     }
 };
 
-const allCustomers = async(req, res, apiKey) => {
+const allCustomers = async (req, res, apiKey) => {
     try {
         const response = await fetch(`${baseURL}/users?apiKey=${apiKey}`);
         const userData = await response.json();

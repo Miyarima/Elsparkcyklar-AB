@@ -1,26 +1,11 @@
-//File for authentication and authorization
+const authorization = require("./authorization.js");
 
 const clientID = "c40fb77fa87796607ad9";
 const clientSecret = "33909380358de1cf2634961840b3f436d6e0236b";
 
-const gitAuthOB = {
-    gitAuth: (token) => {
-        return fetch("https://api.github.com/user", {
-            headers: {
-                Authorization: "token " + token,
-            },
-        })
-            .then((result) => result.json())
-            .then((resJson) => {
-                if (resJson.message === "Bad credentials") {
-                    throw new Error("Bad credentials");
-                }
-                return resJson;
-            });
-    },
-
+const gitAuthentication = {
     gitLogin: (token) => {
-        return gitAuthOB.gitAuth(token).then((res) => {
+        return authorization.gitAuthorization(token).then((res) => {
             return fetch(`http://api:8080/api/gituser/${res.login}?apiKey=1`, {
                 method: "GET",
             })
@@ -34,8 +19,8 @@ const gitAuthOB = {
     gitSignup: (req, res) => {
         const username = req.body.username;
         const access_token = req.session.access_token;
-        return gitAuthOB
-            .gitAuth(access_token)
+        return authorization
+            .gitAuthorization(access_token)
             .then((result) => {
                 const requestBody = {
                     username: username,
@@ -53,8 +38,7 @@ const gitAuthOB = {
                         return res.render("gitsignup.ejs", { msg });
                     }
                     delete req.session.access_token;
-                    req.session.username = req.body.username;
-                    req.session.role = "User";
+                    authorization.updateSession(req, username, "User");
                     return res.redirect("/user/user");
                 });
             })
@@ -79,12 +63,14 @@ const gitAuthOB = {
             .then((result) => result.json())
             .then((resData) => {
                 const accessToken = resData.access_token;
-                return gitAuthOB.gitLogin(accessToken).then((result) => {
-                    if (!result.exists) {
-                        req.session.access_token = result.token;
-                        return res.redirect("/user/gitsignup");
-                    }
-                });
+                return gitAuthentication
+                    .gitLogin(accessToken)
+                    .then((result) => {
+                        if (!result.exists) {
+                            req.session.access_token = result.token;
+                            return res.redirect("/user/gitsignup");
+                        }
+                    });
             })
             .catch(() => {
                 return res.redirect("/user/userlogin");
@@ -93,5 +79,5 @@ const gitAuthOB = {
 };
 
 module.exports = {
-    gitAuthOB,
+    gitAuthentication,
 };
