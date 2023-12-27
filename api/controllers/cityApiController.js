@@ -179,7 +179,8 @@ const getBikeChargingOnStation = async (req, res) => {
         return res.status(403).json({ error: "Missing zoneId for the city!." });
     }
 
-    const bikes = await db.gatheredCityFunctions.bikesAttachedToStation(stationId);
+    const bikes =
+        await db.gatheredCityFunctions.bikesAttachedToStation(stationId);
 
     return res.status(200).json({
         bikes: bikes,
