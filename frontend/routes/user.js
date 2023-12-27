@@ -50,31 +50,19 @@ router.get(
     "/details",
     authorization.simpleAuthorization("User"),
     async (req, res) => {
-<<<<<<< HEAD
         const users = await userController.detailsSpecificUser(req, res, "alice_jones", 123);
         res.render("details.ejs", { users });
     }
 );
-=======
-    const users = await userController.detailsSpecificUser(req, res, "alice_jones", 123);
-    res.render("details.ejs", { users });
-});
->>>>>>> c945ae5a5e84cd87d8be3ff925cf6ddd931d389c
 
 router.get(
     "/detailsedit",
     authorization.simpleAuthorization("User"),
     async (req, res) => {
-<<<<<<< HEAD
         const users = await userController.detailsSpecificUser(req, res, "alice_jones", 123);
         res.render("details_edit.ejs", { users });
     }
 );
-=======
-    const users = await userController.detailsSpecificUser(req, res, "alice_jones", 123);
-    res.render("details_edit.ejs", { users });
-});
->>>>>>> c945ae5a5e84cd87d8be3ff925cf6ddd931d389c
 
 router.post("/detailsedit", async (req, res) => {
     //console.log(JSON.stringify(req.body, null, 4));
@@ -86,7 +74,6 @@ router.get(
     "/history",
     authorization.simpleAuthorization("User"),
     async (req, res) => {
-<<<<<<< HEAD
         const users = await userController.getUserHistory(req, res, "alice_jones", 123);
         res.render("history.ejs", { users });
     }
@@ -97,16 +84,6 @@ router.get("/wallet", authorization.simpleAuthorization("User"),
         res.render("wallet.ejs");
     }
 );
-=======
-    const users = await userController.getUserHistory(req, res, "alice_jones", 123);
-    res.render("history.ejs", { users });
-});
-
-router.get("/wallet", authorization.simpleAuthorization("User"),
-    (req, res) => {
-    res.render("wallet.ejs");
-});
->>>>>>> c945ae5a5e84cd87d8be3ff925cf6ddd931d389c
 
 router.get(
     "/prepaid",
@@ -116,12 +93,7 @@ router.get(
     },
 );
 
-<<<<<<< HEAD
 router.post("/prepaid", async (req, res) => {
-=======
-router.post("/prepaid", 
-    async (req, res) => {
->>>>>>> c945ae5a5e84cd87d8be3ff925cf6ddd931d389c
     await userController.updateUserWallet(req, res, req.body.userId, req.body.amount, 123);
     res.redirect("details");
 });
