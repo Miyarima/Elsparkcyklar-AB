@@ -22,29 +22,29 @@ VALUES
     (3, 18.05265, 59.342445, 200, 10),
     (3, 18.067325, 59.348911, 300, 15);
 
-INSERT INTO Station (longitude, latitude, `address`)
+INSERT INTO Station (longitude, latitude, `address`, `type`)
 VALUES
-    (15.567324, 56.165442, 'Karlskrona1'),
-    (15.594108, 56.15879, 'Hans Wachtmeister, Karlskrona'),
-    (15.598145, 56.158974, 'Stumholmen, Karlskrona'),
-    (15.584546, 56.169233, 'Lidl, Karlskrona'),
-    (15.592292, 56.166385, 'Hamnen, Karlskrona'),
-    (15.573748, 56.161779, 'Björkholmen, Karlskrona'),
-    (15.587597, 56.170252, 'Pantarholmen, Karlskrona'),
-    (12.854642, 55.87217, 'McDonalds, Landskrona'),
-    (12.829674, 55.870754, 'Landskrona museum'),
-    (12.839142, 55.871037, 'Hotel Chaplin, Landskrona'),
-    (12.834833, 55.871546, 'Landskrona stadsbibliotek'),
-    (12.83287, 55.870471, 'Glasögonmagasinet, Landskrona'),
-    (12.842077, 55.86991, 'Nordic Wellness, Landskrona'),
-    (12.830863, 55.870615, 'Rådhustorget, Landskrona'),
-    (18.054143, 59.343579, 'Stockholm stadsbibliotek'),
-    (18.04874, 59.342458, 'Odenplan, Stockholm'),
-    (18.048738, 59.345221, 'Brygghuset, Stockholm'),
-    (18.057193, 59.349225, 'Roslagsgatan, Stockholm'),
-    (18.061216, 59.343212, 'Churchill Arms Stockholm'),
-    (18.070041, 59.349638, 'KTH, Stockholm'),
-    (18.064963, 59.34819, 'Elite Hotel Arcardia, Stockholm');
+    (15.567324, 56.165442, 'Karlskrona1', 'charging'),
+    (15.594108, 56.15879, 'Hans Wachtmeister, Karlskrona', 'charging'),
+    (15.598145, 56.158974, 'Stumholmen, Karlskrona', 'parking'),
+    (15.584546, 56.169233, 'Lidl, Karlskrona', 'charging'),
+    (15.592292, 56.166385, 'Hamnen, Karlskrona', 'charging'),
+    (15.573748, 56.161779, 'Björkholmen, Karlskrona', 'charging'),
+    (15.587597, 56.170252, 'Pantarholmen, Karlskrona', 'parking'),
+    (12.854642, 55.87217, 'McDonalds, Landskrona', 'charging'),
+    (12.829674, 55.870754, 'Landskrona museum', 'charging'),
+    (12.839142, 55.871037, 'Hotel Chaplin, Landskrona', 'charging'),
+    (12.834833, 55.871546, 'Landskrona stadsbibliotek', 'parking'),
+    (12.83287, 55.870471, 'Glasögonmagasinet, Landskrona', 'charging'),
+    (12.842077, 55.86991, 'Nordic Wellness, Landskrona', 'charging'),
+    (12.830863, 55.870615, 'Rådhustorget, Landskrona', 'parking'),
+    (18.054143, 59.343579, 'Stockholm stadsbibliotek', 'charging'),
+    (18.04874, 59.342458, 'Odenplan, Stockholm', 'parking'),
+    (18.048738, 59.345221, 'Brygghuset, Stockholm', 'charging'),
+    (18.057193, 59.349225, 'Roslagsgatan, Stockholm', 'charging'),
+    (18.061216, 59.343212, 'Churchill Arms Stockholm', 'charging'),
+    (18.070041, 59.349638, 'KTH, Stockholm', 'charging'),
+    (18.064963, 59.34819, 'Elite Hotel Arcardia, Stockholm', 'parking');
 
 INSERT INTO Bike (longitude, latitude, `status`)
 VALUES

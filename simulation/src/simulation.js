@@ -47,7 +47,7 @@ const generateBikesAndUsers = async (count) => {
     }
 
     bikes.forEach(async (bike) => {
-        bike.turnOn();
+        await bike.turnOn();
         const bikeId = bike.getBikeId();
         const name = bike.getUserId();
         console.log(`${name} renting ${bikeId}`);
@@ -69,7 +69,7 @@ const initStaticStructures = async () => {
         coordinates.push([
             station.latitude,
             station.longitude,
-            "chargingstation",
+            station.type,
             10,
         ]);
     });
@@ -136,4 +136,4 @@ let zones;
 let reachedDestination = [];
 
 // amount of bikes
-init(1);
+init(3000);

@@ -32,13 +32,13 @@ class Bike {
 
     // Changes the bike to on
     // Starts an interval of 1 sek update
-    turnOn() {
+    async turnOn() {
         this.isOn = true;
         console.log(
             `${this.user} ${this.bikeId} ${this.longitude} ${this.latitude} is now on`,
         );
 
-        this.createBikeInDb();
+        await this.createBikeInDb();
 
         this.updateInterval = setInterval(() => {
             this.updateBikeValues();
