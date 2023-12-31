@@ -10,16 +10,17 @@ const random = (arr) => {
 };
 
 // Generets a bike with the given values
-const createBike = (bikeId, long, lat, route) => {
-    const myBike = new Bike(
-        `${random(firstNames)} ${random(lastNames)}`,
-        bikeId,
-        long,
-        lat,
-        route,
-        5,
-        zones,
-    );
+const createBike = async (bikeId, userId, long, lat, route) => {
+    const name = `${random(firstNames)}_${random(lastNames)}${userId}`;
+
+    await fth.createUser({
+        username: name,
+        password: "test",
+        email: `simuser${userId}@test.com`,
+        wallet: 10000,
+    });
+
+    const myBike = new Bike(name, bikeId, long, lat, route, zones);
 
     return myBike;
 };
@@ -29,19 +30,29 @@ const createBike = (bikeId, long, lat, route) => {
 const generateBikesAndUsers = async (count) => {
     let bikes = [];
     // Bikes already in the DB and the Id starts at 1
-    const first = await fth.fetchBikes();
+    const firstBike = await fth.fetchBikes();
+    const firstUser = await fth.fetchUsers();
 
     for (let i = 0; i < count; i++) {
         const route = routes[Math.floor(Math.random() * routes.length)];
         bikes.push(
-            createBike(i + first.length + 1, route[0][0], route[0][1], route),
+            await createBike(
+                i + firstBike.length + 1,
+                i + firstUser.length + 1,
+                route[0][0],
+                route[0][1],
+                route,
+            ),
         );
     }
 
-    bikes.forEach((bike) => {
+    bikes.forEach(async (bike) => {
         bike.turnOn();
-        // bike.getCoordinates();
-        // bike.getRoute();
+        const bikeId = bike.getBikeId();
+        const name = bike.getUserId();
+        console.log(`${name} renting ${bikeId}`);
+        const res = await fth.rentBike(bikeId, name);
+        console.log(res);
     });
 
     return bikes;
@@ -94,12 +105,13 @@ const sendMapUpdates = (bikes) => {
     fth.sendBikeUpdate(coordinates);
 };
 
-const clearDb = (bikes) => {
-    bikes.forEach((bike) => {
-        const id = bike.getBikeId();
-        fth.deleteBike(id);
-    });
-};
+// Removes the bikes from the db
+// const clearDb = (bikes) => {
+//     bikes.forEach((bike) => {
+//         fth.deleteBike(bike.getBikeId());
+//         fth.deleteUser(bike.getUserId());
+//     });
+// };
 
 async function init(count) {
     await initStaticStructures();
@@ -113,7 +125,7 @@ async function init(count) {
         );
         if (reachedDestination.length === totalBikes.length) {
             clearInterval(updateBikes);
-            clearDb(totalBikes);
+            // clearDb(totalBikes);
         }
         sendMapUpdates(totalBikes);
     }, 1000);
@@ -124,4 +136,4 @@ let zones;
 let reachedDestination = [];
 
 // amount of bikes
-init(3000);
+init(1);

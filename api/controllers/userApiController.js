@@ -287,7 +287,7 @@ const deleteSpecificUser = async (req, res) => {
     if (!userId) {
         return res
             .status(403)
-            .json({ error: "Please provide correct ID for a bike." });
+            .json({ error: "Please provide correct ID for a user." });
     }
 
     const deleted = await db.gatheredUserFunctions.deleteUser(userId);

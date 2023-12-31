@@ -2,6 +2,55 @@
 
 const apiKey = 1;
 
+const fetchUsers = async () => {
+    try {
+        const response = await fetch(
+            `http://localhost:8080/api/users?apiKey=${apiKey}`,
+        );
+        const res = await response.json();
+        return res.users;
+    } catch (error) {
+        console.error("Error fetching users:", error);
+        return null;
+    }
+};
+
+const createUser = async (user) => {
+    try {
+        const response = await fetch(
+            `http://localhost:8080/api/user?apiKey=${apiKey}`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(user),
+            },
+        );
+        const res = await response.json();
+        return res.bikes;
+    } catch (error) {
+        console.error("Error fetching cities:", error);
+        return null;
+    }
+};
+
+// const deleteUser = async (id) => {
+//     try {
+//         const response = await fetch(
+//             `http://localhost:8080/api/user/${id}?apiKey=${apiKey}`,
+//             {
+//                 method: "Delete",
+//             },
+//         );
+//         const res = await response.json();
+//         return res.bikes;
+//     } catch (error) {
+//         console.error("Error deleting user:", error);
+//         return null;
+//     }
+// };
+
 const fetchBikes = async () => {
     try {
         const response = await fetch(
@@ -15,21 +64,40 @@ const fetchBikes = async () => {
     }
 };
 
-const deleteBike = async (id) => {
+const rentBike = async (bikeId, userId) => {
     try {
         const response = await fetch(
-            `http://localhost:8080/api/bike/${id}?apiKey=${apiKey}`,
+            `http://localhost:8080/api/bike/${bikeId}/${userId}/rent?apiKey=${apiKey}`,
             {
-                method: "Delete",
+                method: "Put",
+                headers: {
+                    "Content-Type": "application/json",
+                },
             },
         );
         const res = await response.json();
-        return res.bikes;
+        return res;
     } catch (error) {
-        console.error("Error fetching cities:", error);
+        console.error("Error renting bike:", error);
         return null;
     }
 };
+
+// const deleteBike = async (id) => {
+//     try {
+//         const response = await fetch(
+//             `http://localhost:8080/api/bike/${id}?apiKey=${apiKey}`,
+//             {
+//                 method: "Delete",
+//             },
+//         );
+//         const res = await response.json();
+//         return res.bikes;
+//     } catch (error) {
+//         console.error("Error deleting bike:", error);
+//         return null;
+//     }
+// };
 
 const fetchStations = async () => {
     try {
@@ -88,8 +156,10 @@ const sendBikeUpdate = (coordinates) => {
 };
 
 module.exports = {
+    fetchUsers,
+    createUser,
     fetchBikes,
-    deleteBike,
+    rentBike,
     fetchStations,
     fetchZones,
     sendStaticElements,

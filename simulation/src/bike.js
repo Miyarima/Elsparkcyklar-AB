@@ -9,14 +9,13 @@ class Bike {
     //     [LONGITUDE, LATITUDE],
     // ];
 
-    constructor(user, bikeId, longitude, latitude, route, zoneId, speedZones) {
+    constructor(user, bikeId, longitude, latitude, route, speedZones) {
         this.user = user;
         this.bikeId = bikeId;
         this.longitude = longitude;
         this.latitude = latitude;
         this.isOn = false;
         this.status = "Available";
-        this.zoneId = zoneId;
         this.speed = 0;
         this.maxSpeed = 20;
         this.distanceMoved = 0;
@@ -55,11 +54,12 @@ class Bike {
     turnOff() {
         this.isOn = false;
         this.currentSpeed = 0;
-        console.log(
-            `${this.user} ${this.bikeId} ${this.longitude} ${this.latitude} is now off`,
-        );
+        // console.log(
+        //     `${this.user} ${this.bikeId} ${this.longitude} ${this.latitude} is now off`,
+        // );
         clearInterval(this.updateInterval);
         clearInterval(this.databaseInterval);
+        this.returnBike();
         return this;
     }
 
@@ -71,6 +71,11 @@ class Bike {
     // Returns the bikes ID
     getBikeId() {
         return this.bikeId;
+    }
+
+    // Returns the users ID
+    getUserId() {
+        return this.user;
     }
 
     async createBikeInDb() {
@@ -88,10 +93,25 @@ class Bike {
                     status: this.status,
                 }),
             });
-            // const data = await res.json();
-            // console.log(data);
         } catch (error) {
             console.error("Error failed create bike:", error);
+            return null;
+        }
+    }
+
+    returnBike() {
+        const apiKey = 1;
+
+        try {
+            fetch(
+                `http://localhost:8080/api/bike/${this.bikeId}/${this.longitude}/${this.latitude}/return?apiKey=${apiKey}`,
+                {
+                    method: "Put",
+                },
+            );
+            console.log(`${this.user} has return thier bike`);
+        } catch (error) {
+            console.error("Error returning bike:", error);
             return null;
         }
     }
@@ -102,9 +122,6 @@ class Bike {
         this.calculateDistance();
         this.calculateIntermediateCoordinate(this.distanceMoved);
         this.checkSpeedZone();
-        // console.log(
-        //     `${this.user} at ${this.longitude} ${this.latitude}, going ${this.speed} km/h and moving towards ${this.comparisonLongitude} ${this.comparisonLatitude}`,
-        // );
     }
 
     async updateDb() {

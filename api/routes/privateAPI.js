@@ -101,6 +101,11 @@ router.get("/user/:id/travel", (req, res) => {
     userApiController.getTravelUser(req, res);
 });
 
+// Delete specific user
+router.delete("/user/:id", (req, res) => {
+    userApiController.deleteSpecificUser(req, res);
+});
+
 /* ########################################### */
 /* ################  CITIES   ################ */
 /* ########################################### */
