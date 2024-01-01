@@ -19,7 +19,9 @@ class Bike {
         this.speed = 0;
         this.maxSpeed = 20;
         this.distanceMoved = 0;
+        this.totalDistanceMoved = 0;
         this.battery = 100;
+        this.batteryWarning = false;
         this.charging = false;
         this.route = route;
         this.comparisonLongitude = route[1][0];
@@ -46,7 +48,7 @@ class Bike {
 
         this.databaseInterval = setInterval(() => {
             this.updateDb();
-        }, 10000);
+        }, 30000);
         return this;
     }
 
@@ -78,6 +80,7 @@ class Bike {
         return this.user;
     }
 
+    // Creates the bike in the database
     async createBikeInDb() {
         const apiKey = 1;
 
@@ -99,6 +102,7 @@ class Bike {
         }
     }
 
+    // Returns the rented bike
     returnBike() {
         const apiKey = 1;
 
@@ -109,7 +113,7 @@ class Bike {
                     method: "Put",
                 },
             );
-            console.log(`${this.user} has return thier bike`);
+            // console.log(`${this.user} has return thier bike`);
         } catch (error) {
             console.error("Error returning bike:", error);
             return null;
@@ -122,12 +126,14 @@ class Bike {
         this.calculateDistance();
         this.calculateIntermediateCoordinate(this.distanceMoved);
         this.checkSpeedZone();
+        this.calculateBattery();
     }
 
+    // Sends an update to the database with
+    // longitude, latitude and current speed
     async updateDb() {
-        // console.log("hello");
         const apiKey = 1;
-
+        // console.log(`${this.user} battery: ${this.battery}`);
         try {
             await fetch(
                 `http://localhost:8080/api/bike/${this.bikeId}/position?apiKey=${apiKey}`,
@@ -140,6 +146,8 @@ class Bike {
                         id: this.bikeId,
                         longitude: this.longitude,
                         latitude: this.latitude,
+                        speed: this.speed,
+                        battery: Math.round(this.battery, 1),
                     }),
                 },
             );
@@ -174,6 +182,19 @@ class Bike {
         const mps = this.speed / 3.6;
 
         this.distanceMoved = (time / 1000) * mps;
+    }
+
+    calculateBattery() {
+        // Setting the average Distance really low so the battery
+        // actually change during use
+        const avgDistance = 1000;
+        this.battery = this.battery - this.distanceMoved / avgDistance;
+
+        if (this.battery < 5 && !this.batteryWarning) {
+            console.log(
+                `${this.bikeId} needs to be charged, battery is below 5%`,
+            );
+        }
     }
 
     // Generetas a random speed for the bike based on the max allowed speed

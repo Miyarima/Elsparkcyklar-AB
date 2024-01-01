@@ -25,6 +25,14 @@ const createBike = async (bikeId, userId, long, lat, route) => {
     return myBike;
 };
 
+const turnOnAndRentBikes = async (bikes) => {
+    for (const bike of bikes) {
+        await bike.turnOn();
+        await fth.rentBike(bike.getBikeId(), bike.getUserId());
+    }
+    return bikes;
+};
+
 // Generates the amount of bikes asked for
 // and retuns in an array
 const generateBikesAndUsers = async (count) => {
@@ -45,15 +53,6 @@ const generateBikesAndUsers = async (count) => {
             ),
         );
     }
-
-    bikes.forEach(async (bike) => {
-        await bike.turnOn();
-        const bikeId = bike.getBikeId();
-        const name = bike.getUserId();
-        console.log(`${name} renting ${bikeId}`);
-        const res = await fth.rentBike(bikeId, name);
-        console.log(res);
-    });
 
     return bikes;
 };
@@ -116,6 +115,7 @@ const sendMapUpdates = (bikes) => {
 async function init(count) {
     await initStaticStructures();
     const totalBikes = await generateBikesAndUsers(count);
+    await turnOnAndRentBikes(totalBikes);
 
     // Clears the interval which is automatically
     // sending updates to the map
