@@ -3,10 +3,10 @@ module.exports = {
         return (req, res, next) => {
             if (req.session.username && req.session.role === role) {
                 next();
-            } else {
-                req.session.destroy();
-                return res.redirect("/user/userlogin");
             }
+            const redirectRoute =
+                role == "Admin" ? "/admin/adminlogn" : "/user/userlogin";
+            return res.redirect(redirectRoute);
         };
     },
 
