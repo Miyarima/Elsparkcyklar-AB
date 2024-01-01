@@ -42,7 +42,6 @@ CREATE TABLE Bike (
     charging BOOLEAN DEFAULT false,
     comparison_longitude FLOAT DEFAULT NULL,
     comparison_latitude FLOAT DEFAULT NULL,
-    --power is for admins to set to true or false(on/off)
     power BOOLEAN DEFAULT true,
     FOREIGN KEY (`zone_id`) REFERENCES `Zone`(id),
     FOREIGN KEY (`station_id`) REFERENCES Station(id)
