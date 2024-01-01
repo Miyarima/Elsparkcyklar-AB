@@ -1,6 +1,5 @@
 <%- include("header_admin.ejs") %>
 
-
 <div class="title">Kunder</div>
 
 <table class="table-customer" id="customers">
@@ -13,7 +12,9 @@
     </tr>
     <% for (let user of users) { %>
     <tr class="tr-customer">
-        <td class="td-customer"><%= user.id %></td>
+        <td class="td-customer">
+            <a href="/admin/customeredit/<%= user.id %>"><%= user.id %></a>
+        </td>
         <td class="td-customer"><%= user.role %></td>
         <td class="td-customer"><%= user.email %></td>
         <td class="td-customer">

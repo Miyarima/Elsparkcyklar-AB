@@ -172,44 +172,61 @@ const getBikePosition = async (req, res) => {
     });
 };
 
-//const setBikePosition = async (req, res) => {
-//    const apiKey = req.query.apiKey;
-//    const bikeId = req.params.id;
-//    const contentType = req.headers["content-type"];
-//    const { position } = req.body;
+const updateBikeStation = async (req, res) => {
+    const apiKey = req.query.apiKey;
+    const contentType = req.headers["content-type"];
 
-//    // Check for apiKey provided
-//    if (!apiKey) {
-//       console.log("NO API KEY!");
-//        return res.status(403).json({ error: "Please provide an API key." });
-//    }
+    if (!apiKey) {
+        return res.status(403).json({ error: "Please provide an API key." });
+    }
 
-//    // Check for the required headers
-//    if (!contentType || contentType !== "application/json") {
-//        return res.status(400).json({ error: "Content-Type must be application/json" });
-//    }
+    // Check for the required headers
+    if (!contentType || contentType !== "application/json") {
+        return res
+            .status(400)
+            .json({ error: "Content-Type must be application/json" });
+    }
 
-//    // Check for the required body content
-//    if (!req.body || Object.keys(req.body).length === 0) {
-//        return res.status(400).json({ error: "Request body is missing or empty" });
-//    }
+    // Check for the required body content
+    if (!req.body || Object.keys(req.body).length === 0) {
+        return res
+            .status(400)
+            .json({ error: "Request body is missing or empty" });
+    }
 
-//    // checking if a position was provided in the body
-//    if (!position) {
-//        return res.status(400).json({
-//            error: "No position was provided, so the bike can't be changed",
-//        });
-//    }
+    try {
+        const {
+            bikeId,
+            longitude,
+            latitude,
+            zoneId,
+            stationId,
+            api_key,
+        } = req.body;
 
-//    // If the provided bikeId didn't exist in the database
-//    if (!bikeId) {
-//        return res.status(403).json({ error: "Please provide correct ID for a bike." });
-//    }
+        const update = {
+            table: "Bike",
+            id: bikeId,
+            longitude: longitude,
+            latitude: latitude,
+        };
 
-//    return res.status(200).json({
-//        message: "bike position has been set",
-//    });
-//};
+        if (bikeId) update.id = bikeId;
+        if (longitude) update.longitude = longitude;
+        if (latitude) update.latitude = latitude;
+        if (zoneId) update.zone_id = zoneId;
+        if (stationId) update.station_id = stationId;
+        if (api_key) update.api_key = api_key;
+
+        await dbCreate.functionsForAllTables.oneRowUpdateTable(update);
+
+        return res.status(200).json({
+            message: "The user has been updated",
+        });
+    } catch (error) {
+        return res.status(500).json({ error: `${error}` });
+    }
+};
 
 const updateBikePosition = async (req, res) => {
     const apiKey = req.query.apiKey;
@@ -346,4 +363,5 @@ module.exports = {
     turnOffSpecificBike,
     deleteSpecificBike,
     dummyTest,
+    updateBikeStation,
 };

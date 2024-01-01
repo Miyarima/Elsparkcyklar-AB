@@ -19,6 +19,36 @@ const getAllCities = async (req, res) => {
     });
 };
 
+// Get all information about the cities
+const getAllZones = async (req, res) => {
+    const apiKey = req.query.apiKey;
+
+    if (!apiKey) {
+        return res.status(403).json({ error: "Please provide an API key." });
+    }
+
+    const zones = await db.gatheredCityFunctions.selectAllZones();
+
+    return res.status(200).json({
+        zones: zones,
+    });
+};
+
+// Get all charging stations in the system
+const getAllStations = async (req, res) => {
+    const apiKey = req.query.apiKey;
+
+    if (!apiKey) {
+        return res.status(403).json({ error: "Please provide an API key." });
+    }
+
+    const stations = await db.gatheredCityFunctions.selectAllStation();
+
+    return res.status(200).json({
+        stations: stations,
+    });
+};
+
 // Inserts new city
 const addNewCity = async (req, res) => {
     const apiKey = req.query.apiKey;
@@ -313,4 +343,6 @@ module.exports = {
     addNewBike,
     updateNumberBikes,
     deleteNumberBikes,
+    getAllStations,
+    getAllZones,
 };

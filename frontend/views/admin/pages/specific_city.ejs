@@ -1,0 +1,96 @@
+<%- include("header_admin.ejs") %>
+
+<div class="title">Specifik stad</div>
+
+<table class="table-station" id="customers">
+    <tr class="tr-station">
+        <th class="th-station">Name</th>
+        <th class="th-station">Longitude</th>
+        <th class="th-station">Latitude</th>
+    </tr>
+    <tr class="tr-station">
+        <td class="td-station"><%= cities.name %></td>
+        <td class="td-station"><%= cities.longitude %></td>
+        <td class="td-station"><%= cities.latitude %></td>
+    </tr>
+</table>
+
+<h2>Zoner</h2>
+<table class="table-station" id="customers">
+    <tr class="tr-station">
+        <th class="th-station">ID</th>
+        <th class="th-station">Longitude</th>
+        <th class="th-station">Latitude</th>
+        <th class="th-station">Max-speed</th>
+    </tr>
+    <% zones.forEach(zone => { %>
+        <tr class="tr-station">
+            <td class="td-station"><%= zone.id %></td>
+            <td class="td-station"><%= zone.longitude %></td>
+            <td class="td-station"><%= zone.latitude %></td>
+            <td class="td-station"><%= zone.max_speed %></td>
+        </tr>
+    <% }); %>
+</table>
+
+<h2>Stationer</h2>
+<table class="table-station" id="customers">
+    <tr class="tr-station">
+        <th class="th-station">ID</th>
+        <th class="th-station">Longitude</th>
+        <th class="th-station">Latitude</th>
+        <th class="th-station">Adress</th>
+    </tr>
+    <% stations.forEach(station => { %>
+        <tr class="tr-station">
+            <td class="td-station"><%= station.id %></td>
+            <td class="td-station"><%= station.longitude %></td>
+            <td class="td-station"><%= station.latitude %></td>
+            <td class="td-station"><%= station.address %></td>
+        </tr>
+    <% }); %>
+</table>
+
+<h2>Cyklar</h2>
+<form action="/admin/updatebike" method="POST">
+    <table class="table-details" id="details">
+        <tr class="tr-details">
+            <th class="th-details">Select</th>
+            <th class="th-details">ID</th>
+            <th class="th-details">Longitude</th>
+            <th class="th-details">Latitude</th>
+            <th class="th-details">Status</th>
+            <th class="th-details">Zone-id</th>
+            <th class="th-details">Stations-id</th>
+            <th class="th-details">Battery Status</th>
+        </tr>
+        <% bikes.forEach(bike => { %>
+            <tr class="tr-details">
+                <% if (bike.status != "In-use") { %>
+                    <td class="td-details">
+                        <input type="radio" name="selectedBike" value="<%= bike.id %>">
+                    </td>
+                <% } else { %>
+                    <td class="td-details"></td>
+                <% } %>
+                <td class="td-details"><%= bike.id %></td>
+                <td class="td-details"><%= bike.longitude %></td>
+                <td class="td-details"><%= bike.latitude %></td>
+                <td class="td-details"><%= bike.status %></td>
+                <td class="td-details"><%= bike.zone_id %></td>
+                <% if (bike.status != "In-use") { %>
+                    <td class="td-details"><input class="details-email" type="number" min="0" name="stationId" placeholder="<%= bike.station_id %>"></td>
+                <% } else { %>
+                    <td class="td-details"><%= bike.station_id %></td>
+                <% } %>
+                <td class="td-details"><%= bike.battery %></td>
+            </tr>
+        <% }); %>
+    </table>
+
+    <div class="middle-save-changes">
+        <button type="submit" class="user-button">Save Changes</button>
+    </div>
+</form>
+
+<%- include("footer.ejs") %>

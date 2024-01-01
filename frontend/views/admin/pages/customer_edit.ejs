@@ -1,0 +1,29 @@
+<%- include("header_admin.ejs") %>
+
+<div class="title">Kontodetaljer</div>
+
+<form action="/admin/customeredit" method="POST">
+    <table class="table-details" id="details">
+        <tr class="tr-details">
+            <th class="th-details">Användarnamn</th>
+            <th class="th-details">Roll</th>
+            <th class="th-details">Lösenord</th>
+            <th class="th-details">Email</th>
+            <th class="th-details">Plånbok (kr)</th>
+        </tr>
+        <tr class="tr-details">
+            <td class="td-details"><input class="details-email" type="hidden" name="id" value="<%= users[0].id %>"><%= users[0].id %></td>
+            <td class="td-details"><%= users[0].role %></td>
+            <td class="td-details"><input class="details-email" type="password" name="password"></td>
+            <td class="td-details"><input class="details-email" type="text" name="email" placeholder="<%= users[0].email %>"></td>
+            <td class="td-details"><%= users[0].wallet %></td>
+        </tr>
+    </table>
+
+    <div class="middle-save-changes"> <!-- Ändra till egen klass om du vill flytta den-->
+        <button type="submit" class="user-button">Spara ändringar</button>
+    </div>
+</form>
+
+
+<%- include("footer.ejs") %>
