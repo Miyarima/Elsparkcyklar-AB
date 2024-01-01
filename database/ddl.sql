@@ -30,7 +30,6 @@ CREATE TABLE Station (
     latitude FLOAT NOT NULL,
     `address` TEXT NOT NULL
 );
-
 CREATE TABLE Bike (
     id INT PRIMARY KEY AUTO_INCREMENT,
     longitude FLOAT NOT NULL,
