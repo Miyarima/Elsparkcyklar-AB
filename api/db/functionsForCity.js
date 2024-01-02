@@ -17,6 +17,20 @@ const gatheredCityFunctions = {
         return await dbFuncs.promisifiedSimpleQueryFunc(queryObject);
     },
 
+    selectAllZones: async () => {
+        const queryObject = {
+            query: "SELECT * FROM Zone",
+        };
+        return await dbFuncs.promisifiedSimpleQueryFunc(queryObject);
+    },
+
+    selectAllStations: async () => {
+        const queryObject = {
+            query: "SELECT * FROM Station",
+        };
+        return await dbFuncs.promisifiedSimpleQueryFunc(queryObject);
+    },
+
     /**
      * Selects all stations
      * @async

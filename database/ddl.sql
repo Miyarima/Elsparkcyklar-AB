@@ -20,6 +20,7 @@ CREATE TABLE `Zone` (
     city_id INT NOT NULL,
     longitude FLOAT NOT NULL,
     latitude FLOAT NOT NULL,
+    radius FLOAT,
     max_speed FLOAT NOT NULL,
     FOREIGN KEY (city_id) REFERENCES City(id)
 );
@@ -28,7 +29,8 @@ CREATE TABLE Station (
     id INT PRIMARY KEY AUTO_INCREMENT,
     longitude FLOAT NOT NULL,
     latitude FLOAT NOT NULL,
-    `address` TEXT NOT NULL
+    `address` TEXT NOT NULL,
+    `type` TEXT
 );
 
 CREATE TABLE Bike (

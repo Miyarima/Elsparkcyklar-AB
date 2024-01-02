@@ -14,7 +14,7 @@ function createIcon(url) {
 }
 
 const bikeIcon = createIcon("img/bikeicon.png");
-const parkingZone = createIcon("img/parking.png");
+const parkingIcon = createIcon("img/parking.png");
 const chargingIcon = createIcon("img/chargingstation.png");
 const zone5Icon = createIcon("img/5.png");
 const zone10Icon = createIcon("img/10.png");
@@ -70,9 +70,14 @@ socket.on("updateCoordinates", function (coordinates) {
 
 socket.on("updateStaticCoordinates", function (coordinates) {
     const zoneStyles = {
-        chargingstation: {
+        charging: {
             color: "green",
             fillColor: "#2ff268",
+            fillOpacity: 0.4,
+        },
+        parking: {
+            color: "rgba(0, 50, 200, 0.5)",
+            fillColor: "#11a0ff",
             fillOpacity: 0.4,
         },
         "5-zone": {
@@ -93,7 +98,8 @@ socket.on("updateStaticCoordinates", function (coordinates) {
     };
 
     const zones = {
-        chargingstation: [],
+        charging: [],
+        parking: [],
         "5-zone": [],
         "10-zone": [],
         "15-zone": [],
@@ -105,7 +111,8 @@ socket.on("updateStaticCoordinates", function (coordinates) {
         addCircleToMap([x, y], radius, zoneStyles[zone]);
     });
 
-    updateStaticMapCoordinates(zones.chargingstation, chargingIcon);
+    updateStaticMapCoordinates(zones.charging, chargingIcon);
+    updateStaticMapCoordinates(zones.parking, parkingIcon);
     updateStaticMapCoordinates(zones["5-zone"], zone5Icon);
     updateStaticMapCoordinates(zones["10-zone"], zone10Icon);
     updateStaticMapCoordinates(zones["15-zone"], zone15Icon);

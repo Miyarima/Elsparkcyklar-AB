@@ -334,6 +334,8 @@ const deleteNumberBikes = async (req, res) => {
 
 module.exports = {
     getAllCities,
+    getAllStations,
+    getAllZones,
     addNewCity,
     getSpecificCity,
     getBikesCity,

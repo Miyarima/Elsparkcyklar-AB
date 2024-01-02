@@ -106,6 +106,11 @@ router.get("/user/:id/travel", (req, res) => {
     userApiController.getTravelUser(req, res);
 });
 
+// Delete specific user
+router.delete("/user/:id", (req, res) => {
+    userApiController.deleteSpecificUser(req, res);
+});
+
 /* ########################################### */
 /* ################  CITIES   ################ */
 /* ########################################### */
@@ -115,7 +120,12 @@ router.get("/cities", (req, res) => {
     cityApiController.getAllCities(req, res);
 });
 
-// Returns all cities
+// Returns all stations
+router.get("/cities/stations", (req, res) => {
+    cityApiController.getAllStations(req, res);
+});
+
+// Returns all zones
 router.get("/cities/zones", (req, res) => {
     cityApiController.getAllZones(req, res);
 });

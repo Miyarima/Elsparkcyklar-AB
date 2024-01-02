@@ -2,69 +2,92 @@ const Bike = require("./bike.js");
 const routes = require("./route.js");
 const firstNames = require("./names.js").firstNames;
 const lastNames = require("./names.js").lastNames;
-const stations = require("./stations.js");
-const zones = require("./zones.js");
+const fth = require("./fetch.js");
 
-const createBike = (bikeId, long, lat, route) => {
-    const randomFirstName =
-        firstNames[Math.floor(Math.random() * firstNames.length)];
-    const randomLastName =
-        lastNames[Math.floor(Math.random() * lastNames.length)];
-    const myBike = new Bike(
-        `${randomFirstName} ${randomLastName}`,
-        bikeId,
-        long,
-        lat,
-        route,
-        5,
-        zones,
-    );
+// Returns a random element from the provided array
+const random = (arr) => {
+    return arr[Math.floor(Math.random() * arr.length)];
+};
+
+// Generets a bike with the given values
+const createBike = async (bikeId, userId, long, lat, route) => {
+    const name = `${random(firstNames)}_${random(lastNames)}${userId}`;
+
+    await fth.createUser({
+        username: name,
+        password: "test",
+        email: `simuser${userId}@test.com`,
+        wallet: 10000,
+    });
+
+    const myBike = new Bike(name, bikeId, long, lat, route, zones);
 
     return myBike;
 };
 
-const generateBikesAndUsers = (count) => {
+const turnOnAndRentBikes = async (bikes) => {
+    for (const bike of bikes) {
+        await bike.turnOn();
+        await fth.rentBike(bike.getBikeId(), bike.getUserId());
+    }
+    return bikes;
+};
+
+// Generates the amount of bikes asked for
+// and retuns in an array
+const generateBikesAndUsers = async (count) => {
     let bikes = [];
+    // Bikes already in the DB and the Id starts at 1
+    const firstBike = await fth.fetchBikes();
+    const firstUser = await fth.fetchUsers();
 
     for (let i = 0; i < count; i++) {
         const route = routes[Math.floor(Math.random() * routes.length)];
-        bikes.push(createBike(i, route[0][0], route[0][1], route));
+        bikes.push(
+            await createBike(
+                i + firstBike.length + 1,
+                i + firstUser.length + 1,
+                route[0][0],
+                route[0][1],
+                route,
+            ),
+        );
     }
-
-    bikes.forEach((bike) => {
-        bike.turnOn();
-        bike.getCoordinates();
-        bike.getRoute();
-    });
 
     return bikes;
 };
 
-const initStaticStructures = () => {
+// Send all static objects to the map
+const initStaticStructures = async () => {
+    stations = await fth.fetchStations();
+    zones = await fth.fetchZones();
+
     let coordinates = [];
+
     stations.forEach((station) => {
-        coordinates.push([station[0], station[1], "chargingstation", 10]);
+        coordinates.push([
+            station.latitude,
+            station.longitude,
+            station.type,
+            10,
+        ]);
     });
 
-    zones.forEach((station) => {
-        if (station[3] === 5) {
-            coordinates.push([station[0], station[1], "5-zone", station[2]]);
-        } else if (station[3] === 10) {
-            coordinates.push([station[0], station[1], "10-zone", station[2]]);
-        } else {
-            coordinates.push([station[0], station[1], "15-zone", station[2]]);
+    zones.forEach((zone) => {
+        let speed = "5-zone";
+
+        if (zone.max_speed !== 5) {
+            speed = zone.max_speed === 10 ? "10-zone" : "15-zone";
         }
+
+        coordinates.push([zone.latitude, zone.longitude, speed, zone.radius]);
     });
 
-    fetch("http://localhost:3000/update-map-static", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ coordinates }),
-    });
+    fth.sendStaticElements(coordinates);
 };
 
+// Periodically sends all moving objects as
+// an update to the map
 const sendMapUpdates = (bikes) => {
     let coordinates = [];
     bikes.forEach((bike) => {
@@ -78,25 +101,39 @@ const sendMapUpdates = (bikes) => {
         }
     });
 
-    fetch("http://localhost:3000/update-map", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ coordinates }),
-    });
+    fth.sendBikeUpdate(coordinates);
 };
 
-initStaticStructures();
-const totalBikes = generateBikesAndUsers(3000);
+// Removes the bikes from the db
+// const clearDb = (bikes) => {
+//     bikes.forEach((bike) => {
+//         fth.deleteBike(bike.getBikeId());
+//         fth.deleteUser(bike.getUserId());
+//     });
+// };
+
+async function init(count) {
+    await initStaticStructures();
+    const totalBikes = await generateBikesAndUsers(count);
+    await turnOnAndRentBikes(totalBikes);
+
+    // Clears the interval which is automatically
+    // sending updates to the map
+    const updateBikes = setInterval(() => {
+        console.log(
+            `dest: ${reachedDestination.length}, bikes: ${totalBikes.length}`,
+        );
+        if (reachedDestination.length === totalBikes.length) {
+            clearInterval(updateBikes);
+            // clearDb(totalBikes);
+        }
+        sendMapUpdates(totalBikes);
+    }, 1000);
+}
+
+let stations;
+let zones;
 let reachedDestination = [];
 
-const updateBikes = setInterval(() => {
-    console.log(
-        `dest: ${reachedDestination.length}, bikes: ${totalBikes.length}`,
-    );
-    if (reachedDestination.length === totalBikes.length) {
-        clearInterval(updateBikes);
-    }
-    sendMapUpdates(totalBikes);
-}, 1000);
+// amount of bikes
+init(3000);

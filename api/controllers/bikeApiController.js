@@ -232,7 +232,7 @@ const updateBikePosition = async (req, res) => {
     const apiKey = req.query.apiKey;
     const bikeId = req.params.id;
     const contentType = req.headers["content-type"];
-    const { longitude, latitude } = req.body;
+    // const { longitude, latitude } = req.body;
 
     // Check for apiKey provided
     if (!apiKey) {
@@ -254,37 +254,46 @@ const updateBikePosition = async (req, res) => {
             .json({ error: "Request body is missing or empty" });
     }
 
-    if (!longitude) {
-        return res.status(403).json({
-            error: "Coordinates are needed for the city (longitude)",
+    try {
+        const { longitude, latitude, speed, battery } = req.body;
+
+        if (!longitude) {
+            return res.status(403).json({
+                error: "Coordinates are needed for the city (longitude)",
+            });
+        }
+
+        if (!latitude) {
+            return res.status(403).json({
+                error: "Coordinates are needed for the city (latitude)",
+            });
+        }
+
+        // If the provided bikeId didn't exsist in the database
+        if (!bikeId) {
+            return res
+                .status(403)
+                .json({ error: "Please provide correct ID for a bike." });
+        }
+
+        const update = {
+            table: "Bike",
+            id: bikeId,
+            longitude: longitude,
+            latitude: latitude,
+        };
+
+        if (speed) update.speed = speed;
+        if (battery) update.battery = battery;
+
+        await dbCreate.functionsForAllTables.oneRowUpdateTable(update);
+
+        return res.status(200).json({
+            message: "The bike has been updated",
         });
+    } catch (error) {
+        return res.status(500).json({ error: `${error}` });
     }
-
-    if (!latitude) {
-        return res.status(403).json({
-            error: "Coordinates are needed for the city (latitude)",
-        });
-    }
-
-    // If the provided bikeId didn't exsist in the database
-    if (!bikeId) {
-        return res
-            .status(403)
-            .json({ error: "Please provide correct ID for a bike." });
-    }
-
-    const update = {
-        table: "Bike",
-        id: bikeId,
-        longitude: longitude,
-        latitude: latitude,
-    };
-
-    await dbCreate.functionsForAllTables.oneRowUpdateTable(update);
-
-    return res.status(200).json({
-        message: "updated position of bike",
-    });
 };
 
 const getSpecificBike = async (req, res) => {
@@ -358,7 +367,6 @@ module.exports = {
     returnBike,
     getBikePosition,
     getSpecificBike,
-    // setBikePosition,
     updateBikePosition,
     turnOffSpecificBike,
     deleteSpecificBike,
