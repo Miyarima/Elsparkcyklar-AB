@@ -4,8 +4,9 @@ module.exports = {
             if (req.session.username && req.session.role === role) {
                 next();
             } else {
+                const redirectRoute = role === "Admin" ? "/admin/adminlogin" : "user/userlogin";
                 req.session.destroy();
-                return res.redirect("/user/userlogin");
+                return res.redirect(redirectRoute);
             }
         };
     },

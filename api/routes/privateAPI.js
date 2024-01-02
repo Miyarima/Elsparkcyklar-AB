@@ -50,6 +50,11 @@ router.put("/bike/:id/position", (req, res) => {
     bikeApiController.updateBikePosition(req, res);
 });
 
+// Update a bike which already got a position
+router.put("/bike/:id/station", (req, res) => {
+    bikeApiController.updateBikeStation(req, res);
+});
+
 // Get all information about a specific bike
 router.get("/bike/:id", (req, res) => {
     bikeApiController.getSpecificBike(req, res);
@@ -110,6 +115,11 @@ router.get("/cities", (req, res) => {
     cityApiController.getAllCities(req, res);
 });
 
+// Returns all cities
+router.get("/cities/zones", (req, res) => {
+    cityApiController.getAllZones(req, res);
+});
+
 // Adds new city
 router.post("/city", (req, res) => {
     cityApiController.addNewCity(req, res);
@@ -133,6 +143,11 @@ router.get("/city/:id/zone", (req, res) => {
 // Returns bikes on specific charging station
 router.get("/city/:id/zone/bike", (req, res) => {
     cityApiController.getBikeChargingOnStation(req, res);
+});
+
+// Returns all on charging stations
+router.get("/cities/stations", (req, res) => {
+    cityApiController.getAllStations(req, res);
 });
 
 // Insert new bike
