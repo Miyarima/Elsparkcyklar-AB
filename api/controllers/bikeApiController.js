@@ -172,6 +172,62 @@ const getBikePosition = async (req, res) => {
     });
 };
 
+const updateBikeStation = async (req, res) => {
+    const apiKey = req.query.apiKey;
+    const contentType = req.headers["content-type"];
+
+    if (!apiKey) {
+        return res.status(403).json({ error: "Please provide an API key." });
+    }
+
+    // Check for the required headers
+    if (!contentType || contentType !== "application/json") {
+        return res
+            .status(400)
+            .json({ error: "Content-Type must be application/json" });
+    }
+
+    // Check for the required body content
+    if (!req.body || Object.keys(req.body).length === 0) {
+        return res
+            .status(400)
+            .json({ error: "Request body is missing or empty" });
+    }
+
+    try {
+        const {
+            bikeId,
+            longitude,
+            latitude,
+            zoneId,
+            stationId,
+            api_key,
+        } = req.body;
+
+        const update = {
+            table: "Bike",
+            id: bikeId,
+            longitude: longitude,
+            latitude: latitude,
+        };
+
+        if (bikeId) update.id = bikeId;
+        if (longitude) update.longitude = longitude;
+        if (latitude) update.latitude = latitude;
+        if (zoneId) update.zone_id = zoneId;
+        if (stationId) update.station_id = stationId;
+        if (api_key) update.api_key = api_key;
+
+        await dbCreate.functionsForAllTables.oneRowUpdateTable(update);
+
+        return res.status(200).json({
+            message: "The user has been updated",
+        });
+    } catch (error) {
+        return res.status(500).json({ error: `${error}` });
+    }
+};
+
 const updateBikePosition = async (req, res) => {
     const apiKey = req.query.apiKey;
     const bikeId = req.params.id;
@@ -315,4 +371,5 @@ module.exports = {
     turnOffSpecificBike,
     deleteSpecificBike,
     dummyTest,
+    updateBikeStation,
 };

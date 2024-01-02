@@ -3,10 +3,11 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/userController.js");
-const gitAuthentication = require("../auth/gitauth.js");
-const standardAuthentication = require("../auth/standardauth.js");
-const gitAuth = gitAuthentication.gitAuthOB;
-const standardAuth = standardAuthentication.standardAuth;
+const gitAuthentication = require("../auth/gitauthentication.js");
+const standardAuthentication = require("../auth/standardauthentication.js");
+const authorization = require("../auth/authorization.js");
+const gitAuth = gitAuthentication.gitAuthentication;
+const standardAuth = standardAuthentication.standardAuthentication;
 //router.use(cookieParser());
 
 router.use((req, res, next) => {
@@ -14,61 +15,100 @@ router.use((req, res, next) => {
     next();
 });
 
-router.get("/", (req, res) => {
-    userController.viewHome(req, res);
-});
+router.get(
+    "/",
+    authorization.simpleAuthorization("User"),
+    userController.viewHome,
+);
 
 router.get("/userlogin", (req, res) => {
     res.render("user_login.ejs");
 });
 
+router.post("/userlogin", standardAuth.authenticateLoginUser);
+
 router.get("/createuser", (req, res) => {
     res.render("create_user.ejs");
 });
 
-router.post("/createuser", (req, res) => {
-    standardAuth.insertUser(req, res);
-});
+router.post("/createuser", standardAuth.insertUser);
 
 // Declare the redirect route
-router.get("/authenticate", (req, res) => {
-    gitAuth.getAccessToken(req, res);
-});
+router.get("/authenticate", gitAuth.getAccessToken);
 
 router.get("/gitsignup", (req, res) => {
     res.render("gitsignup.ejs");
 });
 
-router.post("/gitsignup", (req, res) => {
-    gitAuth.gitSignup(req, res);
-});
+router.post("/gitsignup", gitAuth.gitSignup);
 
-router.get("/user", standardAuth.simpleAuthorization("User"), (req, res) => {
+router.get("/user", authorization.simpleAuthorization("User"), (req, res) => {
     userController.specificUser(req, res, "alice_jones", 123);
 });
 
-router.get("/details", standardAuth.simpleAuthorization("User"), (req, res) => {
-    userController.detailsSpecificUser(req, res, "alice_jones", 123);
+router.get(
+    "/details",
+    authorization.simpleAuthorization("User"),
+    async (req, res) => {
+        const users = await userController.detailsSpecificUser(req, res, "alice_jones", 123);
+        res.render("details.ejs", { users });
+    }
+);
+
+router.get(
+    "/detailsedit",
+    authorization.simpleAuthorization("User"),
+    async (req, res) => {
+        const users = await userController.detailsSpecificUser(req, res, "alice_jones", 123);
+        res.render("details_edit.ejs", { users });
+    }
+);
+
+router.post("/detailsedit", async (req, res) => {
+    //console.log(JSON.stringify(req.body, null, 4));
+    await userController.updateEmailAddress(req, res, req.body.id, req.body.email, 123);
+    res.redirect("details");
 });
 
-router.get("/detailsedit", (req, res) => {
-    res.render("details_edit.ejs");
+router.get(
+    "/history",
+    authorization.simpleAuthorization("User"),
+    async (req, res) => {
+        const users = await userController.getUserHistory(req, res, "alice_jones", 123);
+        res.render("history.ejs", { users });
+    }
+);
+
+router.get("/wallet", authorization.simpleAuthorization("User"),
+    (req, res) => {
+        res.render("wallet.ejs");
+    }
+);
+
+router.get(
+    "/prepaid",
+    authorization.simpleAuthorization("User"),
+    (req, res) => {
+        res.render("wallet_prepaid.ejs");
+    },
+);
+
+router.post("/prepaid", async (req, res) => {
+    await userController.updateUserWallet(req, res, req.body.userId, req.body.amount, 123);
+    res.redirect("details");
 });
 
-router.get("/history", (req, res) => {
-    userController.getUserHistory(req, res, "alice_jones", 123);
-});
+router.get(
+    "/autogiro",
+    authorization.simpleAuthorization("User"),
+    (req, res) => {
+        res.render("wallet_autogiro.ejs");
+    },
+);
 
-router.get("/wallet", (req, res) => {
-    res.render("wallet.ejs");
-});
-
-router.get("/prepaid", (req, res) => {
-    res.render("wallet_prepaid.ejs");
-});
-
-router.get("/autogiro", (req, res) => {
-    res.render("wallet_autogiro.ejs");
+router.get("/logout", (req, res) => {
+    req.session.destroy();
+    res.redirect("userlogin");
 });
 
 module.exports = router;

@@ -32,6 +32,32 @@ const gatheredCityFunctions = {
     },
 
     /**
+     * Selects all stations
+     * @async
+     * @function
+     * @returns {Array.<Object>} An array containing objects as the result of the database query.
+     */
+    selectAllZones: async () => {
+        const queryObject = {
+            query: "SELECT * FROM Zone",
+        };
+        return await dbFuncs.promisifiedSimpleQueryFunc(queryObject);
+    },
+
+    /**
+     * Selects all stations
+     * @async
+     * @function
+     * @returns {Array.<Object>} An array containing objects as the result of the database query.
+     */
+    selectAllStation: async () => {
+        const queryObject = {
+            query: "SELECT * FROM Station",
+        };
+        return await dbFuncs.promisifiedSimpleQueryFunc(queryObject);
+    },
+
+    /**
      * Selects available ports for station
      * @async
      * @function
