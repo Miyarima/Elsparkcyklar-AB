@@ -2,24 +2,26 @@
 
 <div class="title">Kontodetaljer</div>
 
-<table class="table-details" id="details">
-    <tr class="tr-details">
-        <th class="th-details">Användarnamn</th>
-        <th class="th-details">Roll</th>
-        <th class="th-details">Email</th>
-        <th class="th-details">Plånbok (kr)</th>
-    </tr>
-    <tr class="tr-details">
-        <form>
-            <td class="td-details"><input class="details-wallet" type="text" placeholder="alice_jones"></td>
-            <td class="td-details">user</td>
-            <td class="td-details"><input class="details-email" type="text" placeholder="alice.jones@email.com"></td>
-            <td class="td-details">100.00</td>
-        </form>
-    </tr>
-</table>
-<div class="middle-save-changes"> <!-- Ändra till egen klass om du vill flytta den-->
-    <a class="edit-button" href="/user/details">Spara ändringar</a>
-</div>
+<form action="/user/detailsedit" method="post">
+    <table class="table-details" id="details">
+        <tr class="tr-details">
+            <th class="th-details">Användarnamn</th>
+            <th class="th-details">Roll</th>
+            <th class="th-details">Email</th>
+            <th class="th-details">Plånbok (kr)</th>
+        </tr>
+        <tr class="tr-details">
+            <td class="td-details"><input class="details-email" type="hidden" name="id" value="<%= users[0].id %>"><%= users[0].id %></td>
+            <td class="td-details"><%= users[0].role %></td>
+            <td class="td-details"><input class="details-email" type="text" name="email" placeholder="<%= users[0].email %>"></td>
+            <td class="td-details"><%= users[0].wallet %></td>
+        </tr>
+    </table>
+
+    <div class="middle-save-changes"> <!-- Ändra till egen klass om du vill flytta den-->
+        <button type="submit" class="user-button">Spara ändringar</button>
+    </div>
+</form>
+
 
 <%- include("footer.ejs") %>

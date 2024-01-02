@@ -19,9 +19,7 @@ const getUserHistory = async (req, res, userId, apiKey) => {
         );
         const userData = await response.json();
 
-        console.log(userData);
-
-        res.render("history.ejs", { users: userData.users });
+        return userData.users;
     } catch (error) {
         console.log("Error fetching user data:", error);
         res.status(500).send("Internal Server Error");
@@ -45,7 +43,65 @@ const detailsSpecificUser = async (req, res, userId, apiKey) => {
         const response = await fetch(`${baseURL}/${userId}?apiKey=${apiKey}`);
         const userData = await response.json();
 
-        res.render("details.ejs", { users: userData.users });
+        return userData.users;
+    } catch (error) {
+        console.error("Error fetching user data:", error);
+        res.status(500).send("Internal Server Error");
+    }
+};
+
+const updateUserWallet = async (req, res, userId, amount, apiKey) => {
+    try {
+        const response = await fetch(`${baseURL}/${userId}?apiKey=${apiKey}`);
+        const userData = await response.json();
+
+        const newWallet = parseInt(userData.users[0].wallet, 10) + parseInt(amount, 10);
+
+        var updateWallet =
+        {
+            username: userId,
+            wallet: newWallet,
+        };
+
+        await fetch(`${baseURL}?apiKey=${apiKey}`, {
+            body: JSON.stringify(updateWallet),
+            headers: {
+                "content-type": "application/json"
+            },
+            method: "PUT"
+        });
+    } catch (error) {
+        console.error("Error fetching user data:", error);
+        res.status(500).send("Internal Server Error");
+    }
+};
+
+
+const updateEmailAddress = async (req, res, userId, email, apiKey) => {
+    try {
+        const response = await fetch(`http://api:8080/api/users?apiKey=${apiKey}`);
+        const allUsers = await response.json();
+
+        if (!allUsers.users.some(user => user.email === email)) {
+            var updateEmail =
+            {
+                username: userId,
+                email: email,
+            };
+
+            await fetch(`${baseURL}?apiKey=${apiKey}`, {
+                body: JSON.stringify(updateEmail),
+                headers: {
+                    "content-type": "application/json"
+                },
+                method: "PUT"
+            });
+
+            console.log("email updated!");
+            return;
+        }
+
+        console.error("Email already in use, has to be unique.");
     } catch (error) {
         console.error("Error fetching user data:", error);
         res.status(500).send("Internal Server Error");
@@ -57,4 +113,6 @@ module.exports = {
     specificUser,
     detailsSpecificUser,
     getUserHistory,
+    updateUserWallet,
+    updateEmailAddress,
 };
