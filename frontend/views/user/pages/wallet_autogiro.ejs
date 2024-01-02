@@ -3,9 +3,9 @@
 <div class="title">Plånbok - Autogiro</div>
 
 <div class="middle">
-    <form action="/user/wallet">
+    <form action="/user/autogiro" method="POST">
         <label class="give-code" for="fname">Ange belopp i kr (debiteras månadsvis)</label><br><br>
-        <input class="text-wallet" type="number" required><br>
+        <input class="text-wallet" name="amount" type="number" min="29" required><br>
         <input class="user-button" type="submit" value="Skicka">
     </form>
 </div>

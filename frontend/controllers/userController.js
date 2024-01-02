@@ -77,6 +77,34 @@ const updateUserWallet = async (req, res, userId, amount) => {
     }
 };
 
+const deductUserWallet = async (req, res, userId, amount) => {
+    try {
+        const response = await fetch(`${baseURL}/${userId}?apiKey=${apiKey}`);
+        const userData = await response.json();
+
+        const newWallet = parseInt(userData.users[0].wallet, 10) - parseInt(amount, 10);
+
+        console.log(newWallet);
+
+        var updateWallet =
+        {
+            username: userId,
+            wallet: newWallet,
+        };
+
+        await fetch(`${baseURL}?apiKey=${apiKey}`, {
+            body: JSON.stringify(updateWallet),
+            headers: {
+                "content-type": "application/json"
+            },
+            method: "PUT"
+        });
+    } catch (error) {
+        console.error("Error fetching user data:", error);
+        res.status(500).send("Internal Server Error");
+    }
+};
+
 
 const updateEmailAddress = async (req, res, userId, email) => {
     try {
@@ -116,4 +144,5 @@ module.exports = {
     getUserHistory,
     updateUserWallet,
     updateEmailAddress,
+    deductUserWallet,
 };

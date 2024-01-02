@@ -99,7 +99,7 @@ router.get(
 );
 
 router.post("/prepaid", async (req, res) => {
-    await userController.updateUserWallet(req, res, req.body.userId, req.body.amount);
+    await userController.updateUserWallet(req, res, req.session.username, req.body.amount);
     res.redirect("details");
 });
 
@@ -110,6 +110,11 @@ router.get(
         res.render("wallet_autogiro.ejs");
     },
 );
+
+router.post("/autogiro", async (req, res) => {
+    await userController.deductUserWallet(req, res, req.session.username, req.body.amount);
+    res.redirect("details");
+});
 
 router.get("/logout", (req, res) => {
     req.session.destroy();
