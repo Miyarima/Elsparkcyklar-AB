@@ -2,6 +2,7 @@
 
 const print = require("../src/user/printHello.js");
 const baseURL = "http://api:8080/api/user";
+const apiKey = 123;
 
 const viewHome = (req, res) => {
     print.hello();
@@ -12,7 +13,7 @@ const viewHome = (req, res) => {
     });
 };
 
-const getUserHistory = async (req, res, userId, apiKey) => {
+const getUserHistory = async (req, res, userId) => {
     try {
         const response = await fetch(
             `${baseURL}/${userId}/travel?apiKey=${apiKey}`,
@@ -26,7 +27,7 @@ const getUserHistory = async (req, res, userId, apiKey) => {
     }
 };
 
-const specificUser = async (req, res, userId, apiKey) => {
+const specificUser = async (req, res, userId) => {
     try {
         const response = await fetch(`${baseURL}/${userId}?apiKey=${apiKey}`);
         const userData = await response.json();
@@ -38,7 +39,7 @@ const specificUser = async (req, res, userId, apiKey) => {
     }
 };
 
-const detailsSpecificUser = async (req, res, userId, apiKey) => {
+const detailsSpecificUser = async (req, res, userId) => {
     try {
         const response = await fetch(`${baseURL}/${userId}?apiKey=${apiKey}`);
         const userData = await response.json();
@@ -50,7 +51,7 @@ const detailsSpecificUser = async (req, res, userId, apiKey) => {
     }
 };
 
-const updateUserWallet = async (req, res, userId, amount, apiKey) => {
+const updateUserWallet = async (req, res, userId, amount) => {
     try {
         const response = await fetch(`${baseURL}/${userId}?apiKey=${apiKey}`);
         const userData = await response.json();
@@ -77,7 +78,7 @@ const updateUserWallet = async (req, res, userId, amount, apiKey) => {
 };
 
 
-const updateEmailAddress = async (req, res, userId, email, apiKey) => {
+const updateEmailAddress = async (req, res, userId, email) => {
     try {
         const response = await fetch(`http://api:8080/api/users?apiKey=${apiKey}`);
         const allUsers = await response.json();
