@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Map Overview</title>
+        <!-- Include Leaflet CSS and JS -->
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"
+        />
+        <link rel="stylesheet" href="/style/admin.css" />
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+        <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+        <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js.map"></script>
+        <style>
+            #map {
+                margin: 3em 1em 0 1em;
+                height: 92vh;
+            }
+        </style>
+    </head>
+    <body>
+        <ul>
+            <li class="list" style="float: right">
+                <a class="active" href="/admin/adminlogin">Logga ut</a>
+            </li>
+            <li class="list"><a href="/admin/cities">Städer</a></li>
+            <li class="list"><a href="/admin/customers">Kunder</a></li>
+            <li class="list"><a href="/admin/bikes">Cyklar</a></li>
+            <li class="list"><a href="/admin/stations">Stationer</a></li>
+            <li class="list">
+                <a href="/admin/parkingzones">Parkeringszoner</a>
+            </li>
+            <li class="list"><a href="/admin/overview">Översikt</a></li>
+        </ul>
+        <br />
+        <div id="map"></div>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/src/map.js"></script>
+    </body>
+</html>
