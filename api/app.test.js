@@ -1,9 +1,31 @@
 const request = require("supertest");
 const app = require("./app.js");
 const db = require("./db/sql.js");
-// const bike = require("./db/functionsForBike.js");
 const bikeController = require("./controllers/bikeApiController.js");
 const dbCreate = require("./db/functionsForAllTables.js");
+
+const mockReturnValue = true;
+const mockLongitude = 50.1234;
+const mockLatitude = 15.5678;
+
+jest.mock("./db/functionsForBike.js", () => ({
+    ...jest.requireActual("./db/functionsForBike.js"),
+    gatheredBikeFunctions: {
+        getAllBikes: jest.fn(),
+        unlockBike: jest.fn(),
+        lockBike: jest.fn(),
+        getOneBike: jest.fn(),
+        changePowerStatus: jest.fn(),
+        deleteBike: jest.fn(),
+    },
+}));
+
+jest.mock("./db/functionsForAllTables.js", () => ({
+    ...jest.requireActual("./db/functionsForAllTables.js"),
+    functionsForAllTables: {
+        oneRowUpdateTable: jest.fn(),
+    },
+}));
 
 describe("GET /api/v1", () => {
     describe("Not providing an API Key", () => {
@@ -37,29 +59,6 @@ describe("GET /api/v1", () => {
         });
     });
 });
-
-const mockReturnValue = true;
-const mockLongitude = 50.1234;
-const mockLatitude = 15.5678;
-
-jest.mock("./db/functionsForBike.js", () => ({
-    ...jest.requireActual("./db/functionsForBike.js"),
-    gatheredBikeFunctions: {
-        getAllBikes: jest.fn(),
-        unlockBike: jest.fn(),
-        lockBike: jest.fn(),
-        getOneBike: jest.fn(),
-        changePowerStatus: jest.fn(),
-        deleteBike: jest.fn(),
-    },
-}));
-
-jest.mock("./db/functionsForAllTables.js", () => ({
-    ...jest.requireActual("./db/functionsForAllTables.js"),
-    functionsForAllTables: {
-        oneRowUpdateTable: jest.fn(),
-    },
-}));
 
 describe("GET /api/v1/bikes", () => {
     describe("Not providing an API Key", () => {
