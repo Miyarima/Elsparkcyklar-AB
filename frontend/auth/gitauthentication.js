@@ -6,7 +6,7 @@ const clientSecret = "33909380358de1cf2634961840b3f436d6e0236b";
 const gitAuthentication = {
     gitLogin: (token) => {
         return authorization.gitAuthorization(token).then((res) => {
-            return fetch(`http://api:8080/api/gituser/${res.login}?apiKey=1`, {
+            return fetch(`http://api:8080/api/v1/gituser/${res.login}?apiKey=1`, {
                 method: "GET",
             })
                 .then((result) => result.json())
@@ -26,7 +26,7 @@ const gitAuthentication = {
                     username: username,
                     git_id: result.login,
                 };
-                return fetch("http://api:8080/api/gituser?apiKey=1", {
+                return fetch("http://api:8080/api/v1/gituser?apiKey=1", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",

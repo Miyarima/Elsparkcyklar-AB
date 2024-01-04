@@ -1,7 +1,7 @@
 "use strict";
 
 const print = require("../src/user/printHello.js");
-const baseURL = "http://api:8080/api/user";
+const baseURL = "http://api:8080/api/v1/user";
 const apiKey = 123;
 
 const viewHome = (req, res) => {
@@ -108,7 +108,7 @@ const deductUserWallet = async (req, res, userId, amount) => {
 
 const updateEmailAddress = async (req, res, userId, email) => {
     try {
-        const response = await fetch(`http://api:8080/api/users?apiKey=${apiKey}`);
+        const response = await fetch(`http://api:8080/api/v1/users?apiKey=${apiKey}`);
         const allUsers = await response.json();
 
         if (!allUsers.users.some(user => user.email === email)) {

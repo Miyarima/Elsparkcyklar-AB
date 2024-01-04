@@ -43,7 +43,6 @@ router.get("/gitsignup", (req, res) => {
 router.post("/gitsignup", gitAuth.gitSignup);
 
 router.get("/user", authorization.simpleAuthorization("User"), (req, res) => {
-    //userController.specificUser(req, res, "alice_jones", 123);
     userController.specificUser(req, res, req.session.username);
 });
 
@@ -51,8 +50,6 @@ router.get(
     "/details",
     authorization.simpleAuthorization("User"),
     async (req, res) => {
-        //console.log(req.session.username);
-        //const users = await userController.detailsSpecificUser(req, res, "alice_jones", 123);
         const users = await userController.detailsSpecificUser(req, res, req.session.username);
         res.render("details.ejs", { users });
     }
@@ -62,14 +59,12 @@ router.get(
     "/detailsedit",
     authorization.simpleAuthorization("User"),
     async (req, res) => {
-        //const users = await userController.detailsSpecificUser(req, res, "alice_jones", 123);
         const users = await userController.detailsSpecificUser(req, res, req.session.username);
         res.render("details_edit.ejs", { users });
     }
 );
 
 router.post("/detailsedit", async (req, res) => {
-    //console.log(JSON.stringify(req.body, null, 4));
     await userController.updateEmailAddress(req, res, req.body.id, req.body.email);
     res.redirect("details");
 });
@@ -78,7 +73,6 @@ router.get(
     "/history",
     authorization.simpleAuthorization("User"),
     async (req, res) => {
-        //const users = await userController.getUserHistory(req, res, "alice_jones", 123);
         const users = await userController.getUserHistory(req, res, req.session.username);
         res.render("history.ejs", { users });
     }

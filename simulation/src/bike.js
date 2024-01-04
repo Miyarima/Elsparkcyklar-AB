@@ -85,7 +85,7 @@ class Bike {
         const apiKey = 1;
 
         try {
-            await fetch(`http://localhost:8080/api/bike?apiKey=${apiKey}`, {
+            await fetch(`http://localhost:8080/api/v1/bike?apiKey=${apiKey}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -108,7 +108,7 @@ class Bike {
 
         try {
             fetch(
-                `http://localhost:8080/api/bike/${this.bikeId}/${this.longitude}/${this.latitude}/return?apiKey=${apiKey}`,
+                `http://localhost:8080/api/v1/bike/${this.bikeId}/${this.longitude}/${this.latitude}/return?apiKey=${apiKey}`,
                 {
                     method: "Put",
                 },
@@ -136,7 +136,7 @@ class Bike {
         // console.log(`${this.user} battery: ${this.battery}`);
         try {
             await fetch(
-                `http://localhost:8080/api/bike/${this.bikeId}/position?apiKey=${apiKey}`,
+                `http://localhost:8080/api/v1/bike/${this.bikeId}/position?apiKey=${apiKey}`,
                 {
                     method: "PUT",
                     headers: {
