@@ -195,14 +195,8 @@ const updateBikeStation = async (req, res) => {
     }
 
     try {
-        const {
-            bikeId,
-            longitude,
-            latitude,
-            zoneId,
-            stationId,
-            api_key,
-        } = req.body;
+        const { bikeId, longitude, latitude, zoneId, stationId, api_key } =
+            req.body;
 
         const update = {
             table: "Bike",
@@ -236,7 +230,6 @@ const updateBikePosition = async (req, res) => {
 
     // Check for apiKey provided
     if (!apiKey) {
-        console.log("NO API KEY!");
         return res.status(403).json({ error: "Please provide an API key." });
     }
 
@@ -339,6 +332,30 @@ const turnOffSpecificBike = async (req, res) => {
     });
 };
 
+const getBikesWithStatus = async (req, res) => {
+    const apiKey = req.query.apiKey;
+    const status = req.params.status;
+
+    if (!apiKey) {
+        return res.status(403).json({ error: "Please provide an API key." });
+    }
+
+    if (!status) {
+        return res
+            .status(403)
+            .json({ error: "Please provide correct ID for a bike." });
+    }
+    try {
+        const bikes =
+            await db.gatheredBikeFunctions.selectBikesFromStatus(status);
+        return res.status(200).json({
+            bikes: bikes,
+        });
+    } catch (error) {
+        return res.status(500).json({ error: `${error}` });
+    }
+};
+
 const deleteSpecificBike = async (req, res) => {
     const apiKey = req.query.apiKey;
     const bikeId = req.params.id;
@@ -372,4 +389,5 @@ module.exports = {
     deleteSpecificBike,
     dummyTest,
     updateBikeStation,
+    getBikesWithStatus,
 };
