@@ -4,6 +4,7 @@ const db = require("./db/sql.js");
 const dbCreate = require("./db/functionsForAllTables.js");
 const bikeController = require("./controllers/bikeApiController.js");
 const userController = require("./controllers/userApiController.js");
+const cityController = require("./controllers/cityApiController.js");
 
 const mockReturnValue = true;
 const mockLongitude = 50.1234;
@@ -18,6 +19,7 @@ jest.mock("./db/functionsForBike.js", () => ({
         getOneBike: jest.fn(),
         changePowerStatus: jest.fn(),
         deleteBike: jest.fn(),
+        getUserTravelStatus: jest.fn(),
     },
 }));
 
@@ -29,8 +31,20 @@ jest.mock("./db/functionsForUser.js", () => ({
         getUsernameFromGit: jest.fn(),
         selectRowsWithEmail: jest.fn(),
         selectTravelForUser: jest.fn(),
-        getUserTravelStatus: jest.fn(),
         deleteUser: jest.fn(),
+    },
+}));
+
+jest.mock("./db/functionsForCity.js", () => ({
+    ...jest.requireActual("./db/functionsForCity.js"),
+    gatheredCityFunctions: {
+        selectAllCities: jest.fn(),
+        selectAllZones: jest.fn(),
+        selectAllStation: jest.fn(),
+        specificCity: jest.fn(),
+        allBikesAndItsCities: jest.fn(),
+        availablePortsForStation: jest.fn(),
+        bikesAttachedToStation: jest.fn(),
     },
 }));
 
@@ -686,6 +700,442 @@ describe("GET /api/v1/email/:email_id", () => {
             expect(res.status).toHaveBeenCalledWith(200);
             expect(res.json).toHaveBeenCalledWith({
                 users: true,
+            });
+        });
+    });
+});
+
+describe("GET /api/v1/users/travel/all/:id", () => {
+    describe("Not providing an API Key", () => {
+        test("should respond with a 403 status code", async () => {
+            const res = await request(app)
+                .get("/api/v1/users/travel/all/1")
+                .query({});
+            expect(res.statusCode).toBe(403);
+            expect(res.body).toEqual({ error: "Please provide an API key." });
+        });
+    });
+    describe("Providing an API Key", () => {
+        test("should respond with a 200 status code, and the specific travel", async () => {
+            db.gatheredUserFunctions.selectRowsWithEmail.mockResolvedValue(
+                mockReturnValue,
+            );
+
+            const req = {
+                query: { apiKey: 123 },
+                params: { id: 1 },
+            };
+            const res = {
+                status: jest.fn().mockReturnThis(),
+                json: jest.fn(),
+            };
+
+            await userController.getUserFromEmail(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(200);
+            expect(res.json).toHaveBeenCalledWith({
+                users: true,
+            });
+        });
+    });
+});
+
+describe("GET /api/v1/user/:id/:status", () => {
+    describe("Not providing an API Key", () => {
+        test("should respond with a 403 status code", async () => {
+            const res = await request(app).get("/api/v1/user/1/test").query({});
+            expect(res.statusCode).toBe(403);
+            expect(res.body).toEqual({ error: "Please provide an API key." });
+        });
+    });
+    describe("Providing an API Key", () => {
+        test("should respond with a 200 status code, and the specific travel", async () => {
+            db.gatheredBikeFunctions.getUserTravelStatus.mockResolvedValue(
+                mockReturnValue,
+            );
+
+            const req = {
+                query: { apiKey: 123 },
+                params: { id: 1, status: "test" },
+            };
+            const res = {
+                status: jest.fn().mockReturnThis(),
+                json: jest.fn(),
+            };
+
+            await bikeController.getTravelStatusForUser(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(200);
+            expect(res.json).toHaveBeenCalledWith({
+                status: true,
+            });
+        });
+    });
+});
+
+describe("DELETE /api/v1/user/:id", () => {
+    describe("Not providing an API Key", () => {
+        test("should respond with a 403 status code", async () => {
+            const res = await request(app).delete("/api/v1/user/1").query({});
+            expect(res.statusCode).toBe(403);
+            expect(res.body).toEqual({ error: "Please provide an API key." });
+        });
+    });
+    describe("Providing an API Key", () => {
+        test("should respond with a 200 status code, and the user has been deleted", async () => {
+            db.gatheredUserFunctions.deleteUser.mockResolvedValue(
+                mockReturnValue,
+            );
+
+            const req = {
+                query: { apiKey: 123 },
+                params: { id: 1 },
+            };
+            const res = {
+                status: jest.fn().mockReturnThis(),
+                json: jest.fn(),
+            };
+
+            await userController.deleteSpecificUser(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(200);
+            expect(res.json).toHaveBeenCalledWith({
+                message: "the user has been deleted",
+                status: true,
+            });
+        });
+    });
+});
+
+describe("GET /api/v1/cities", () => {
+    describe("Not providing an API Key", () => {
+        test("should respond with a 403 status code", async () => {
+            const res = await request(app).get("/api/v1/cities").query({});
+            expect(res.statusCode).toBe(403);
+            expect(res.body).toEqual({ error: "Please provide an API key." });
+        });
+    });
+    describe("Providing an API Key", () => {
+        test("should respond with a 200 status code, and all cities", async () => {
+            db.gatheredCityFunctions.selectAllCities.mockResolvedValue(
+                mockReturnValue,
+            );
+
+            const req = {
+                query: { apiKey: 123 },
+            };
+            const res = {
+                status: jest.fn().mockReturnThis(),
+                json: jest.fn(),
+            };
+
+            await cityController.getAllCities(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(200);
+            expect(res.json).toHaveBeenCalledWith({
+                cities: true,
+            });
+        });
+    });
+});
+
+describe("GET /api/v1/cities/zones", () => {
+    describe("Not providing an API Key", () => {
+        test("should respond with a 403 status code", async () => {
+            const res = await request(app)
+                .get("/api/v1/cities/zones")
+                .query({});
+            expect(res.statusCode).toBe(403);
+            expect(res.body).toEqual({ error: "Please provide an API key." });
+        });
+    });
+    describe("Providing an API Key", () => {
+        test("should respond with a 200 status code, and all zones", async () => {
+            db.gatheredCityFunctions.selectAllZones.mockResolvedValue(
+                mockReturnValue,
+            );
+
+            const req = {
+                query: { apiKey: 123 },
+            };
+            const res = {
+                status: jest.fn().mockReturnThis(),
+                json: jest.fn(),
+            };
+
+            await cityController.getAllZones(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(200);
+            expect(res.json).toHaveBeenCalledWith({
+                zones: true,
+            });
+        });
+    });
+});
+
+describe("GET /api/v1/cities/stations", () => {
+    describe("Not providing an API Key", () => {
+        test("should respond with a 403 status code", async () => {
+            const res = await request(app)
+                .get("/api/v1/cities/stations")
+                .query({});
+            expect(res.statusCode).toBe(403);
+            expect(res.body).toEqual({ error: "Please provide an API key." });
+        });
+    });
+    describe("Providing an API Key", () => {
+        test("should respond with a 200 status code, and all stations", async () => {
+            db.gatheredCityFunctions.selectAllStation.mockResolvedValue(
+                mockReturnValue,
+            );
+
+            const req = {
+                query: { apiKey: 123 },
+            };
+            const res = {
+                status: jest.fn().mockReturnThis(),
+                json: jest.fn(),
+            };
+
+            await cityController.getAllStations(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(200);
+            expect(res.json).toHaveBeenCalledWith({
+                stations: true,
+            });
+        });
+    });
+});
+
+describe("POST /api/v1/city", () => {
+    describe("Not providing an API Key", () => {
+        test("should respond with a 403 status code", async () => {
+            const res = await request(app).post("/api/v1/city").query({});
+            expect(res.statusCode).toBe(403);
+            expect(res.body).toEqual({ error: "Please provide an API key." });
+        });
+    });
+    describe("Providing an API Key, but nothing else", () => {
+        test("should respond with a 400 status code", async () => {
+            const res = await request(app).post("/api/v1/city").query({
+                apiKey: 123,
+            });
+            expect(res.statusCode).toBe(400);
+            expect(res.body).toEqual({
+                error: "Content-Type must be application/json",
+            });
+        });
+    });
+    describe("Providing an API Key, with a test user", () => {
+        test("should respond with a 200 status code, and that a new city has been created", async () => {
+            dbCreate.functionsForAllTables.insertTable.mockResolvedValue(
+                mockReturnValue,
+            );
+
+            const req = {
+                query: { apiKey: 123 },
+                headers: { "content-type": "application/json" },
+                body: {
+                    name: "testuser",
+                    longitude: mockLongitude,
+                    latitude: mockLatitude,
+                },
+            };
+            const res = {
+                status: jest.fn().mockReturnThis(),
+                json: jest.fn(),
+            };
+
+            await cityController.addNewCity(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(200);
+            expect(res.json).toHaveBeenCalledWith({
+                message: "A new city has been created",
+            });
+        });
+    });
+});
+
+describe("POST /api/v1/bike", () => {
+    describe("Not providing an API Key", () => {
+        test("should respond with a 403 status code", async () => {
+            const res = await request(app).post("/api/v1/bike").query({});
+            expect(res.statusCode).toBe(403);
+            expect(res.body).toEqual({ error: "Please provide an API key." });
+        });
+    });
+    describe("Providing an API Key, but nothing else", () => {
+        test("should respond with a 400 status code", async () => {
+            const res = await request(app).post("/api/v1/bike").query({
+                apiKey: 123,
+            });
+            expect(res.statusCode).toBe(400);
+            expect(res.body).toEqual({
+                error: "Content-Type must be application/json",
+            });
+        });
+    });
+    describe("Providing an API Key, with a test user", () => {
+        test("should respond with a 200 status code, and that a new bike has been added", async () => {
+            dbCreate.functionsForAllTables.insertTable.mockResolvedValue(
+                mockReturnValue,
+            );
+
+            const req = {
+                query: { apiKey: 123 },
+                headers: { "content-type": "application/json" },
+                body: {
+                    status: "test",
+                    longitude: mockLongitude,
+                    latitude: mockLatitude,
+                },
+            };
+            const res = {
+                status: jest.fn().mockReturnThis(),
+                json: jest.fn(),
+            };
+
+            await cityController.addNewBike(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(200);
+            expect(res.json).toHaveBeenCalledWith({
+                message: "Bikes have been added to city.",
+            });
+        });
+    });
+});
+
+describe("GET /api/v1/city/:id", () => {
+    describe("Not providing an API Key", () => {
+        test("should respond with a 403 status code", async () => {
+            const res = await request(app).get("/api/v1/city/1").query({});
+            expect(res.statusCode).toBe(403);
+            expect(res.body).toEqual({ error: "Please provide an API key." });
+        });
+    });
+    describe("Providing an API Key", () => {
+        test("should respond with a 200 status code, and the city", async () => {
+            db.gatheredCityFunctions.specificCity.mockResolvedValue(
+                mockReturnValue,
+            );
+
+            const req = {
+                query: { apiKey: 123 },
+                params: { id: 1 },
+            };
+            const res = {
+                status: jest.fn().mockReturnThis(),
+                json: jest.fn(),
+            };
+
+            await cityController.getSpecificCity(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(200);
+            expect(res.json).toHaveBeenCalledWith({
+                city: true,
+            });
+        });
+    });
+});
+
+describe("GET /api/v1/city/:city/bike", () => {
+    describe("Not providing an API Key", () => {
+        test("should respond with a 403 status code", async () => {
+            const res = await request(app).get("/api/v1/city/1/bike").query({});
+            expect(res.statusCode).toBe(403);
+            expect(res.body).toEqual({ error: "Please provide an API key." });
+        });
+    });
+    describe("Providing an API Key", () => {
+        test("should respond with a 200 status code, and the city", async () => {
+            db.gatheredCityFunctions.allBikesAndItsCities.mockResolvedValue([
+                { name: "stockholm" },
+            ]);
+
+            const req = {
+                query: { apiKey: 123 },
+                params: { city: "stockholm" },
+            };
+            const res = {
+                status: jest.fn().mockReturnThis(),
+                json: jest.fn(),
+            };
+
+            await cityController.getBikesCity(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(200);
+            expect(res.json).toHaveBeenCalledWith({
+                bikes: [{ name: "stockholm" }],
+            });
+        });
+    });
+});
+
+describe("GET /api/v1/city/:id/zone/bike", () => {
+    describe("Not providing an API Key", () => {
+        test("should respond with a 403 status code", async () => {
+            const res = await request(app)
+                .get("/api/v1/city/1/zone/bike")
+                .query({});
+            expect(res.statusCode).toBe(403);
+            expect(res.body).toEqual({ error: "Please provide an API key." });
+        });
+    });
+    describe("Providing an API Key", () => {
+        test("should respond with a 200 status code, and the city", async () => {
+            db.gatheredCityFunctions.availablePortsForStation.mockResolvedValue(
+                mockReturnValue,
+            );
+
+            const req = {
+                query: { apiKey: 123 },
+                params: { zoneid: 1 },
+            };
+            const res = {
+                status: jest.fn().mockReturnThis(),
+                json: jest.fn(),
+            };
+
+            await cityController.getCityChargingStation(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(200);
+            expect(res.json).toHaveBeenCalledWith({
+                ports: true,
+            });
+        });
+    });
+});
+
+describe("GET /api/v1/city/zone/:id/ports", () => {
+    describe("Not providing an API Key", () => {
+        test("should respond with a 403 status code", async () => {
+            const res = await request(app)
+                .get("/api/v1/city/zone/1/ports")
+                .query({});
+            expect(res.statusCode).toBe(403);
+            expect(res.body).toEqual({ error: "Please provide an API key." });
+        });
+    });
+    describe("Providing an API Key", () => {
+        test("should respond with a 200 status code, and the city", async () => {
+            db.gatheredCityFunctions.bikesAttachedToStation.mockResolvedValue(
+                mockReturnValue,
+            );
+
+            const req = {
+                query: { apiKey: 123 },
+                params: { id: 1 },
+            };
+            const res = {
+                status: jest.fn().mockReturnThis(),
+                json: jest.fn(),
+            };
+
+            await cityController.getBikeChargingOnStation(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(200);
+            expect(res.json).toHaveBeenCalledWith({
+                bikes: true,
             });
         });
     });
