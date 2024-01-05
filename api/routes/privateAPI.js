@@ -108,7 +108,7 @@ router.get("/gituser/:id", (req, res) => {
     userApiController.getUserFromGitUsername(req, res);
 });
 
-router.get("/email/email_id", (req, res) => {
+router.get("/email/:email_id", (req, res) => {
     userApiController.getUserFromEmail(req, res);
 });
 

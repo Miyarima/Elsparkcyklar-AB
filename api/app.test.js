@@ -1,8 +1,9 @@
 const request = require("supertest");
 const app = require("./app.js");
 const db = require("./db/sql.js");
-const bikeController = require("./controllers/bikeApiController.js");
 const dbCreate = require("./db/functionsForAllTables.js");
+const bikeController = require("./controllers/bikeApiController.js");
+const userController = require("./controllers/userApiController.js");
 
 const mockReturnValue = true;
 const mockLongitude = 50.1234;
@@ -20,10 +21,24 @@ jest.mock("./db/functionsForBike.js", () => ({
     },
 }));
 
+jest.mock("./db/functionsForUser.js", () => ({
+    ...jest.requireActual("./db/functionsForUser.js"),
+    gatheredUserFunctions: {
+        allUsers: jest.fn(),
+        specificUser: jest.fn(),
+        getUsernameFromGit: jest.fn(),
+        selectRowsWithEmail: jest.fn(),
+        selectTravelForUser: jest.fn(),
+        getUserTravelStatus: jest.fn(),
+        deleteUser: jest.fn(),
+    },
+}));
+
 jest.mock("./db/functionsForAllTables.js", () => ({
     ...jest.requireActual("./db/functionsForAllTables.js"),
     functionsForAllTables: {
         oneRowUpdateTable: jest.fn(),
+        insertTable: jest.fn(),
     },
 }));
 
@@ -418,6 +433,259 @@ describe("DELETE /api/v1/bike/:id", () => {
             expect(res.json).toHaveBeenCalledWith({
                 message: "the bike has been deleted",
                 status: true,
+            });
+        });
+    });
+});
+
+describe("GET /api/v1/users", () => {
+    describe("Not providing an API Key", () => {
+        test("should respond with a 403 status code", async () => {
+            const res = await request(app).get("/api/v1/users").query({});
+            expect(res.statusCode).toBe(403);
+            expect(res.body).toEqual({ error: "Please provide an API key." });
+        });
+    });
+    describe("Providing an API Key", () => {
+        test("should respond with a 200 status code, and all users", async () => {
+            db.gatheredUserFunctions.allUsers.mockResolvedValue(
+                mockReturnValue,
+            );
+
+            const req = {
+                query: { apiKey: 123 },
+            };
+            const res = {
+                status: jest.fn().mockReturnThis(),
+                json: jest.fn(),
+            };
+
+            await userController.getAllUsers(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(200);
+            expect(res.json).toHaveBeenCalledWith({
+                users: true,
+            });
+        });
+    });
+});
+
+describe("POST /api/v1/user", () => {
+    describe("Not providing an API Key", () => {
+        test("should respond with a 403 status code", async () => {
+            const res = await request(app).post("/api/v1/user").query({});
+            expect(res.statusCode).toBe(403);
+            expect(res.body).toEqual({ error: "Please provide an API key." });
+        });
+    });
+    describe("Providing an API Key, but nothing else", () => {
+        test("should respond with a 400 status code", async () => {
+            const res = await request(app).put("/api/v1/user").query({
+                apiKey: 123,
+            });
+            expect(res.statusCode).toBe(400);
+            expect(res.body).toEqual({
+                error: "Content-Type must be application/json",
+            });
+        });
+    });
+    describe("Providing an API Key, with a test user", () => {
+        test("should respond with a 200 status code, and that a new user has been created", async () => {
+            dbCreate.functionsForAllTables.insertTable.mockResolvedValue(
+                mockReturnValue,
+            );
+
+            const req = {
+                query: { apiKey: 123 },
+                headers: { "content-type": "application/json" },
+                body: {
+                    username: "testuser",
+                    password: "test",
+                    email: "test@email.com",
+                },
+            };
+            const res = {
+                status: jest.fn().mockReturnThis(),
+                json: jest.fn(),
+            };
+
+            await userController.addUser(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(200);
+            expect(res.json).toHaveBeenCalledWith({
+                message: "A new user has been created",
+            });
+        });
+    });
+});
+
+describe("POST /api/v1/gituser", () => {
+    describe("Not providing an API Key", () => {
+        test("should respond with a 403 status code", async () => {
+            const res = await request(app).post("/api/v1/gituser").query({});
+            expect(res.statusCode).toBe(403);
+            expect(res.body).toEqual({ error: "Please provide an API key." });
+        });
+    });
+    describe("Providing an API Key, with a test git user", () => {
+        test("should respond with a 200 status code, and that a new user has been created", async () => {
+            dbCreate.functionsForAllTables.insertTable.mockResolvedValue(
+                mockReturnValue,
+            );
+
+            const req = {
+                query: { apiKey: 123 },
+                headers: { "content-type": "application/json" },
+                body: {
+                    username: "testuser",
+                },
+            };
+            const res = {
+                status: jest.fn().mockReturnThis(),
+                json: jest.fn(),
+            };
+
+            await userController.addGitUser(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(200);
+            expect(res.json).toHaveBeenCalledWith({
+                message: "A new user has been created",
+            });
+        });
+    });
+});
+
+describe("PUT /api/v1/user", () => {
+    describe("Not providing an API Key", () => {
+        test("should respond with a 403 status code", async () => {
+            const res = await request(app).put("/api/v1/user").query({});
+            expect(res.statusCode).toBe(403);
+            expect(res.body).toEqual({ error: "Please provide an API key." });
+        });
+    });
+    describe("Providing an API Key, with a test git user", () => {
+        test("should respond with a 200 status code, and that the user has been updated", async () => {
+            dbCreate.functionsForAllTables.oneRowUpdateTable.mockResolvedValue(
+                mockReturnValue,
+            );
+
+            const req = {
+                query: { apiKey: 123 },
+                headers: { "content-type": "application/json" },
+                body: {
+                    username: "testuser",
+                    password: "newpassword",
+                },
+            };
+            const res = {
+                status: jest.fn().mockReturnThis(),
+                json: jest.fn(),
+            };
+
+            await userController.updateSpecificUser(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(200);
+            expect(res.json).toHaveBeenCalledWith({
+                message: "The user has been updated",
+            });
+        });
+    });
+});
+
+describe("GET /api/v1/user/:id", () => {
+    describe("Not providing an API Key", () => {
+        test("should respond with a 403 status code", async () => {
+            const res = await request(app).get("/api/v1/user/1").query({});
+            expect(res.statusCode).toBe(403);
+            expect(res.body).toEqual({ error: "Please provide an API key." });
+        });
+    });
+    describe("Providing an API Key", () => {
+        test("should respond with a 200 status code, and the specific user", async () => {
+            db.gatheredUserFunctions.specificUser.mockResolvedValue(
+                mockReturnValue,
+            );
+
+            const req = {
+                query: { apiKey: 123 },
+                params: { id: 1 },
+            };
+            const res = {
+                status: jest.fn().mockReturnThis(),
+                json: jest.fn(),
+            };
+
+            await userController.getSpecificUser(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(200);
+            expect(res.json).toHaveBeenCalledWith({
+                users: true,
+            });
+        });
+    });
+});
+
+describe("GET /api/v1/gituser/:id", () => {
+    describe("Not providing an API Key", () => {
+        test("should respond with a 403 status code", async () => {
+            const res = await request(app).get("/api/v1/gituser/1").query({});
+            expect(res.statusCode).toBe(403);
+            expect(res.body).toEqual({ error: "Please provide an API key." });
+        });
+    });
+    describe("Providing an API Key", () => {
+        test("should respond with a 200 status code, and the specific user", async () => {
+            db.gatheredUserFunctions.getUsernameFromGit.mockResolvedValue(
+                mockReturnValue,
+            );
+
+            const req = {
+                query: { apiKey: 123 },
+                params: { id: 1 },
+            };
+            const res = {
+                status: jest.fn().mockReturnThis(),
+                json: jest.fn(),
+            };
+
+            await userController.getUserFromGitUsername(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(200);
+            expect(res.json).toHaveBeenCalledWith({
+                users: true,
+            });
+        });
+    });
+});
+
+describe("GET /api/v1/email/:email_id", () => {
+    describe("Not providing an API Key", () => {
+        test("should respond with a 403 status code", async () => {
+            const res = await request(app).get("/api/v1/email/1").query({});
+            expect(res.statusCode).toBe(403);
+            expect(res.body).toEqual({ error: "Please provide an API key." });
+        });
+    });
+    describe("Providing an API Key", () => {
+        test("should respond with a 200 status code, and the specific user", async () => {
+            db.gatheredUserFunctions.selectRowsWithEmail.mockResolvedValue(
+                mockReturnValue,
+            );
+
+            const req = {
+                query: { apiKey: 123 },
+                params: { id: 1 },
+            };
+            const res = {
+                status: jest.fn().mockReturnThis(),
+                json: jest.fn(),
+            };
+
+            await userController.getUserFromEmail(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(200);
+            expect(res.json).toHaveBeenCalledWith({
+                users: true,
             });
         });
     });
