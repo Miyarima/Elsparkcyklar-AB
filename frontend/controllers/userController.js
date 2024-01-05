@@ -16,7 +16,7 @@ const viewHome = (req, res) => {
 const getUserHistory = async (req, res, userId) => {
     try {
         const response = await fetch(
-            `${baseURL}/${userId}/travel?apiKey=${apiKey}`,
+            `http://api:8080/api/v1/users/travel/all/${userId}?apiKey=${apiKey}`,
         );
         const userData = await response.json();
 
