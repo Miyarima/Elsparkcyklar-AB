@@ -5,7 +5,7 @@ const apiKey = 1;
 const fetchUsers = async () => {
     try {
         const response = await fetch(
-            `http://localhost:8080/api/users?apiKey=${apiKey}`,
+            `http://localhost:8080/api/v1/users?apiKey=${apiKey}`,
         );
         const res = await response.json();
         return res.users;
@@ -18,7 +18,7 @@ const fetchUsers = async () => {
 const createUser = async (user) => {
     try {
         const response = await fetch(
-            `http://localhost:8080/api/user?apiKey=${apiKey}`,
+            `http://localhost:8080/api/v1/user?apiKey=${apiKey}`,
             {
                 method: "POST",
                 headers: {
@@ -54,7 +54,7 @@ const createUser = async (user) => {
 const fetchBikes = async () => {
     try {
         const response = await fetch(
-            `http://localhost:8080/api/bikes?apiKey=${apiKey}`,
+            `http://localhost:8080/api/v1/bikes?apiKey=${apiKey}`,
         );
         const res = await response.json();
         return res.bikes;
@@ -67,7 +67,7 @@ const fetchBikes = async () => {
 const rentBike = async (bikeId, userId) => {
     try {
         const response = await fetch(
-            `http://localhost:8080/api/bike/${bikeId}/${userId}/rent?apiKey=${apiKey}`,
+            `http://localhost:8080/api/v1/bike/${bikeId}/${userId}/rent?apiKey=${apiKey}`,
             {
                 method: "Put",
                 headers: {
@@ -86,7 +86,7 @@ const rentBike = async (bikeId, userId) => {
 // const deleteBike = async (id) => {
 //     try {
 //         const response = await fetch(
-//             `http://localhost:8080/api/bike/${id}?apiKey=${apiKey}`,
+//             `http://localhost:8080/api/v1/bike/${id}?apiKey=${apiKey}`,
 //             {
 //                 method: "Delete",
 //             },
@@ -102,7 +102,7 @@ const rentBike = async (bikeId, userId) => {
 const fetchStations = async () => {
     try {
         const response = await fetch(
-            `http://localhost:8080/api/cities/stations?apiKey=${apiKey}`,
+            `http://localhost:8080/api/v1/cities/stations?apiKey=${apiKey}`,
         );
         const res = await response.json();
         return res.stations;
@@ -115,7 +115,7 @@ const fetchStations = async () => {
 const fetchZones = async () => {
     try {
         const response = await fetch(
-            `http://localhost:8080/api/cities/zones?apiKey=${apiKey}`,
+            `http://localhost:8080/api/v1/cities/zones?apiKey=${apiKey}`,
         );
         const res = await response.json();
         return res.zones;

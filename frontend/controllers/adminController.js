@@ -1,7 +1,7 @@
 "use strict";
 
 const bikes = require("../src/admin/bikes.js");
-const baseURL = "http://api:8080/api";
+const baseURL = "http://api:8080/api/v1";
 const apiKey = 123;
 
 const viewHome = async (req, res) => {
@@ -79,7 +79,7 @@ const specificUser = async (req, res, userId) => {
 
 const updateAccount = async (req, res, userId, password, email) => {
     try {
-        const response = await fetch(`http://api:8080/api/users?apiKey=${apiKey}`);
+        const response = await fetch(`http://api:8080/api/v1/users?apiKey=${apiKey}`);
         const allUsers = await response.json();
 
         if (!allUsers.users.some(user => user.email === email) || password !== "") {
