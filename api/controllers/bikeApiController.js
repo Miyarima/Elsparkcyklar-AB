@@ -71,38 +71,44 @@ const rentBike = async (req, res) => {
     const userId = req.params.userid;
     const contentType = req.headers["content-type"];
 
-    // Check for apiKey
-    if (!apiKey) {
-        return res.status(403).json({ error: "Please provide an API key." });
+    try {
+        // Check for apiKey
+        if (!apiKey) {
+            return res
+                .status(403)
+                .json({ error: "Please provide an API key." });
+        }
+
+        // Check for the required headers
+        if (!contentType || contentType !== "application/json") {
+            return res
+                .status(400)
+                .json({ error: "Content-Type must be application/json" });
+        }
+
+        // checking if a user was provided in the body
+        if (!userId) {
+            return res
+                .status(403)
+                .json({ error: "No user to rent the bike was provided" });
+        }
+
+        // If the provided bikeId didn't exsist in the database
+        if (!bikeId) {
+            return res
+                .status(403)
+                .json({ error: "Please provide correct ID for a bike." });
+        }
+
+        const rent = await db.gatheredBikeFunctions.unlockBike(bikeId, userId);
+
+        return res.status(200).json({
+            message: "bike has been rented",
+            status: rent,
+        });
+    } catch (error) {
+        return res.status(500).json({ error: `${error}` });
     }
-
-    // Check for the required headers
-    if (!contentType || contentType !== "application/json") {
-        return res
-            .status(400)
-            .json({ error: "Content-Type must be application/json" });
-    }
-
-    // checking if a user was provided in the body
-    if (!userId) {
-        return res
-            .status(403)
-            .json({ error: "No user to rent the bike was provided" });
-    }
-
-    // If the provided bikeId didn't exsist in the database
-    if (!bikeId) {
-        return res
-            .status(403)
-            .json({ error: "Please provide correct ID for a bike." });
-    }
-
-    const rent = await db.gatheredBikeFunctions.unlockBike(bikeId, userId);
-
-    return res.status(200).json({
-        message: "bike has been rented",
-        status: rent,
-    });
 };
 
 const returnBike = async (req, res) => {
@@ -111,41 +117,47 @@ const returnBike = async (req, res) => {
     const longitude = req.params.longitude;
     const latitude = req.params.latitude;
 
-    if (!apiKey) {
-        return res.status(403).json({ error: "Please provide an API key." });
-    }
+    try {
+        if (!apiKey) {
+            return res
+                .status(403)
+                .json({ error: "Please provide an API key." });
+        }
 
-    if (!bikeId) {
-        console.log("NO BIKE ID GIVEN!");
-        return res
-            .status(403)
-            .json({ error: "Please provide correct ID for a bike." });
-    }
+        if (!bikeId) {
+            console.log("NO BIKE ID GIVEN!");
+            return res
+                .status(403)
+                .json({ error: "Please provide correct ID for a bike." });
+        }
 
-    if (!longitude) {
-        console.log("No coordinates for Longitude given!");
-        return res.status(403).json({
-            error: "Please provide a coordinate for longitude for a bike.",
+        if (!longitude) {
+            console.log("No coordinates for Longitude given!");
+            return res.status(403).json({
+                error: "Please provide a coordinate for longitude for a bike.",
+            });
+        }
+
+        if (!latitude) {
+            console.log("No coordinates for Latitude given!");
+            return res.status(403).json({
+                error: "Please provide a coordinate for latitude for a bike.",
+            });
+        }
+
+        const bike = await db.gatheredBikeFunctions.lockBike(
+            bikeId,
+            longitude,
+            latitude,
+        );
+
+        return res.status(200).json({
+            message: "bike has been returned",
+            status: bike,
         });
+    } catch (error) {
+        return res.status(500).json({ error: `${error}` });
     }
-
-    if (!latitude) {
-        console.log("No coordinates for Latitude given!");
-        return res.status(403).json({
-            error: "Please provide a coordinate for latitude for a bike.",
-        });
-    }
-
-    const bike = await db.gatheredBikeFunctions.lockBike(
-        bikeId,
-        longitude,
-        latitude,
-    );
-
-    return res.status(200).json({
-        message: "bike has been returned",
-        status: bike,
-    });
 };
 
 const getBikePosition = async (req, res) => {
@@ -195,14 +207,8 @@ const updateBikeStation = async (req, res) => {
     }
 
     try {
-        const {
-            bikeId,
-            longitude,
-            latitude,
-            zoneId,
-            stationId,
-            api_key,
-        } = req.body;
+        const { bikeId, longitude, latitude, zoneId, stationId, api_key } =
+            req.body;
 
         const update = {
             table: "Bike",
@@ -236,7 +242,6 @@ const updateBikePosition = async (req, res) => {
 
     // Check for apiKey provided
     if (!apiKey) {
-        console.log("NO API KEY!");
         return res.status(403).json({ error: "Please provide an API key." });
     }
 
@@ -339,6 +344,30 @@ const turnOffSpecificBike = async (req, res) => {
     });
 };
 
+const getBikesWithStatus = async (req, res) => {
+    const apiKey = req.query.apiKey;
+    const status = req.params.status;
+
+    if (!apiKey) {
+        return res.status(403).json({ error: "Please provide an API key." });
+    }
+
+    if (!status) {
+        return res
+            .status(403)
+            .json({ error: "Please provide correct ID for a bike." });
+    }
+    try {
+        const bikes =
+            await db.gatheredBikeFunctions.selectBikesFromStatus(status);
+        return res.status(200).json({
+            bikes: bikes,
+        });
+    } catch (error) {
+        return res.status(500).json({ error: `${error}` });
+    }
+};
+
 const deleteSpecificBike = async (req, res) => {
     const apiKey = req.query.apiKey;
     const bikeId = req.params.id;
@@ -372,4 +401,5 @@ module.exports = {
     deleteSpecificBike,
     dummyTest,
     updateBikeStation,
+    getBikesWithStatus,
 };

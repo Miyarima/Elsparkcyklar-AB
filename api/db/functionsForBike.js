@@ -79,6 +79,22 @@ const gatheredBikeFunctions = {
         return await dbFuncs.promisifiedSimpleQueryFunc(queryObject);
     },
 
+    selectBikesFromStatus: async (status) => {
+        const queryObject = {
+            query: "SELECT id,longitude,latitude FROM Bike WHERE `status` = ?",
+            params: [status],
+        };
+        return await dbFuncs.promisifiedSimpleQueryFunc(queryObject);
+    },
+
+    getUserTravelStatus: async (userId, status) => {
+        const queryObject = {
+            query: "SELECT * FROM Travel WHERE `status` = ? AND user_id = ?",
+            params: [status, userId],
+        };
+        return await dbFuncs.promisifiedSimpleQueryFunc(queryObject);
+    },
+
     /**
      * Function to all bikes and its power status
      * @async

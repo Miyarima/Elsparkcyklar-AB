@@ -276,6 +276,39 @@ const getTravelUser = async (req, res) => {
     });
 };
 
+const getTravelStatusForUser = async (req, res) => {
+    const apiKey = req.query.apiKey;
+    const userId = req.params.id;
+    const status = req.params.status;
+
+    if (!apiKey) {
+        return res.status(403).json({ error: "Please provide an API key." });
+    }
+
+    if (!userId) {
+        return res
+            .status(403)
+            .json({ error: "Please provide correct ID for a user." });
+    }
+
+    if (!status) {
+        return res
+            .status(403)
+            .json({ error: "Please provide correct status." });
+    }
+    try {
+        const statusQuery = await db.gatheredBikeFunctions.getUserTravelStatus(
+            userId,
+            status,
+        );
+        return res.status(200).json({
+            status: statusQuery,
+        });
+    } catch (error) {
+        return res.status(500).json({ error: `${error}` });
+    }
+};
+
 const deleteSpecificUser = async (req, res) => {
     const apiKey = req.query.apiKey;
     const userId = req.params.id;
@@ -308,4 +341,5 @@ module.exports = {
     getUserFromGitUsername,
     getUserFromEmail,
     addGitUser,
+    getTravelStatusForUser,
 };
