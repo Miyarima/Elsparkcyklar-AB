@@ -2,6 +2,7 @@
 
 const bikes = require("../src/admin/bikes.js");
 const baseURL = "http://api:8080/api";
+const apiKey = 123;
 
 const viewHome = async (req, res) => {
     const allBikes = await bikes.getBikes();
@@ -15,7 +16,7 @@ const viewHome = async (req, res) => {
     });
 };
 
-const allCities = async (req, res, apiKey) => {
+const allCities = async (req, res) => {
     try {
         const response = await fetch(`${baseURL}/cities?apiKey=${apiKey}`);
         const cityData = await response.json();
@@ -28,7 +29,7 @@ const allCities = async (req, res, apiKey) => {
     }
 };
 
-const allBikes = async (req, res, apiKey) => {
+const allBikes = async (req, res) => {
     try {
         const response = await fetch(`${baseURL}/bikes?apiKey=${apiKey}`);
         const bikeData = await response.json();
@@ -40,7 +41,7 @@ const allBikes = async (req, res, apiKey) => {
     }
 };
 
-const allCustomers = async (req, res, apiKey) => {
+const allCustomers = async (req, res) => {
     try {
         const response = await fetch(`${baseURL}/users?apiKey=${apiKey}`);
         const userData = await response.json();
@@ -52,7 +53,7 @@ const allCustomers = async (req, res, apiKey) => {
     }
 };
 
-const allStations = async (req, res, apiKey) => {
+const allStations = async (req, res) => {
     try {
         const response = await fetch(`${baseURL}/cities/stations?apiKey=${apiKey}`);
         const stationData = await response.json();
@@ -64,7 +65,7 @@ const allStations = async (req, res, apiKey) => {
     }
 };
 
-const specificUser = async (req, res, userId, apiKey) => {
+const specificUser = async (req, res, userId) => {
     try {
         const response = await fetch(`${baseURL}/user/${userId}?apiKey=${apiKey}`);
         const userData = await response.json();
@@ -76,7 +77,7 @@ const specificUser = async (req, res, userId, apiKey) => {
     }
 };
 
-const updateAccount = async (req, res, userId, password, email, apiKey) => {
+const updateAccount = async (req, res, userId, password, email) => {
     try {
         const response = await fetch(`http://api:8080/api/users?apiKey=${apiKey}`);
         const allUsers = await response.json();
@@ -108,7 +109,7 @@ const updateAccount = async (req, res, userId, password, email, apiKey) => {
     }
 };
 
-const filteredCity = async (cityName, apiKey) => {
+const filteredCity = async (cityName) => {
     const cityResponse = await fetch(`${baseURL}/cities?apiKey=${apiKey}`);
     const cityData = await cityResponse.json();
 
@@ -117,7 +118,7 @@ const filteredCity = async (cityName, apiKey) => {
     return selectedCity;
 };
 
-const filteredStations = async (cityName, apiKey) => {
+const filteredStations = async (cityName) => {
     const stationsResponse = await fetch(`${baseURL}/cities/stations?apiKey=${apiKey}`);
     const stationsData = await stationsResponse.json();
 
@@ -126,7 +127,7 @@ const filteredStations = async (cityName, apiKey) => {
     return selectedStations;
 };
 
-const allZones = async (req, res, apiKey) => {
+const allZones = async (req, res) => {
     try {
         const zonesResponse = await fetch(`${baseURL}/cities/zones?apiKey=${apiKey}`);
         const zonesData = await zonesResponse.json();
@@ -138,7 +139,7 @@ const allZones = async (req, res, apiKey) => {
     }
 };
 
-const getSpecificCity = async (req, res, cityName, apiKey) => {
+const getSpecificCity = async (req, res, cityName) => {
     try {
         // Gets all Zones
         const zonesData = await allZones(apiKey);
@@ -183,7 +184,7 @@ const getSpecificCity = async (req, res, cityName, apiKey) => {
     }
 };
 
-const updateStationBike = async (req, res, bikeId, stationId, apiKey) => {
+const updateStationBike = async (req, res, bikeId, stationId) => {
     try {
         let selectedId;
 

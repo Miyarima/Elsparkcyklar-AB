@@ -2,6 +2,7 @@
 
 const print = require("../src/user/printHello.js");
 const baseURL = "http://api:8080/api/user";
+const apiKey = 123;
 
 const viewHome = (req, res) => {
     print.hello();
@@ -12,7 +13,7 @@ const viewHome = (req, res) => {
     });
 };
 
-const getUserHistory = async (req, res, userId, apiKey) => {
+const getUserHistory = async (req, res, userId) => {
     try {
         const response = await fetch(
             `${baseURL}/${userId}/travel?apiKey=${apiKey}`,
@@ -26,7 +27,7 @@ const getUserHistory = async (req, res, userId, apiKey) => {
     }
 };
 
-const specificUser = async (req, res, userId, apiKey) => {
+const specificUser = async (req, res, userId) => {
     try {
         const response = await fetch(`${baseURL}/${userId}?apiKey=${apiKey}`);
         const userData = await response.json();
@@ -38,7 +39,7 @@ const specificUser = async (req, res, userId, apiKey) => {
     }
 };
 
-const detailsSpecificUser = async (req, res, userId, apiKey) => {
+const detailsSpecificUser = async (req, res, userId) => {
     try {
         const response = await fetch(`${baseURL}/${userId}?apiKey=${apiKey}`);
         const userData = await response.json();
@@ -50,7 +51,7 @@ const detailsSpecificUser = async (req, res, userId, apiKey) => {
     }
 };
 
-const updateUserWallet = async (req, res, userId, amount, apiKey) => {
+const updateUserWallet = async (req, res, userId, amount) => {
     try {
         const response = await fetch(`${baseURL}/${userId}?apiKey=${apiKey}`);
         const userData = await response.json();
@@ -76,8 +77,36 @@ const updateUserWallet = async (req, res, userId, amount, apiKey) => {
     }
 };
 
+const deductUserWallet = async (req, res, userId, amount) => {
+    try {
+        const response = await fetch(`${baseURL}/${userId}?apiKey=${apiKey}`);
+        const userData = await response.json();
 
-const updateEmailAddress = async (req, res, userId, email, apiKey) => {
+        const newWallet = parseInt(userData.users[0].wallet, 10) - parseInt(amount, 10);
+
+        console.log(newWallet);
+
+        var updateWallet =
+        {
+            username: userId,
+            wallet: newWallet,
+        };
+
+        await fetch(`${baseURL}?apiKey=${apiKey}`, {
+            body: JSON.stringify(updateWallet),
+            headers: {
+                "content-type": "application/json"
+            },
+            method: "PUT"
+        });
+    } catch (error) {
+        console.error("Error fetching user data:", error);
+        res.status(500).send("Internal Server Error");
+    }
+};
+
+
+const updateEmailAddress = async (req, res, userId, email) => {
     try {
         const response = await fetch(`http://api:8080/api/users?apiKey=${apiKey}`);
         const allUsers = await response.json();
@@ -115,4 +144,5 @@ module.exports = {
     getUserHistory,
     updateUserWallet,
     updateEmailAddress,
+    deductUserWallet,
 };
