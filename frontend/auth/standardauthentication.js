@@ -4,7 +4,7 @@ const standardAuthentication = {
     insertUser: (req, res) => {
         const { username, password, email } = req.body;
 
-        return fetch("http://api:8080/api/user?apiKey=1", {
+        return fetch("http://api:8080/api/v1/user?apiKey=1", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -44,7 +44,7 @@ const standardAuthentication = {
     },
 
     authenticateLogin: (username, password, role) => {
-        return fetch(`http://api:8080/api/user/${username}?apiKey=1`, {
+        return fetch(`http://api:8080/api/v1/user/${username}?apiKey=1`, {
             method: "GET",
         })
             .then((result) => result.json())

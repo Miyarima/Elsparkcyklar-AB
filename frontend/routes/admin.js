@@ -29,8 +29,7 @@ router.get(
     "/cities",
     authorization.simpleAuthorization("Admin"),
     async (req, res) => {
-        const cities = await adminController.allCities(req, res, 123);
-        console.log(cities);
+        const cities = await adminController.allCities(req, res);
         res.render("cities.ejs", { cities });
     },
 );
@@ -39,7 +38,7 @@ router.get(
     "/customers",
     authorization.simpleAuthorization("Admin"),
     async (req, res) => {
-        const users = await adminController.allCustomers(req, res, 123);
+        const users = await adminController.allCustomers(req, res);
         res.render("customers.ejs", { users });
     },
 );
@@ -48,28 +47,30 @@ router.get(
     "/customeredit/:id",
     authorization.simpleAuthorization("Admin"),
     async (req, res) => {
-        const users = await adminController.specificUser(req, res, req.params.id, 123);
+        const users = await adminController.specificUser(req, res, req.params.id);
         res.render("customer_edit.ejs", { users });
     },
 );
 
 router.post("/customeredit", async (req, res) => {
-    //console.log(JSON.stringify(req.body, null, 4));
-    await adminController.updateAccount(req, res, req.body.id, req.body.password, req.body.email, 123);
+    await adminController.updateAccount(req, res, req.body.id, req.body.password, req.body.email);
     res.redirect("customers");
 });
 
-router.get("/bikes", authorization.simpleAuthorization("Admin"), 
+router.get(
+    "/bikes",
+    authorization.simpleAuthorization("Admin"),
     async (req, res) => {
-        const bikes = await adminController.allBikes(req, res, 123);
+        const bikes = await adminController.allBikes(req, res);
         res.render("bikes.ejs", { bikes });
-    });
+    },
+);
 
 router.get(
     "/stations",
     authorization.simpleAuthorization("Admin"),
     async (req, res) => {
-        const stations = await adminController.allStations(req, res, 123);
+        const stations = await adminController.allStations(req, res);
         res.render("stations.ejs", { stations });
     },
 );
@@ -85,14 +86,76 @@ router.get(
 router.get(
     "/overview",
     authorization.simpleAuthorization("Admin"),
-    (req, res) => {
-        res.render("overview.ejs");
+    async (req, res) => {
+        const stations = await adminController.allStations(req, res, 123);
+        const zones = await adminController.allZones(req, res, 123);
+        const bikes = await adminController.allBikes(req, res, 123);
+
+        let staticCoordinates = [];
+
+        stations.forEach((station) => {
+            staticCoordinates.push([
+                station.latitude,
+                station.longitude,
+                station.type,
+                10,
+            ]);
+        });
+
+        zones.forEach((zone) => {
+            let speed = "5-zone";
+
+            if (zone.max_speed !== 5) {
+                speed = zone.max_speed === 10 ? "10-zone" : "15-zone";
+            }
+
+            staticCoordinates.push([
+                zone.latitude,
+                zone.longitude,
+                speed,
+                zone.radius,
+            ]);
+        });
+
+        let coordinates = [];
+        bikes.forEach((bike) => {
+            coordinates.push([bike.latitude, bike.longitude]);
+        });
+
+        res.render("map.ejs");
+
+        setTimeout(function () {
+            try {
+                fetch("http://localhost:1337/admin/update-map", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ coordinates }),
+                });
+            } catch (error) {
+                console.error("Error sending bike update", error);
+                return null;
+            }
+
+            try {
+                fetch("http://localhost:1337/admin/update-map-static", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ staticCoordinates }),
+                });
+            } catch (error) {
+                console.error("Error sending static update", error);
+                return null;
+            }
+        }, 1000);
     },
 );
 
 router.post("/updatebike", async (req, res) => {
-    //console.log(JSON.stringify(req.body, null, 4));
-    await adminController.updateStationBike(req, res, req.body.selectedBike, req.body.stationId, 123);
+    await adminController.updateStationBike(req, res, req.body.selectedBike, req.body.stationId);
     res.redirect("cities");
 });
 
@@ -100,9 +163,7 @@ router.get(
     "/chosencity/:city",
     authorization.simpleAuthorization("Admin"),
     async (req, res) => {
-        // const city = "Stockholm";
-        const chosen = await adminController.getSpecificCity(req, res, req.params.city, 123);
-        //console.log(chosen);
+        const chosen = await adminController.getSpecificCity(req, res, req.params.city);
         res.render("specific_city.ejs", chosen);
     },
 );
