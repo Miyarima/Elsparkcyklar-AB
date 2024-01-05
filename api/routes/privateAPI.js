@@ -40,6 +40,10 @@ router.get("/bike/:id/position", (req, res) => {
     bikeApiController.getBikePosition(req, res);
 });
 
+router.get("/bikes/:status", (req, res) => {
+    bikeApiController.getBikesWithStatus(req, res);
+});
+
 // Set bike position first time
 // router.post("/bike/:id/position", (req, res) => {
 //     bikeApiController.setBikePosition(req, res);
@@ -99,6 +103,10 @@ router.get("/email/email_id", (req, res) => {
 
 router.get("/user/:id/travel", (req, res) => {
     userApiController.getTravelUser(req, res);
+});
+
+router.get("/user/:id/:status", (req, res) => {
+    bikeApiController.getTravelStatusForUser(req, res);
 });
 
 /* ########################################### */

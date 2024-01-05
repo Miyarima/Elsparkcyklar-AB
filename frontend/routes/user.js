@@ -17,7 +17,7 @@ router.use((req, res, next) => {
 
 router.get(
     "/",
-    authorization.simpleAuthorization("User"),
+    authorization.simpleAuthorization("User", "/user/userlogin"),
     userController.viewHome,
 );
 
@@ -42,13 +42,17 @@ router.get("/gitsignup", (req, res) => {
 
 router.post("/gitsignup", gitAuth.gitSignup);
 
-router.get("/user", authorization.simpleAuthorization("User"), (req, res) => {
-    userController.specificUser(req, res, "alice_jones", 123);
-});
+router.get(
+    "/user",
+    authorization.simpleAuthorization("User", "/user/userlogin"),
+    (req, res) => {
+        userController.specificUser(req, res, "alice_jones", 123);
+    },
+);
 
 router.get(
     "/details",
-    authorization.simpleAuthorization("User"),
+    authorization.simpleAuthorization("User", "/user/userlogin"),
     (req, res) => {
         userController.detailsSpecificUser(req, res, "alice_jones", 123);
     },
@@ -56,7 +60,7 @@ router.get(
 
 router.get(
     "/detailsedit",
-    authorization.simpleAuthorization("User"),
+    authorization.simpleAuthorization("User", "/user/userlogin"),
     (req, res) => {
         res.render("details_edit.ejs");
     },
@@ -64,19 +68,23 @@ router.get(
 
 router.get(
     "/history",
-    authorization.simpleAuthorization("User"),
+    authorization.simpleAuthorization("User", "/user/userlogin"),
     (req, res) => {
         userController.getUserHistory(req, res, "alice_jones", 123);
     },
 );
 
-router.get("/wallet", authorization.simpleAuthorization("User"), (req, res) => {
-    res.render("wallet.ejs");
-});
+router.get(
+    "/wallet",
+    authorization.simpleAuthorization("User", "/user/userlogin"),
+    (req, res) => {
+        res.render("wallet.ejs");
+    },
+);
 
 router.get(
     "/prepaid",
-    authorization.simpleAuthorization("User"),
+    authorization.simpleAuthorization("User", "/user/userlogin"),
     (req, res) => {
         res.render("wallet_prepaid.ejs");
     },
@@ -84,7 +92,7 @@ router.get(
 
 router.get(
     "/autogiro",
-    authorization.simpleAuthorization("User"),
+    authorization.simpleAuthorization("User", "/user/userlogin"),
     (req, res) => {
         res.render("wallet_autogiro.ejs");
     },

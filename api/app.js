@@ -12,7 +12,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use("/api", privateAPI);
+app.use("/api/v1", privateAPI);
 
 // app.listen(port, () => {
 //     console.log(`starting a server on the port:${port}`);

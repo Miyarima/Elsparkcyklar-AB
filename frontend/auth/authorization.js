@@ -1,12 +1,11 @@
 module.exports = {
-    simpleAuthorization: (role) => {
+    simpleAuthorization: (role, redirection) => {
         return (req, res, next) => {
             if (req.session.username && req.session.role === role) {
                 next();
+                return;
             }
-            const redirectRoute =
-                role == "Admin" ? "/admin/adminlogn" : "/user/userlogin";
-            return res.redirect(redirectRoute);
+            return res.redirect(redirection);
         };
     },
 

@@ -1,8 +1,8 @@
 "use strict";
 
 const print = require("../src/user/printHello.js");
-const baseURL = "http://api:8080/api/user";
-
+let { apiAddress } = require("../apiaddress.js");
+apiAddress += "/user";
 const viewHome = (req, res) => {
     print.hello();
 
@@ -15,7 +15,7 @@ const viewHome = (req, res) => {
 const getUserHistory = async (req, res, userId, apiKey) => {
     try {
         const response = await fetch(
-            `${baseURL}/${userId}/travel?apiKey=${apiKey}`,
+            `${apiAddress}/${userId}/travel?apiKey=${apiKey}`,
         );
         const userData = await response.json();
 
@@ -30,7 +30,9 @@ const getUserHistory = async (req, res, userId, apiKey) => {
 
 const specificUser = async (req, res, userId, apiKey) => {
     try {
-        const response = await fetch(`${baseURL}/${userId}?apiKey=${apiKey}`);
+        const response = await fetch(
+            `${apiAddress}/${userId}?apiKey=${apiKey}`,
+        );
         const userData = await response.json();
 
         res.render("front.ejs", { users: userData.users });
@@ -42,7 +44,9 @@ const specificUser = async (req, res, userId, apiKey) => {
 
 const detailsSpecificUser = async (req, res, userId, apiKey) => {
     try {
-        const response = await fetch(`${baseURL}/${userId}?apiKey=${apiKey}`);
+        const response = await fetch(
+            `${apiAddress}/${userId}?apiKey=${apiKey}`,
+        );
         const userData = await response.json();
 
         res.render("details.ejs", { users: userData.users });

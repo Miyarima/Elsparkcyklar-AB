@@ -80,6 +80,21 @@ const gatheredBikeFunctions = {
     },
 
     /**
+     * Function to all bikes and its status
+     * @async
+     * @function
+     * @param {string} status Status string
+     * @returns {Array.<Object>} An array containing objects as the result of the database query
+     */
+    selectBikesFromStatus: async (status) => {
+        const queryObject = {
+            query: "SELECT id,longitude,latitude FROM Bike WHERE `status` = ?",
+            params: [status],
+        };
+        return await dbFuncs.promisifiedSimpleQueryFunc(queryObject);
+    },
+
+    /**
      * Function to all bikes and its power status
      * @async
      * @function
@@ -100,17 +115,17 @@ const gatheredBikeFunctions = {
      * @async
      * @function
      * @param {int} bikeId bikeId
-     * @param {int} userId Status string
+     * @param {int} userId   string
      * @returns {bool} True if the querys were succesful, otherwise an error.
      */
     unlockBike: async (bikeId, userId) => {
         const queryObject = {
-            query: "INSERT INTO Travel(bike_id, `user_id`, `status`, start_longitude, start_latitude) VALUES (?, ?, 'Ongoing', (SELECT longitude FROM Bike WHERE id = ?),(SELECT latitude FROM Bike WHERE id = ?))",
+            query: "INSERT INTO Travel(bike_id, `user_id`, `status`, start_longitude, start_latitude) VALUES (?, ?, 'Ongoing', (SELECT longitude FROM Bike WHERE id = ? AND `status` = 'Locked'),(SELECT latitude FROM Bike WHERE id = ? AND `status` = 'Locked'))",
             params: [bikeId, userId, bikeId, bikeId],
         };
 
         const queryObject2 = {
-            query: "UPDATE Bike SET `status` = 'Unlocked' WHERE id = ?",
+            query: "UPDATE Bike SET `status` = 'Unlocked' WHERE id = ? AND `status` = 'Locked'",
             params: [bikeId],
         };
 
@@ -157,6 +172,14 @@ const gatheredBikeFunctions = {
             queryObject2,
             queryObject3,
         ]);
+    },
+
+    getUserTravelStatus: async (userId, status) => {
+        const queryObject = {
+            query: "SELECT * FROM Travel WHERE `status` = ? AND user_id = ?",
+            params: [status, userId],
+        };
+        return await dbFuncs.promisifiedSimpleQueryFunc(queryObject);
     },
 };
 

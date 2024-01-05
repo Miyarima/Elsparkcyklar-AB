@@ -96,13 +96,16 @@ const rentBike = async (req, res) => {
             .status(403)
             .json({ error: "Please provide correct ID for a bike." });
     }
+    try {
+        const rent = await db.gatheredBikeFunctions.unlockBike(bikeId, userId);
 
-    const rent = await db.gatheredBikeFunctions.unlockBike(bikeId, userId);
-
-    return res.status(200).json({
-        message: "bike has been rented",
-        status: rent,
-    });
+        return res.status(200).json({
+            message: "bike has been rented",
+            status: rent,
+        });
+    } catch (error) {
+        return res.status(500).json({ error: `${error}` });
+    }
 };
 
 const returnBike = async (req, res) => {
@@ -291,6 +294,63 @@ const getSpecificBike = async (req, res) => {
     });
 };
 
+const getTravelStatusForUser = async (req, res) => {
+    const apiKey = req.query.apiKey;
+    const userId = req.params.id;
+    const status = req.params.status;
+
+    if (!apiKey) {
+        return res.status(403).json({ error: "Please provide an API key." });
+    }
+
+    if (!userId) {
+        return res
+            .status(403)
+            .json({ error: "Please provide correct ID for a user." });
+    }
+
+    if (!status) {
+        return res
+            .status(403)
+            .json({ error: "Please provide correct status." });
+    }
+    try {
+        const statusQuery = await db.gatheredBikeFunctions.getUserTravelStatus(
+            userId,
+            status,
+        );
+        return res.status(200).json({
+            status: statusQuery,
+        });
+    } catch (error) {
+        return res.status(500).json({ error: `${error}` });
+    }
+};
+
+const getBikesWithStatus = async (req, res) => {
+    const apiKey = req.query.apiKey;
+    const status = req.params.status;
+
+    if (!apiKey) {
+        return res.status(403).json({ error: "Please provide an API key." });
+    }
+
+    if (!status) {
+        return res
+            .status(403)
+            .json({ error: "Please provide correct ID for a bike." });
+    }
+    try {
+        const bikes =
+            await db.gatheredBikeFunctions.selectBikesFromStatus(status);
+        return res.status(200).json({
+            bikes: bikes,
+        });
+    } catch (error) {
+        return res.status(500).json({ error: `${error}` });
+    }
+};
+
 const turnOffSpecificBike = async (req, res) => {
     const apiKey = req.query.apiKey;
     const bikeId = req.params.id;
@@ -346,4 +406,6 @@ module.exports = {
     turnOffSpecificBike,
     deleteSpecificBike,
     dummyTest,
+    getBikesWithStatus,
+    getTravelStatusForUser,
 };

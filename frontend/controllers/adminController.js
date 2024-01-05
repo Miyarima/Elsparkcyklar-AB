@@ -1,8 +1,8 @@
 "use strict";
 
 const bikes = require("../src/admin/bikes.js");
-const baseURL = "http://api:8080/api";
-
+let { apiAddress } = require("../apiaddress.js");
+apiAddress += "/admin";
 const viewHome = async (req, res) => {
     const allBikes = await bikes.getBikes();
 
@@ -17,7 +17,7 @@ const viewHome = async (req, res) => {
 
 const allCities = async (req, res, apiKey) => {
     try {
-        const response = await fetch(`${baseURL}/cities?apiKey=${apiKey}`);
+        const response = await fetch(`${apiAddress}/cities?apiKey=${apiKey}`);
         const cityData = await response.json();
         const cityMalmoe = [];
         const cityStockholm = [];
@@ -42,7 +42,7 @@ const allCities = async (req, res, apiKey) => {
 
 const allBikes = async (req, res, apiKey) => {
     try {
-        const response = await fetch(`${baseURL}/bikes?apiKey=${apiKey}`);
+        const response = await fetch(`${apiAddress}/bikes?apiKey=${apiKey}`);
         const bikeData = await response.json();
 
         res.render("bikes.ejs", { bikes: bikeData.bikes });
@@ -54,7 +54,7 @@ const allBikes = async (req, res, apiKey) => {
 
 const allCustomers = async (req, res, apiKey) => {
     try {
-        const response = await fetch(`${baseURL}/users?apiKey=${apiKey}`);
+        const response = await fetch(`${apiAddress}/users?apiKey=${apiKey}`);
         const userData = await response.json();
 
         res.render("customers.ejs", { users: userData.users });

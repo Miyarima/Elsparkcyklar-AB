@@ -34,7 +34,7 @@ CREATE TABLE Bike (
     id INT PRIMARY KEY AUTO_INCREMENT,
     longitude FLOAT NOT NULL,
     latitude FLOAT NOT NULL,
-    `status` VARCHAR(10) DEFAULT NULL,
+    `status` VARCHAR(10) DEFAULT 'Locked',
     speed FLOAT DEFAULT 0,
     `zone_id` INT DEFAULT NULL,
     `station_id` INT DEFAULT NULL,
