@@ -91,8 +91,8 @@ class Bike {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    longitude: this.longitude,
-                    latitude: this.latitude,
+                    latitude: this.longitude,
+                    longitude: this.latitude,
                     status: this.status,
                 }),
             });
@@ -144,8 +144,8 @@ class Bike {
                     },
                     body: JSON.stringify({
                         id: this.bikeId,
-                        longitude: this.longitude,
-                        latitude: this.latitude,
+                        latitude: this.longitude,
+                        longitude: this.latitude,
                         speed: this.speed,
                         battery: Math.round(this.battery, 1),
                     }),
