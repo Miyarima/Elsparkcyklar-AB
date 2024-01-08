@@ -56,10 +56,10 @@ const updateUserWallet = async (req, res, userId, amount) => {
         const response = await fetch(`${baseURL}/${userId}?apiKey=${apiKey}`);
         const userData = await response.json();
 
-        const newWallet = parseInt(userData.users[0].wallet, 10) + parseInt(amount, 10);
+        const newWallet =
+            parseInt(userData.users[0].wallet, 10) + parseInt(amount, 10);
 
-        var updateWallet =
-        {
+        var updateWallet = {
             username: userId,
             wallet: newWallet,
         };
@@ -67,9 +67,9 @@ const updateUserWallet = async (req, res, userId, amount) => {
         await fetch(`${baseURL}?apiKey=${apiKey}`, {
             body: JSON.stringify(updateWallet),
             headers: {
-                "content-type": "application/json"
+                "content-type": "application/json",
             },
-            method: "PUT"
+            method: "PUT",
         });
     } catch (error) {
         console.error("Error fetching user data:", error);
@@ -82,12 +82,12 @@ const deductUserWallet = async (req, res, userId, amount) => {
         const response = await fetch(`${baseURL}/${userId}?apiKey=${apiKey}`);
         const userData = await response.json();
 
-        const newWallet = parseInt(userData.users[0].wallet, 10) - parseInt(amount, 10);
+        const newWallet =
+            parseInt(userData.users[0].wallet, 10) - parseInt(amount, 10);
 
         console.log(newWallet);
 
-        var updateWallet =
-        {
+        var updateWallet = {
             username: userId,
             wallet: newWallet,
         };
@@ -95,9 +95,9 @@ const deductUserWallet = async (req, res, userId, amount) => {
         await fetch(`${baseURL}?apiKey=${apiKey}`, {
             body: JSON.stringify(updateWallet),
             headers: {
-                "content-type": "application/json"
+                "content-type": "application/json",
             },
-            method: "PUT"
+            method: "PUT",
         });
     } catch (error) {
         console.error("Error fetching user data:", error);
@@ -105,15 +105,15 @@ const deductUserWallet = async (req, res, userId, amount) => {
     }
 };
 
-
 const updateEmailAddress = async (req, res, userId, email) => {
     try {
-        const response = await fetch(`http://api:8080/api/v1/users?apiKey=${apiKey}`);
+        const response = await fetch(
+            `http://api:8080/api/v1/users?apiKey=${apiKey}`,
+        );
         const allUsers = await response.json();
 
-        if (!allUsers.users.some(user => user.email === email)) {
-            var updateEmail =
-            {
+        if (!allUsers.users.some((user) => user.email === email)) {
+            var updateEmail = {
                 username: userId,
                 email: email,
             };
@@ -121,9 +121,9 @@ const updateEmailAddress = async (req, res, userId, email) => {
             await fetch(`${baseURL}?apiKey=${apiKey}`, {
                 body: JSON.stringify(updateEmail),
                 headers: {
-                    "content-type": "application/json"
+                    "content-type": "application/json",
                 },
-                method: "PUT"
+                method: "PUT",
             });
 
             console.log("email updated!");

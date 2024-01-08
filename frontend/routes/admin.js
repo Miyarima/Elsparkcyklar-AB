@@ -12,9 +12,13 @@ router.use((req, res, next) => {
     next();
 });
 
-router.get("/", authorization.simpleAuthorization("Admin", "/admin/adminlogin"), (req, res) => {
-    adminController.viewHome(req, res);
-});
+router.get(
+    "/",
+    authorization.simpleAuthorization("Admin", "/admin/adminlogin"),
+    (req, res) => {
+        adminController.viewHome(req, res);
+    },
+);
 
 router.get("/adminlogin", (req, res) => {
     res.render("admin_login.ejs");
@@ -22,9 +26,13 @@ router.get("/adminlogin", (req, res) => {
 
 router.post("/adminlogin", standardAuth.authenticateLoginAdmin);
 
-router.get("/admin", authorization.simpleAuthorization("Admin", "/admin/adminlogin"), (req, res) => {
-    res.render("front.ejs");
-});
+router.get(
+    "/admin",
+    authorization.simpleAuthorization("Admin", "/admin/adminlogin"),
+    (req, res) => {
+        res.render("front.ejs");
+    },
+);
 
 router.get(
     "/cities",
@@ -48,13 +56,23 @@ router.get(
     "/customeredit/:id",
     authorization.simpleAuthorization("Admin", "/admin/adminlogin"),
     async (req, res) => {
-        const users = await adminController.specificUser(req, res, req.params.id);
+        const users = await adminController.specificUser(
+            req,
+            res,
+            req.params.id,
+        );
         res.render("customer_edit.ejs", { users });
     },
 );
 
 router.post("/customeredit", async (req, res) => {
-    await adminController.updateAccount(req, res, req.body.id, req.body.password, req.body.email);
+    await adminController.updateAccount(
+        req,
+        res,
+        req.body.id,
+        req.body.password,
+        req.body.email,
+    );
     res.redirect("customers");
 });
 
@@ -156,7 +174,12 @@ router.get(
 );
 
 router.post("/updatebike", async (req, res) => {
-    await adminController.updateStationBike(req, res, req.body.selectedBike, req.body.stationId);
+    await adminController.updateStationBike(
+        req,
+        res,
+        req.body.selectedBike,
+        req.body.stationId,
+    );
     res.redirect("cities");
 });
 
@@ -164,7 +187,11 @@ router.get(
     "/chosencity/:city",
     authorization.simpleAuthorization("Admin", "/admin/adminlogin"),
     async (req, res) => {
-        const chosen = await adminController.getSpecificCity(req, res, req.params.city);
+        const chosen = await adminController.getSpecificCity(
+            req,
+            res,
+            req.params.city,
+        );
         res.render("specific_city.ejs", chosen);
     },
 );

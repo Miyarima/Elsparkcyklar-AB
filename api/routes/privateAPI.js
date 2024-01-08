@@ -120,7 +120,6 @@ router.get("/user/:id/:status", (req, res) => {
     bikeApiController.getTravelStatusForUser(req, res);
 });
 
-
 /* ########################################### */
 /* ################  CITIES   ################ */
 /* ########################################### */
