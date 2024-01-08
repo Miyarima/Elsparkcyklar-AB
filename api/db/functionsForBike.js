@@ -120,7 +120,6 @@ const gatheredBikeFunctions = {
      * @returns {bool} True if the querys were succesful, otherwise an error.
      */
     unlockBike: async (bikeId, userId) => {
-
         const queryObject = {
             query: "INSERT INTO Travel(bike_id, `user_id`, `status`, start_longitude, start_latitude) VALUES (?, ?, 'Ongoing', (SELECT longitude FROM Bike WHERE id = ? AND `status` = 'Available'),(SELECT latitude FROM Bike WHERE id = ? AND `status` = 'Available'))",
             params: [bikeId, userId, bikeId, bikeId],

@@ -2,18 +2,18 @@ const { apiAddress } = require("../apiaddress.js");
 
 module.exports = {
     unfinishedTravelCheck: (username, status) => {
-        console.log(`${apiAddress}/user/${username}/${status}?apiKey=1`)
+        console.log(`${apiAddress}/user/${username}/${status}?apiKey=1`);
         return fetch(`${apiAddress}/user/${username}/${status}?apiKey=1`, {
             method: "GET",
-        })
-            .then((result) => result.json());
+        }).then((result) => result.json());
     },
 
     setTravelSession: (req, res) => {
         return module.exports
             .unfinishedTravelCheck(req.session.username, "Ongoing")
             .then((result) => {
-                req.session.travel = result.status[0] === undefined ? false : true;
+                req.session.travel =
+                    result.status[0] === undefined ? false : true;
                 module.exports.getTravelSession(req, res);
             })
             .catch(() => {
@@ -47,7 +47,7 @@ module.exports = {
                     },
                 ).then((result) => {
                     if (result.status !== 200) {
-                        console.log(result)
+                        console.log(result);
                         throw new Error("Error occured");
                     }
                 });
@@ -86,49 +86,47 @@ module.exports = {
 
     lockBikeHandling: (req, res) => {
         return module.exports
-        .lockBike(req.session.username)
-        .then(() => {
-            req.session.travel = false;
-            return res.redirect("/mobile/rent");
-        })
-        .catch((error) => {
-            console.log("buuu")
-            console.log(error)
-            const msg = "An error occured";
-            const renderName = !req.session.username
-                ? "mobile_login.ejs"
-                : "returnbike.ejs";
-            return res.render(renderName, { msg });
-        });
+            .lockBike(req.session.username)
+            .then(() => {
+                req.session.travel = false;
+                return res.redirect("/mobile/rent");
+            })
+            .catch((error) => {
+                console.log("buuu");
+                console.log(error);
+                const msg = "An error occured";
+                const renderName = !req.session.username
+                    ? "mobile_login.ejs"
+                    : "returnbike.ejs";
+                return res.render(renderName, { msg });
+            });
     },
 
     lockBike: (username) => {
         return module.exports
-        .unfinishedTravelCheck(username, "Ongoing")
-        .then((result) => {
-            if (result.status[0] === undefined) {
-                throw new Error();
-            }
-            const bikeId = result.status[0].bike_id;
-            
-            return fetch(
-                `${apiAddress}/bike/${bikeId}?apiKey=1`,
-                {
-                    method: "GET"
-                }
-            ).then(result => result.json())
+            .unfinishedTravelCheck(username, "Ongoing")
             .then((result) => {
-                const bike = result.bike[0];
-                return fetch(
-                    `${apiAddress}/bike/${bike.id}/${bike.longitude}/${bike.latitude}/return?apiKey=1`,
-                    {
-                        method: "PUT",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                    },
-                )
-            })
-        });
-    }
+                if (result.status[0] === undefined) {
+                    throw new Error();
+                }
+                const bikeId = result.status[0].bike_id;
+
+                return fetch(`${apiAddress}/bike/${bikeId}?apiKey=1`, {
+                    method: "GET",
+                })
+                    .then((result) => result.json())
+                    .then((result) => {
+                        const bike = result.bike[0];
+                        return fetch(
+                            `${apiAddress}/bike/${bike.id}/${bike.longitude}/${bike.latitude}/return?apiKey=1`,
+                            {
+                                method: "PUT",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                },
+                            },
+                        );
+                    });
+            });
+    },
 };

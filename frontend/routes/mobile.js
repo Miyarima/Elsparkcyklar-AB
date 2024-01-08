@@ -34,7 +34,7 @@ router.get("/returnbike", (req, res) => {
 
 router.get("/logout", (req, res) => {
     req.session.destroy();
-    res.redirect("/mobile/mobilelogin")
+    res.redirect("/mobile/mobilelogin");
 });
 
 router.get("/parking", (req, res) => {
