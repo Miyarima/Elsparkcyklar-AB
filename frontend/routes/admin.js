@@ -11,7 +11,8 @@ router.use((req, res, next) => {
     req.app.set("views", "./views/admin/pages");
     next();
 });
-router.get("/", authorization.simpleAuthorization("Admin"), (req, res) => {
+
+router.get("/", authorization.simpleAuthorization("Admin", "/admin/adminlogin"), (req, res) => {
     adminController.viewHome(req, res);
 });
 
@@ -21,13 +22,13 @@ router.get("/adminlogin", (req, res) => {
 
 router.post("/adminlogin", standardAuth.authenticateLoginAdmin);
 
-router.get("/admin", authorization.simpleAuthorization("Admin"), (req, res) => {
+router.get("/admin", authorization.simpleAuthorization("Admin", "/admin/adminlogin"), (req, res) => {
     res.render("front.ejs");
 });
 
 router.get(
     "/cities",
-    authorization.simpleAuthorization("Admin"),
+    authorization.simpleAuthorization("Admin", "/admin/adminlogin"),
     async (req, res) => {
         const cities = await adminController.allCities(req, res);
         res.render("cities.ejs", { cities });
@@ -36,7 +37,7 @@ router.get(
 
 router.get(
     "/customers",
-    authorization.simpleAuthorization("Admin"),
+    authorization.simpleAuthorization("Admin", "/admin/adminlogin"),
     async (req, res) => {
         const users = await adminController.allCustomers(req, res);
         res.render("customers.ejs", { users });
@@ -45,7 +46,7 @@ router.get(
 
 router.get(
     "/customeredit/:id",
-    authorization.simpleAuthorization("Admin"),
+    authorization.simpleAuthorization("Admin", "/admin/adminlogin"),
     async (req, res) => {
         const users = await adminController.specificUser(req, res, req.params.id);
         res.render("customer_edit.ejs", { users });
@@ -59,7 +60,7 @@ router.post("/customeredit", async (req, res) => {
 
 router.get(
     "/bikes",
-    authorization.simpleAuthorization("Admin"),
+    authorization.simpleAuthorization("Admin", "/admin/adminlogin"),
     async (req, res) => {
         const bikes = await adminController.allBikes(req, res);
         res.render("bikes.ejs", { bikes });
@@ -68,7 +69,7 @@ router.get(
 
 router.get(
     "/stations",
-    authorization.simpleAuthorization("Admin"),
+    authorization.simpleAuthorization("Admin", "/admin/adminlogin"),
     async (req, res) => {
         const stations = await adminController.allStations(req, res);
         res.render("stations.ejs", { stations });
@@ -77,7 +78,7 @@ router.get(
 
 router.get(
     "/parkingzones",
-    authorization.simpleAuthorization("Admin"),
+    authorization.simpleAuthorization("Admin", "/admin/adminlogin"),
     (req, res) => {
         res.render("parkingzones.ejs");
     },
@@ -85,7 +86,7 @@ router.get(
 
 router.get(
     "/overview",
-    authorization.simpleAuthorization("Admin"),
+    authorization.simpleAuthorization("Admin", "/admin/adminlogin"),
     async (req, res) => {
         const stations = await adminController.allStations(req, res, 123);
         const zones = await adminController.allZones(req, res, 123);
@@ -161,7 +162,7 @@ router.post("/updatebike", async (req, res) => {
 
 router.get(
     "/chosencity/:city",
-    authorization.simpleAuthorization("Admin"),
+    authorization.simpleAuthorization("Admin", "/admin/adminlogin"),
     async (req, res) => {
         const chosen = await adminController.getSpecificCity(req, res, req.params.city);
         res.render("specific_city.ejs", chosen);

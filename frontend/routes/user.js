@@ -17,7 +17,7 @@ router.use((req, res, next) => {
 
 router.get(
     "/",
-    authorization.simpleAuthorization("User"),
+    authorization.simpleAuthorization("User", "/user/userlogin"),
     userController.viewHome,
 );
 
@@ -42,13 +42,13 @@ router.get("/gitsignup", (req, res) => {
 
 router.post("/gitsignup", gitAuth.gitSignup);
 
-router.get("/user", authorization.simpleAuthorization("User"), (req, res) => {
+router.get("/user", authorization.simpleAuthorization("User", "/user/userlogin"), (req, res) => {
     userController.specificUser(req, res, req.session.username);
 });
 
 router.get(
     "/details",
-    authorization.simpleAuthorization("User"),
+    authorization.simpleAuthorization("User", "/user/userlogin"),
     async (req, res) => {
         const users = await userController.detailsSpecificUser(req, res, req.session.username);
         res.render("details.ejs", { users });
@@ -57,7 +57,7 @@ router.get(
 
 router.get(
     "/detailsedit",
-    authorization.simpleAuthorization("User"),
+    authorization.simpleAuthorization("User", "/user/userlogin"),
     async (req, res) => {
         const users = await userController.detailsSpecificUser(req, res, req.session.username);
         res.render("details_edit.ejs", { users });
@@ -71,14 +71,14 @@ router.post("/detailsedit", async (req, res) => {
 
 router.get(
     "/history",
-    authorization.simpleAuthorization("User"),
+    authorization.simpleAuthorization("User", "/user/userlogin"),
     async (req, res) => {
         const users = await userController.getUserHistory(req, res, req.session.username);
         res.render("history.ejs", { users });
     }
 );
 
-router.get("/wallet", authorization.simpleAuthorization("User"),
+router.get("/wallet", authorization.simpleAuthorization("User", "/user/userlogin"),
     (req, res) => {
         res.render("wallet.ejs");
     }
@@ -86,7 +86,7 @@ router.get("/wallet", authorization.simpleAuthorization("User"),
 
 router.get(
     "/prepaid",
-    authorization.simpleAuthorization("User"),
+    authorization.simpleAuthorization("User", "/user/userlogin"),
     (req, res) => {
         res.render("wallet_prepaid.ejs");
     },
@@ -99,7 +99,7 @@ router.post("/prepaid", async (req, res) => {
 
 router.get(
     "/autogiro",
-    authorization.simpleAuthorization("User"),
+    authorization.simpleAuthorization("User", "/user/userlogin"),
     (req, res) => {
         res.render("wallet_autogiro.ejs");
     },
