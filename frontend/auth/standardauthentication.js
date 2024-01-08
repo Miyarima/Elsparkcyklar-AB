@@ -29,8 +29,8 @@ const standardAuthentication = {
                             msg = extractedString.includes("PRIMARY")
                                 ? "Username already exists"
                                 : extractedString.includes("email")
-                                  ? " Email already exists"
-                                  : "There was an error";
+                                    ? " Email already exists"
+                                    : "There was an error";
                         }
                         return res.render("create_user.ejs", { msg });
                     });
