@@ -71,9 +71,6 @@ router.delete("/bike/:id", (req, res) => {
 });
 
 // Rentuns if the users has a ongoing travel
-router.get("/user/:id/:status", (req, res) => {
-    bikeApiController.getTravelStatusForUser(req, res);
-});
 
 // Returns the status of the bike
 router.get("/bikes/:status", (req, res) => {
@@ -120,6 +117,11 @@ router.get("/user/:id/travel", (req, res) => {
 router.delete("/user/:id", (req, res) => {
     userApiController.deleteSpecificUser(req, res);
 });
+
+router.get("/user/:id/:status", (req, res) => {
+    userApiController.getTravelStatusForUser(req, res);
+});
+
 
 /* ########################################### */
 /* ################  CITIES   ################ */

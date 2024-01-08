@@ -1,12 +1,15 @@
-<%- include("header_mobile.ejs") %>
+<%- include("extended_header.ejs") %>
 
-<div class="title">För att lämna tillbaka ange cykelns ID</div>
+
 
 <div class="middle">
-    <form action="/mobile/rent">
-        <label class="give-bikeid" for="fname">Cykel-ID</label><br><br>
-        <input class="text-rent" type="number" required><br>
-        <input class="rent-button" type="submit" value="Lämna tillbaka">
+    <% if (typeof msg !== 'undefined') { %>
+        <h1><%= msg %></h1>
+    <% } %>
+    <form method="POST" action="/mobile/rent">
+        <label class="give-bikeid" for="returnera_cykel">Cykel-ID</label><br><br>
+        <input name="rent" value="lock" hidden>
+        <input class="rent-button" type="submit" value="Returnera cykel">
     </form>
 </div>
 

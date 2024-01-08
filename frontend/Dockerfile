@@ -7,6 +7,7 @@ COPY package*.json .
 RUN npm install
 
 COPY server.js .
+COPY apiaddress.js .
 COPY controllers ./controllers/
 COPY public ./public/
 COPY routes ./routes/

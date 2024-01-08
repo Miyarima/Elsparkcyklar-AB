@@ -116,17 +116,18 @@ const gatheredBikeFunctions = {
      * @async
      * @function
      * @param {int} bikeId bikeId
-     * @param {int} userId Status string
+     * @param {int} userId   string
      * @returns {bool} True if the querys were succesful, otherwise an error.
      */
     unlockBike: async (bikeId, userId) => {
+
         const queryObject = {
-            query: "INSERT INTO Travel(bike_id, `user_id`, `status`, start_longitude, start_latitude) VALUES (?, ?, 'Ongoing', (SELECT longitude FROM Bike WHERE id = ?),(SELECT latitude FROM Bike WHERE id = ?))",
+            query: "INSERT INTO Travel(bike_id, `user_id`, `status`, start_longitude, start_latitude) VALUES (?, ?, 'Ongoing', (SELECT longitude FROM Bike WHERE id = ? AND `status` = 'Available'),(SELECT latitude FROM Bike WHERE id = ? AND `status` = 'Available'))",
             params: [bikeId, userId, bikeId, bikeId],
         };
 
         const queryObject2 = {
-            query: "UPDATE Bike SET `status` = 'Unlocked' WHERE id = ?",
+            query: "UPDATE Bike SET `status` = 'In-use' WHERE id = ?",
             params: [bikeId],
         };
 
@@ -164,7 +165,7 @@ const gatheredBikeFunctions = {
         };
 
         const queryObject3 = {
-            query: "UPDATE Bike SET status = 'Locked', longitude = ?, latitude = ? WHERE id = ?",
+            query: "UPDATE Bike SET status = 'Available', longitude = ?, latitude = ? WHERE id = ?",
             params: [longitude, latitude, bikeId],
         };
 
