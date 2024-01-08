@@ -143,10 +143,6 @@ const getBikesCity = async (req, res) => {
         return res.status(403).json({ error: "Missing name for the city!." });
     }
 
-    // ! ==================================================
-    // ! = Detta är nog inte optimalt, kommer nog bli slöt
-    // ! ==================================================
-
     const citiesAndBikes =
         await db.gatheredCityFunctions.allBikesAndItsCities();
 
@@ -154,24 +150,6 @@ const getBikesCity = async (req, res) => {
 
     return res.status(200).json({
         bikes: allBikes,
-    });
-};
-
-// Get zones, bikes and charging station in specific city
-const getCityZone = async (req, res) => {
-    const apiKey = req.query.apiKey;
-    const cityId = req.params.id;
-
-    if (!apiKey) {
-        return res.status(403).json({ error: "Please provide an API key." });
-    }
-
-    if (!cityId) {
-        return res.status(403).json({ error: "Missing id for the city!." });
-    }
-
-    return res.status(200).json({
-        bikes: cityId,
     });
 };
 
@@ -216,10 +194,6 @@ const getBikeChargingOnStation = async (req, res) => {
         bikes: bikes,
     });
 };
-
-//? ======================================
-//? = Vet inte riktigt vad dessa ska göra
-//? ======================================
 
 // Add number of bikes in city
 const addNewBike = async (req, res) => {
@@ -282,56 +256,6 @@ const addNewBike = async (req, res) => {
     }
 };
 
-// Update number of bikes in city
-const updateNumberBikes = async (req, res) => {
-    const apiKey = req.query.apiKey;
-    const cityId = req.params.id;
-    const numberId = req.params.nr;
-
-    if (!apiKey) {
-        return res.status(403).json({ error: "Please provide an API key." });
-    }
-
-    if (!cityId) {
-        return res.status(403).json({ error: "Missing cityId for the city!." });
-    }
-
-    if (!numberId) {
-        return res
-            .status(403)
-            .json({ error: "Missing number of bikes to add to the city!." });
-    }
-
-    return res.status(200).json({
-        message: "Bikes have been updated in the city.",
-    });
-};
-
-// Remove number of bikes from city
-const deleteNumberBikes = async (req, res) => {
-    const apiKey = req.query.apiKey;
-    const cityId = req.params.id;
-    const numberId = req.params.nr;
-
-    if (!apiKey) {
-        return res.status(403).json({ error: "Please provide an API key." });
-    }
-
-    if (!cityId) {
-        return res.status(403).json({ error: "Missing cityId for the city!." });
-    }
-
-    if (!numberId) {
-        return res
-            .status(403)
-            .json({ error: "Missing number of bikes to remove to the city!." });
-    }
-
-    return res.status(200).json({
-        message: "Bikes have been removed from the city.",
-    });
-};
-
 module.exports = {
     getAllCities,
     getAllStations,
@@ -339,12 +263,7 @@ module.exports = {
     addNewCity,
     getSpecificCity,
     getBikesCity,
-    getCityZone,
     getCityChargingStation,
     getBikeChargingOnStation,
     addNewBike,
-    updateNumberBikes,
-    deleteNumberBikes,
-    getAllStations,
-    getAllZones,
 };

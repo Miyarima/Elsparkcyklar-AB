@@ -70,8 +70,6 @@ router.delete("/bike/:id", (req, res) => {
     bikeApiController.deleteSpecificBike(req, res);
 });
 
-// Rentuns if the users has a ongoing travel
-
 // Returns the status of the bike
 router.get("/bikes/:status", (req, res) => {
     bikeApiController.getBikesWithStatus(req, res);
@@ -105,11 +103,11 @@ router.get("/gituser/:id", (req, res) => {
     userApiController.getUserFromGitUsername(req, res);
 });
 
-router.get("/email/email_id", (req, res) => {
+router.get("/email/:email_id", (req, res) => {
     userApiController.getUserFromEmail(req, res);
 });
 
-router.get("/user/:id/travel", (req, res) => {
+router.get("/users/travel/all/:id", (req, res) => {
     userApiController.getTravelUser(req, res);
 });
 
@@ -119,7 +117,7 @@ router.delete("/user/:id", (req, res) => {
 });
 
 router.get("/user/:id/:status", (req, res) => {
-    userApiController.getTravelStatusForUser(req, res);
+    bikeApiController.getTravelStatusForUser(req, res);
 });
 
 /* ########################################### */
@@ -156,11 +154,6 @@ router.get("/city/:city/bike", (req, res) => {
     cityApiController.getBikesCity(req, res);
 });
 
-// Returns zones, bikes and charging statioins in specific city
-router.get("/city/:id/zone", (req, res) => {
-    cityApiController.getCityZone(req, res);
-});
-
 // Returns bikes on specific charging station
 router.get("/city/:id/zone/bike", (req, res) => {
     cityApiController.getBikeChargingOnStation(req, res);
@@ -174,16 +167,6 @@ router.get("/cities/stations", (req, res) => {
 // Insert new bike
 router.post("/bike", (req, res) => {
     cityApiController.addNewBike(req, res);
-});
-
-// Update a number of bikes from specific city
-router.put("/city/:id/bike/:nr", (req, res) => {
-    cityApiController.updateNumberBikes(req, res);
-});
-
-// Remove a number of bikes from specific city
-router.delete("/city/:id/bike/:nr", (req, res) => {
-    cityApiController.deleteNumberBikes(req, res);
 });
 
 // Returns all availbel ports on a station
