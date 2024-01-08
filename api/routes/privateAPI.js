@@ -117,7 +117,7 @@ router.delete("/user/:id", (req, res) => {
 });
 
 router.get("/user/:id/:status", (req, res) => {
-    userApiController.getTravelStatusForUser(req, res);
+    bikeApiController.getTravelStatusForUser(req, res);
 });
 
 
