@@ -112,7 +112,7 @@ router.get("/email/email_id", (req, res) => {
     userApiController.getUserFromEmail(req, res);
 });
 
-router.get("/user/:id/travel", (req, res) => {
+router.get("/users/travel/all/:id", (req, res) => {
     userApiController.getTravelUser(req, res);
 });
 
