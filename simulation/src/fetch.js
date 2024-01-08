@@ -126,8 +126,10 @@ const fetchZones = async () => {
 };
 
 const sendStaticElements = (coordinates) => {
+    // const mapTesting = "http://localhost:3000/update-map-static";
+    const frontend = "http://localhost:1337/admin/update-map-static";
     try {
-        fetch("http://localhost:3000/update-map-static", {
+        fetch(frontend, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -141,8 +143,10 @@ const sendStaticElements = (coordinates) => {
 };
 
 const sendBikeUpdate = (coordinates) => {
+    // const mapTesting = "http://localhost:3000/update-map-static";
+    const frontend = "http://localhost:1337/admin/update-map";
     try {
-        fetch("http://localhost:3000/update-map", {
+        fetch(frontend, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
