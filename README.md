@@ -78,6 +78,10 @@ mysql -h 127.0.0.1 -P 3307 -u vteam -p
 
 ## Documentation
 
+Routes in the API
+
+- [API](https://github.com/Miyarima/Elsparkcyklar-AB/blob/main/docs/api.md)
+
 ## Team
 
 -   [**Jonathan**](https://github.com/Miyarima)
