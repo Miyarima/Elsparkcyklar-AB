@@ -4,15 +4,7 @@ Introducing our innovative Bike Renting System API, designed to revolutionize th
 
 ## Usage
 
-To use the public API you will need to generate a API key on the following link<br>
-
-```bash
-/api/apikey
-```
-
-It will return a key, which you need to use in every request to use the API
-
-## Exampel
+### Exampel
 
 A Request should look like this
 
