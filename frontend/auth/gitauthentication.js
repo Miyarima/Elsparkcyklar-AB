@@ -11,7 +11,7 @@ const gitAuthentication = {
             })
                 .then((result) => result.json())
                 .then((data) => {
-                    return { exists: data.users.length === 1, token: token };
+                    return { user: data.users, token: token };
                 });
         });
     },
@@ -49,6 +49,7 @@ const gitAuthentication = {
     },
 
     getAccessToken: (req, res) => {
+        console.log("getAccessToken");
         const requestToken = req.query.code;
 
         fetch(
@@ -66,10 +67,12 @@ const gitAuthentication = {
                 return gitAuthentication
                     .gitLogin(accessToken)
                     .then((result) => {
-                        if (!result.exists) {
+                        if (result.user.length !== 1) {
                             req.session.access_token = result.token;
                             return res.redirect("/user/gitsignup");
                         }
+                        authorization.updateSession(req, result.user[0].id, "User");
+                        return res.redirect("/user/user");
                     });
             })
             .catch(() => {
